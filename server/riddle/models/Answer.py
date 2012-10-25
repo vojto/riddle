@@ -1,13 +1,15 @@
-from riddle import app, db
+from riddle import app, db, model_classes
 from peewee import *
 from riddle.models.Question import Question
 from riddle.models.Option import Option
+from flask_peewee.admin import ModelAdmin
 
 class Answer(db.Model):
     text = TextField()
     option = ForeignKeyField(Option)
     question = ForeignKeyField(Question)
 
-app.logger.debug("Creating table for " + __name__)
-Answer.create_table(fail_silently=True)
+class AnswerAdmin(ModelAdmin):
+    columns = ('text', 'option', 'question')
 
+model_classes.append((Answer, AnswerAdmin))

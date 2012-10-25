@@ -1,9 +1,13 @@
-from riddle import app, db
+from riddle import app, db, model_classes
 from peewee import *
+from flask_peewee.admin import ModelAdmin
 
 class Student(db.Model):
     name = CharField()
-    sessid = CharField()
+    session_id = CharField()
 
-app.logger.debug("Creating table for " + __name__)
-Student.create_table(fail_silently=True)
+class StudentAdmin(ModelAdmin):
+    columns = ('name', 'session_id')
+
+model_classes.append((Student, StudentAdmin))
+

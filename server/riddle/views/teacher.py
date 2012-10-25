@@ -12,3 +12,4 @@ def show():
 @auth.login_required
 def add():
     return "Time to add some cool stuff."
+

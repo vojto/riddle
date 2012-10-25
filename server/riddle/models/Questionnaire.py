@@ -1,12 +1,18 @@
-from riddle import app, db
+from riddle import app, db, model_classes
 from peewee import *
 from riddle.models.Teacher import Teacher
 from riddle.models.Category import Category
+from flask_peewee.admin import ModelAdmin
 
 class Questionnaire(db.Model):
     name = CharField()
-    pubid = CharField()
+    public_id = CharField()
     category = ForeignKeyField(Category)
 
-app.logger.debug("Creating table for " + __name__)
-Questionnaire.create_table(fail_silently=True)
+class QuestionnaireAdmin(ModelAdmin):
+    columns = ('name', 'public_id', 'category')
+
+
+model_classes.append((Questionnaire, QuestionnaireAdmin))
+
+

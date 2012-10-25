@@ -1,10 +1,13 @@
-from riddle import app, db
+from riddle import app, db, model_classes
 from peewee import *
 from riddle.models.Questionnaire import Questionnaire
+from flask_peewee.admin import ModelAdmin
 
 class Rating(db.Model):
     like = BooleanField()
     questionnaire = ForeignKeyField(Questionnaire)
 
-app.logger.debug("Creating table for " + __name__)
-Rating.create_table(fail_silently=True)
+class RatingAdmin(ModelAdmin):
+    columns = ('like', 'questionnaire')
+
+model_classes.append((Rating, RatingAdmin))

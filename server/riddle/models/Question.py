@@ -1,6 +1,7 @@
-from riddle import app, db
+from riddle import app, db, model_classes
 from riddle.models.Questionnaire import Questionnaire
 from peewee import *
+from flask_peewee.admin import ModelAdmin
 
 class Question(db.Model):
     description = TextField()
@@ -8,5 +9,7 @@ class Question(db.Model):
     presented = BooleanField()
     questionnaire = ForeignKeyField(Questionnaire)
 
-app.logger.debug("Creating table for " + __name__)
-Question.create_table(fail_silently=True)
+class QuestionAdmin(ModelAdmin):
+    columns = ('description', 'typ', 'presented', 'questionnaire')
+
+model_classes.append((Question, QuestionAdmin))
