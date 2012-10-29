@@ -5,7 +5,7 @@ from flask_peewee.admin import ModelAdmin
 
 class Question(db.Model):
     description = TextField()
-    typ = IntegerField(choices=[(1, 'single'), (2, 'multi'), ('3', 'text')])
+    typ = IntegerField(choices=[(1, 'single'), (2, 'multi'), (3, 'text')])
     presented = BooleanField()
     questionnaire = ForeignKeyField(Questionnaire)
 
