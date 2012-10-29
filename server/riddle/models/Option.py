@@ -7,6 +7,9 @@ class Option(db.Model):
     text = TextField()
     question = ForeignKeyField(Question)
 
+    def __unicode__(self):
+        return self.text
+
 class OptionAdmin(ModelAdmin):
     columns = ('text', 'question')
 

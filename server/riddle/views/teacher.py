@@ -1,12 +1,24 @@
 from flask import Blueprint
 from riddle import auth
+from riddle.models.Teacher import Teacher
+from riddle.models.Questionnaire import Questionnaire
+from riddle.models.Category import Category 
 
 teacher = Blueprint('teacher', __name__)
 
 @teacher.route('/qaires')
 @auth.login_required
 def show():
-    return "Hello! These are your questionnaires: (none)!"
+    user = auth.get_logged_in_user()
+    cats = Category.select().join(Teacher).where(Teacher.id == user.id)
+    ret = "Hello %s! These are your categories: <br /><br />" % (user.username)
+    for c in cats:
+        ret += "Category: %s<br />" % (c.name)
+        qaires = Questionnaire.select().join(Category).where(Category.id == c.id)
+        for q in qaires:
+            ret += "Questionnaire: %s<br />" % (q.name)
+
+    return ret
 
 @teacher.route('/new', methods = ['POST'])
 @auth.login_required

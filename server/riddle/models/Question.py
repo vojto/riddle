@@ -9,6 +9,9 @@ class Question(db.Model):
     presented = BooleanField()
     questionnaire = ForeignKeyField(Questionnaire)
 
+    def __unicode__(self):
+        return self.description
+
 class QuestionAdmin(ModelAdmin):
     columns = ('description', 'typ', 'presented', 'questionnaire')
 

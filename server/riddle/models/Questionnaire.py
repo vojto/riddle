@@ -9,6 +9,9 @@ class Questionnaire(db.Model):
     public_id = CharField()
     category = ForeignKeyField(Category)
 
+    def __unicode__(self):
+        return "%s (ID: %s)" % (self.name, self.public_id)
+
 class QuestionnaireAdmin(ModelAdmin):
     columns = ('name', 'public_id', 'category')
 
