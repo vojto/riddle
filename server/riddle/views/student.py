@@ -7,10 +7,10 @@ import json
 
 student = Blueprint('student', __name__)
 
-@student.route('/view/<qaire_id>')
+@student.route('/view/<qaire_id>/')
 def show(qaire_id):
     qaires = Questionnaire.select().where(Questionnaire.public_id == qaire_id)
-    ret = []
+    ret = {}
 
     def qtype2str(n):
         for ch in Question.typ.choices:
@@ -18,11 +18,10 @@ def show(qaire_id):
                 return ch[1]
 
         return 0
-            
 
     for qaire in qaires:
-        category = Category.select().join(Questionnaire)
-        questions = Question.select().join(Questionnaire).where(Question.presented == True)
+        category = Category.select().join(Questionnaire).where(Questionnaire.id == qaire.id)
+        questions = Question.select().join(Questionnaire).where(Questionnaire.id == qaire.id).where(Question.presented == True)
 
         catname = ''
 

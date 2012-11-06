@@ -2,6 +2,8 @@ from flask import Flask
 from flask_peewee.db import Database
 from flask_peewee.auth import Auth
 from flask_peewee.admin import Admin
+import functools
+import json
 
 DATABASE = {
     'name': 'data.db',
@@ -33,6 +35,17 @@ class TeacherAuth(Auth):
 
     def get_model_admin(self):
         return TeacherAdmin
+
+    def login_required(self, fn):
+        @functools.wraps(fn)
+
+        def inner(*args, **kwargs):
+            user = self.get_logged_in_user()
+
+            if not user:
+                return json.dumps({'error': 'logged_out'})
+            return fn(*args, **kwargs)
+        return inner
 
 class CustomAdmin(Admin):
     def check_user_permission(self, user):
