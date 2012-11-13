@@ -2,6 +2,8 @@ require('lib/setup')
 
 Spine = require('spine')
 
+Session = require('models/session')
+
 LoginPage = require('pages/login_page')
 DashboardPage = require('pages/dashboard_page')
 
@@ -19,9 +21,12 @@ class App extends Spine.Controller
       '/dashboard': @dashboardPage
     
     Spine.Route.setup()
-    @navigate '/login'
     
-    # TODO: In the future we want to manage stack of pages
+    user = Session.user()
+    if user
+      @navigate '/dashboard'
+    else
+      @navigate '/login'
   
   addRoutesForPages: (table) ->
     @pageTable = table

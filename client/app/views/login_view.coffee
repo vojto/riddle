@@ -19,8 +19,6 @@ class LoginView extends View
     ev.preventDefault()
     
     data = @$form.serializeObject()
-    # TODO: Validate data with the server
-    
-    @navigate '/dashboard'
+    @trigger 'login', data
 
 module.exports = LoginView
