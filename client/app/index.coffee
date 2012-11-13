@@ -3,15 +3,18 @@ require('lib/setup')
 Spine = require('spine')
 
 LoginPage = require('pages/login_page')
+DashboardPage = require('pages/dashboard_page')
 
 class App extends Spine.Controller
   constructor: ->
     super
 
     @loginPage = new LoginPage
+    @dashboardPage = new DashboardPage
     
     @addRoutesForPages
       '/login': @loginPage
+      '/dashboard': @dashboardPage
     
     Spine.Route.setup()
     @navigate '/login'
