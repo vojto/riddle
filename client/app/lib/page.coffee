@@ -6,15 +6,12 @@ class Page extends Spine.Controller
   means to reuse layout elements on pages.
   ###
   
-  template: require('templates/pages/page')
-  
   constructor: ->
     super
     @render()
   
   render: ->
     @el.addClass('page')
-    @html @template(@)
   
   willShow: ->
     ###
