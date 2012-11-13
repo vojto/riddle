@@ -5,11 +5,15 @@ class Persistence extends Spine.Module
     localStorage["riddle.#{key}"] = JSON.stringify(value)
   
   @get: (key) ->
-    JSON.parse(localStorage["riddle.#{key}"])
+    value = localStorage["riddle.#{key}"]
+    if value then JSON.parse(value) else null
 
 class Session extends Spine.Module
+  @extend Spine.Events
+  
   @setUser: (user) ->
     Persistence.set 'currentUser', user
+    @trigger 'changeUser'
   
   @user: ->
     Persistence.get 'currentUser'

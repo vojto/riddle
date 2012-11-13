@@ -1,6 +1,7 @@
 if this.user
-  div
-    | Logged in: 
-    = user.name
-    | 
-    a(href='#') Log out
+  | Logged in: 
+  = user.name
+  | 
+  a(href='#') Log out
+else
+  | Not logged in
