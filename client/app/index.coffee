@@ -22,9 +22,15 @@ class App extends Spine.Controller
     # TODO: In the future we want to manage stack of pages
   
   addRoutesForPages: (table) ->
+    @pageTable = table
     for routeName, page of table
-      Spine.Route.add routeName, =>
-        @el.empty()
-        @append(page)
+      Spine.Route.add routeName, @didChangeRoute
+    
+  didChangeRoute: (match) =>
+    input = match.match.input
+    page = @pageTable[input]
+    if page
+      @el.empty()
+      @append(page)
 
 module.exports = App
