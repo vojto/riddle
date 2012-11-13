@@ -2,14 +2,15 @@ require('lib/setup')
 
 Spine = require('spine')
 
-Canvas = require('controllers/canvas')
+LoginPage = require('pages/login_page')
 
 class App extends Spine.Controller
   constructor: ->
     super
-    
-    @canvas = new Canvas
-    @append @canvas
+
+    @loginPage = new LoginPage
+    @append @loginPage
+    # TODO: In the future we want to manage stack of pages
 
 module.exports = App
     
