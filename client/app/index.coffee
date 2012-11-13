@@ -6,6 +6,8 @@ LoginPage = require('pages/login_page')
 DashboardPage = require('pages/dashboard_page')
 
 class App extends Spine.Controller
+  className: 'app'
+  
   constructor: ->
     super
 

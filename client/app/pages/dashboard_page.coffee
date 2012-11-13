@@ -3,6 +3,8 @@ Page = require('lib/page')
 CategoryListView = require('views/category_list_view')
 
 class DashboardPage extends Page
+  className: 'dashboard-page'
+  
   constructor: ->
     super
 

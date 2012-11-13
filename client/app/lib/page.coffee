@@ -13,6 +13,7 @@ class Page extends Spine.Controller
     @render()
   
   render: ->
+    @el.addClass('page')
     @html @template(@)
   
   willShow: ->
