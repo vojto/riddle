@@ -7,6 +7,8 @@ class DashboardPage extends Page
   
   constructor: ->
     super
+    
+    @addLoginStatus()
 
     @categoryList = new CategoryListView
     @append @categoryList

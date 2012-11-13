@@ -1,4 +1,5 @@
 Spine = require('spine')
+LoginStatusView = require('views/login_status_view')
 
 class Page extends Spine.Controller
   ###
@@ -9,6 +10,10 @@ class Page extends Spine.Controller
   constructor: ->
     super
     @render()
+    
+  addLoginStatus: ->
+    @loginStatus = new LoginStatusView
+    @append @loginStatus
   
   render: ->
     @el.addClass('page')
