@@ -8,4 +8,6 @@ require('spine/lib/ajax')
 require('spine/lib/manager')
 require('spine/lib/route')
 
+require('spine-binding')
+
 require('lib/jquery_ext')

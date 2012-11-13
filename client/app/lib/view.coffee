@@ -6,6 +6,6 @@ class View extends Spine.Controller
     @render()
   
   render: ->
-    @html @template(@)
+    @html @template(@) if @template
 
 module.exports = View

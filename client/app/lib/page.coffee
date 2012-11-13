@@ -14,5 +14,10 @@ class Page extends Spine.Controller
   
   render: ->
     @html @template(@)
+  
+  willShow: ->
+    ###
+    Performs additional additional before the page can be shown to the user
+    ###
 
 module.exports = Page

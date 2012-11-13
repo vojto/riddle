@@ -9,6 +9,7 @@
     "jqueryify": "~0.0.1",
     "spine": "~1.0.6",
     "jade": "*",
-    "hem-jade": "*"
+    "hem-jade": "*",
+    "spine-binding": "*"
   }
 }
