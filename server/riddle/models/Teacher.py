@@ -6,6 +6,7 @@ from flask_peewee.admin import ModelAdmin
 class Teacher(db.Model, BaseUser):
     username = CharField()
     fullname = CharField()
+    email = CharField()
     password = CharField()
     active = BooleanField()
     superuser = BooleanField()

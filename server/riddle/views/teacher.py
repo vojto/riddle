@@ -19,7 +19,7 @@ def show():
         ret.append({'category': c.name, 'questionnaires': []})
         qaires = Questionnaire.select().join(Category).where(Category.id == c.id)
         for q in qaires:
-            ret[-1]['questionnaires'].append({'name': q.name})
+            ret[-1]['questionnaires'].append({'name': q.name, 'public_id': q.public_id})
 
     return json.dumps(ret)
 
@@ -55,6 +55,7 @@ def login():
 
     if teacher == False:
         ret['response'] = 'error'
+        ret['reason'] = 'wrong_password'
     else:
         auth.login_user(teacher)
         ret['response'] = 'success'
@@ -90,7 +91,7 @@ def registration():
             return json.dumps(ret)
     except recaptcha.RecaptchaException as ex:
         ret['response'] = 'error'
-        ret['reason'] = 'captcha_internal_error'
+        ret['reason'] = 'internal_error'
         return json.dumps(ret)
 
     for teacher in teachers:
