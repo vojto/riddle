@@ -1,14 +1,14 @@
 # View questionnaires
 
 ## Client -> Server
-Method: GET
-Requires: Auth
-URL: `/qaire/`
-Fields: None
+Method: GET  
+Requires: Auth  
+URL: `/qaire/`  
+Fields: None  
 
 ## Server -> Client
-Method: JSON
-Examples:
+Method: JSON  
+Examples:  
 * Typical example
 
   ```json

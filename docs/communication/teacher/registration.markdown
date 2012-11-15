@@ -1,10 +1,10 @@
 # Registration
 
 ## Client -> Server
-Method: Form POST
-Requires: Nothing
-URL: `/registration/`
-Fields:
+Method: Form POST  
+Requires: Nothing  
+URL: `/registration/`  
+Fields:  
 * username
 * fullname
 * email
@@ -13,8 +13,8 @@ Fields:
 * recaptcha_response_field
 
 ## Server -> Client
-Method: JSON
-Examples:
+Method: JSON  
+Examples:  
 * Incorrect CAPTCHA
 
   ```json

@@ -1,16 +1,16 @@
 # Login
 
 ## Client -> Server
-Method: Form POST
-Requires: Nothing
-URL: `/login/`
-Fields:
+Method: Form POST  
+Requires: Nothing  
+URL: `/login/`  
+Fields:  
 * username
 * password
 
 ## Server -> Client
-Method: JSON
-Examples:
+Method: JSON  
+Examples:  
 * Wrong username or password
 
   ```json

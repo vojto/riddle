@@ -1,15 +1,15 @@
 # View questionnaires
 
 ## Client -> Server
-Method: GET
-Requires: Auth
-URL: `/view/<qaire_id>/`
-Fields:
+Method: GET  
+Requires: Auth  
+URL: `/view/<qaire_id>/`  
+Fields:  
 * qaire_id - questionnaire id
 
 ## Server -> Client
-Method: JSON
-Examples:
+Method: JSON  
+Examples:  
 * Typical example
 
   ```json

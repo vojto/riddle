@@ -1,15 +1,15 @@
 # New category
 
 ## Client -> Server
-Method: Form POST
-Requires: Auth
-URL: `/new-category/`
-Fields:
+Method: Form POST  
+Requires: Auth  
+URL: `/new-category/`  
+Fields:  
 * name
 
 ## Server -> Client
-Method: JSON
-Examples:
+Method: JSON  
+Examples:  
 * Category already exists
 
   ```json
