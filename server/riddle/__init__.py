@@ -10,10 +10,14 @@ DATABASE = {
     'engine': 'peewee.SqliteDatabase'
 }
 
+SECRET_KEY = 'this_is_too_secret'
 
-app = Flask(__name__)
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+
+app = Flask(__name__, static_folder='../../client/public', static_url_path='/static')
 app.config.from_object(__name__)
-app.secret_key = 'this_is_too_secret'
+app.config.from_pyfile("settings.cfg", silent=True)
 
 db = Database(app)
 
@@ -43,7 +47,7 @@ class TeacherAuth(Auth):
             user = self.get_logged_in_user()
 
             if not user:
-                return json.dumps({'error': 'logged_out'})
+                return json.dumps({'response': 'error', 'reason': 'logged_out'})
             return fn(*args, **kwargs)
         return inner
 

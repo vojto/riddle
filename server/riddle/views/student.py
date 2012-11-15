@@ -37,10 +37,13 @@ def show(qaire_id):
 
             if qtype == 'single' or qtype == 'multi':
                 ret['questions'][-1]['options'] = []
-                options = Option.select().join(Question)
+                options = Option.select().join(Question).where(Question.id == qion.id)
 
                 for opt in options:
                     ret['questions'][-1]['options'].append({'text': opt.text})
 
+    if not ret:
+        ret['response'] = 'error'
+        ret['reason'] = 'not_found'
     return json.dumps(ret)
 

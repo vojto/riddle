@@ -1,0 +1,4 @@
+SECRET_KEY = 'Insert a very secure phrase - not your birthday!'
+RECAPTCHA_PUBLIC_KEY = 'reCAPTCHA public key (40 chars)'
+RECAPTCHA_PRIVATE_KEY = 'reCAPTCHA private key (40 chars)'
+
