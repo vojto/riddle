@@ -47,3 +47,13 @@ def show(qaire_id):
         ret['reason'] = 'not_found'
     return json.dumps(ret)
 
+# TODO
+@student.route('/settings/', methods=['POST'])
+def settings():
+    pass
+
+# TODO
+@student.route('/submit-qaire/', methods=['POST'])
+def submit_qaire():
+    pass
+

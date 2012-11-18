@@ -106,3 +106,27 @@ def registration():
     ret['response'] = 'success'
     return json.dumps(ret)
 
+# TODO
+@teacher.route('/new-questionnaire/', methods=['POST'])
+@auth.login_required
+def new_questionnaire():
+    pass
+
+# TODO
+@teacher.route('/new-question/', methods=['POST'])
+@auth.login_required
+def new_question():
+    pass
+
+# TODO
+@teacher.route('/settings/', methods=['POST'])
+@auth.login_required
+def settings():
+    pass
+
+# TODO
+@teacher.route('/results/<qaire_id>/', methods=['POST'])
+@auth.login_required
+def results(qaire_id):
+    pass
+
