@@ -18,7 +18,7 @@ class Page extends Spine.Controller
   render: ->
     @el.addClass('page')
   
-  willShow: ->
+  show: ->
     ###
     Performs additional additional before the page can be shown to the user
     ###

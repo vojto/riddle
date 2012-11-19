@@ -1,14 +1,22 @@
 View = require('lib/view')
+CoursesListView = require('views/courses_list_view')
 
 class CategoryView extends View
   template: require('templates/category')
   
   constructor: (options) ->
-    @category = options.model
     super
+
+    @category = options.model
+    @coursesListView = new CoursesListView(courses: @category.courses().all())
+    
+    @render()
   
   render: ->
-    super
+    @el.empty()
+    @renderTemplate()
+    @coursesListView.render()
+    @append @coursesListView
 
 class CategoryListView extends View
   @extend Spine.Binding

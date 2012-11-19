@@ -8,6 +8,7 @@
     "spine/lib/ajax",
     "spine/lib/route",
     "spine/lib/manager",
+    "spine/lib/relation",
     "jade/lib/runtime",
     "spine-binding",
     "atmos2"

@@ -14,6 +14,7 @@ class LoginView extends View
   
   constructor: ->
     super
+    @render()
     @$el.bind 'ajaxSend', ->
       $(@).addClass('loading')
     @$el.bind 'ajaxComplete', ->

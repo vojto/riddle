@@ -40,7 +40,7 @@ class App extends Spine.Controller
     input = match.match.input
     page = @pageTable[input]
     if page
-      page.willShow()
+      page.show()
       @el.empty()
       @append(page)
 
