@@ -24,6 +24,23 @@ div.login-status
   top 10px
   right 10px
 
+div.login
+  h1.failed
+    display none
+    color red
+
+  &.loading
+    background #fff url('/images/loader.gif') no-repeat center center
+    
+    form
+      visibility hidden
+    
+  &.failed
+    h1.default
+      display none
+    h1.failed
+      display block
+
 // Typo
 // ----------------------------------------------------------------------------
 

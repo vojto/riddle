@@ -15,12 +15,11 @@ class LoginPage extends Page
     @loginView.bind 'login', @didLogin
     @append @loginView
   
-  didLogin: (user) ->
+  didLogin: (user) =>
     console.log 'logged in', user
-    # TODO: Make request to check if user is logged in
     Session.login user, (res) =>
       if res.response == 'error'
-        alert 'Login failed'
+        @loginView.showFailed()
       else
         Session.setUser(user)
         @navigate '/dashboard'
