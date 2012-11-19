@@ -3,7 +3,7 @@
 ## Client -> Server
 Method: GET  
 Requires: Auth  
-URL: `/qaire/`  
+URL: `/qaires/`  
 Fields: None  
 
 ## Server -> Client
