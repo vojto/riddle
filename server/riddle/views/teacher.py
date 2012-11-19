@@ -6,6 +6,8 @@ from riddle.models.Category import Category
 import json
 import recaptcha
 
+IS_CAPTCHA_ENABLED = False
+
 teacher = Blueprint('teacher', __name__)
 captcha = recaptcha.RecaptchaClient(app.config['RECAPTCHA_PRIVATE_KEY'], app.config['RECAPTCHA_PUBLIC_KEY'])
 
@@ -77,34 +79,43 @@ def registration():
     username = request.form['username']
     fullname = request.form['fullname']
     password = request.form['password']
-    captcha_challenge = request.form['recaptcha_challenge_field']
-    captcha_solution = request.form['recaptcha_response_field']
-
-    teachers = Teacher.select().where(Teacher.username == username)
-
+    email    = request.form['email']
     ret = {}
 
-    try:
-        if not captcha.is_solution_correct(captcha_solution, captcha_challenge, request.remote_addr):
-            ret['response'] = 'error'
-            ret['reason'] = 'captcha_incorrect'
-            return json.dumps(ret)
-    except recaptcha.RecaptchaException as ex:
-        ret['response'] = 'error'
-        ret['reason'] = 'internal_error'
-        return json.dumps(ret)
+    captcha_result = check_captcha(request)
+    if captcha_result[0] == False:
+        return json.dumps({'response': 'error', 'reason': captcha_result[1]})
 
+    teachers = Teacher.select().where(Teacher.username == username)
     for teacher in teachers:
         ret['response'] = 'error'
         ret['reason'] = 'already_exists'
         return json.dumps(ret)
 
-    teacher = Teacher(username=username, fullname=fullname, active=True, superuser=False)
+    teacher = Teacher(username=username, fullname=fullname, email=email, active=True, superuser=False)
     teacher.set_password(password)
     teacher.save()
 
     ret['response'] = 'success'
     return json.dumps(ret)
+
+def check_captcha(request):
+    """Checks captcha from request. Returns (result:Boolean, error:String)."""
+    
+    if not IS_CAPTCHA_ENABLED:
+        return (True, None)
+    
+    captcha_challenge = request.form.get('recaptcha_challenge_field', None)
+    captcha_solution = request.form.get('recaptcha_response_field', None)
+    try:
+        is_correct = captcha.is_solution_correct(captcha_solution, captcha_challenge, request.remote_addr)
+    except recaptcha.RecaptchaException as ex:
+        return (False, 'internal_error')
+    
+    if is_correct:
+        return (True, None)
+    else:
+        return (False, 'captcha_incorrect')
 
 # TODO
 @teacher.route('/new-questionnaire/', methods=['POST'])
