@@ -17,7 +17,12 @@ class LoginPage extends Page
   
   didLogin: (user) ->
     console.log 'logged in', user
-    Session.setUser(user)
-    @navigate '/dashboard'
+    # TODO: Make request to check if user is logged in
+    Session.login user, (res) =>
+      if res.response == 'error'
+        alert 'Login failed'
+      else
+        Session.setUser(user)
+        @navigate '/dashboard'
 
 module.exports = LoginPage

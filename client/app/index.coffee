@@ -1,6 +1,7 @@
 require('lib/setup')
 
 Spine = require('spine')
+Atmos = require('atmos2')
 
 Session = require('models/session')
 
@@ -12,6 +13,8 @@ class App extends Spine.Controller
   
   constructor: ->
     super
+
+    @atmos = new Atmos(base: 'http://localhost:5000')
 
     @loginPage = new LoginPage
     @dashboardPage = new DashboardPage

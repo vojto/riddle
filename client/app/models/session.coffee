@@ -1,4 +1,5 @@
 Spine = require('spine')
+Atmos = require('atmos2')
 
 class Persistence extends Spine.Module
   @set: (key, value) ->
@@ -17,5 +18,10 @@ class Session extends Spine.Module
   
   @user: ->
     Persistence.get 'currentUser'
+  
+  @login: (user, callback) ->
+    ### Performs AJAX to login ###
+    Atmos.res.post '/login/', user, (res) ->
+      callback(res)
   
 module.exports = Session
