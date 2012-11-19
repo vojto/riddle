@@ -5,6 +5,9 @@ Session = require('models/session')
 class LoginStatusView extends View
   template: require('templates/login_status')
   className: 'login-status'
+    
+  events:
+    'click a.log-out': 'logOut'
   
   constructor: ->
     super
@@ -14,5 +17,9 @@ class LoginStatusView extends View
   render: =>
     @user = Session.user()
     super
+  
+  logOut: ->
+    Session.logout()
+    @navigate '/login'
 
 module.exports = LoginStatusView

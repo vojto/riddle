@@ -8,6 +8,9 @@ class Persistence extends Spine.Module
   @get: (key) ->
     value = localStorage["riddle.#{key}"]
     if value then JSON.parse(value) else null
+  
+  @delete: (key) ->
+    delete localStorage["riddle.#{key}"]
 
 class Session extends Spine.Module
   @extend Spine.Events
@@ -23,5 +26,8 @@ class Session extends Spine.Module
     ### Performs AJAX to login ###
     Atmos.res.post '/login/', user, (res) ->
       callback(res)
+  
+  @logout: ->
+    Persistence.delete 'currentUser'
   
 module.exports = Session
