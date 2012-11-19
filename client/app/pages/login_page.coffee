@@ -10,19 +10,24 @@ class LoginPage extends Page
   
   constructor: ->
     super
+    
+    @addBackgroundLogo()
 
     @loginView = new LoginView
     @loginView.bind 'login', @didLogin
     @append @loginView
   
   didLogin: (user) =>
-    console.log 'logged in', user
     Session.login user, (res) =>
       if res.response == 'error'
         @loginView.showFailed()
       else
         @loginView.reset()
-        Session.setUser(user)
-        @navigate '/dashboard'
+        @logo.addClass('hidden')
+        setTimeout =>
+          Session.setUser(user)
+          @navigate '/dashboard'
+        , 500
+        
 
 module.exports = LoginPage

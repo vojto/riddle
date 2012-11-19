@@ -15,6 +15,10 @@ class Page extends Spine.Controller
     @loginStatus = new LoginStatusView
     @append @loginStatus
   
+  addBackgroundLogo: ->
+    @logo = $('<div />').addClass('background-logo')
+    @append @logo
+  
   render: ->
     @el.addClass('page')
   

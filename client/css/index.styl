@@ -19,6 +19,25 @@ html, body
 body
   background url(/images/linen.jpg)
 
+div.background-logo
+  width 190px
+  height 44px
+  position fixed
+  top 10px
+  left 50%
+  margin-left -95px
+  top 60%
+  background url(/images/logo.png)
+  opacity 0.1
+  -webkit-filter blur(0px)
+  -webkit-transition: -webkit-filter 0.5s linear, opacity 0.5s linear, -webkit-transform 1s linear;
+  -webkit-transform: scale(1)
+  
+  &.hidden
+    -webkit-filter blur(50px)
+    opacity 0
+    -webkit-transform: scale(10)
+
 div.login-status
   position absolute
   top 10px
