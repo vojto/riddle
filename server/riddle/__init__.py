@@ -4,6 +4,8 @@ from flask_peewee.auth import Auth
 from flask_peewee.admin import Admin
 import functools
 import json
+from werkzeug import SharedDataMiddleware
+import os
 
 DATABASE = {
     'name': 'data.db',
@@ -67,3 +69,8 @@ admin.setup()
 
 import riddle.views
 
+# Static files
+
+app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
+  '/': os.path.join(os.path.dirname(__file__), '../../client/public')
+})
