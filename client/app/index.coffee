@@ -16,11 +16,14 @@ class App extends Spine.Controller
     super
 
     @atmos = new Atmos(base: 'http://localhost:5000')
+    @atmos.bind 'auth_fail', @didFailAuth
+    @atmos.bind 'response_error', @didFailResponse
     
     @addRoutesForPages
       '/login'          : 'pages/login_page'
       '/dashboard'      : 'pages/dashboard_page'
       '/categories/new' : 'pages/category_add_page'
+      '/error'          : 'pages/error_page'
     
     Spine.Route.setup()
     
@@ -39,6 +42,10 @@ class App extends Spine.Controller
   didChangeRoute: (match) =>
     input = match.match.input
     pagePath = @pageTable[input]
+    
+    if !pagePath
+      console.log 'Routing error: ', match
+
     pageClass = require(pagePath)
     @pageInstances or= {}
 
@@ -48,8 +55,16 @@ class App extends Spine.Controller
       page = @pageInstances[pagePath] = new pageClass
 
     if page
-      page.show()
+      page.show(match)
       @el.empty()
       @append(page)
+  
+  didFailAuth: =>
+    Session.logout()
+    @navigate '/login'
+  
+  didFailResponse: =>
+    Session.logout()
+    @navigate '/error'
 
 module.exports = App
