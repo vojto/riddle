@@ -22,6 +22,9 @@ class LoginView extends View
   showFailed: ->
     @$el.addClass('failed')
   
+  reset: ->
+    @$el.removeClass('failed')
+  
   submit: (ev) ->
     ev.preventDefault()
     

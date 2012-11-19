@@ -21,6 +21,7 @@ class LoginPage extends Page
       if res.response == 'error'
         @loginView.showFailed()
       else
+        @loginView.reset()
         Session.setUser(user)
         @navigate '/dashboard'
 
