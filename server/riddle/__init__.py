@@ -47,7 +47,7 @@ class TeacherAuth(Auth):
             user = self.get_logged_in_user()
 
             if not user:
-                return json.dumps({'response': 'error', 'reason': 'logged_out'})
+                return json.dumps({'response': 'error', 'reason': 'logged_out'}), 401
             return fn(*args, **kwargs)
         return inner
 
