@@ -8,10 +8,15 @@ CategoryListView = require('views/category_list_view')
 class DashboardPage extends Page
   className: 'dashboard-page'
   
+  events:
+    'click a.add-category': 'addCategory'
+  
   constructor: ->
     super
     
     @addLoginStatus()
+    
+    @append require('templates/dashboard/buttons')() # TODO: Ugly
 
     @categoryList = new CategoryListView
     @append @categoryList
@@ -19,7 +24,9 @@ class DashboardPage extends Page
   show: ->
     Category.fetch =>
       @categories = Category.all()
-    
       @categoryList.setCategories(@categories)
+  
+  addCategory: ->
+    @navigate '/categories/new'
 
 module.exports = DashboardPage

@@ -24,22 +24,12 @@ div.login-status
   top 10px
   right 10px
 
-div.login
-  h1.failed
-    display none
-    color red
+div.buttons
+  position fixed
+  bottom 30px
 
-  &.loading
-    background #fff url('/images/loader.gif') no-repeat center center
-    
-    form
-      visibility hidden
-    
-  &.failed
-    h1.default
-      display none
-    h1.failed
-      display block
+  a.button
+    margin-right 10px
 
 // Typo
 // ----------------------------------------------------------------------------
@@ -75,9 +65,11 @@ form
 .button
   background #3F6AC2
   border none
-  font-size 13px
-  font-weight 600
+  font-size 14px
+  font-weight 400
   color #fff
+  padding 10px 15px
+  cursor pointer
 
 // Views
 // ----------------------------------------------------------------------------
@@ -97,3 +89,20 @@ div.login
   h1
     text-align center
     margin 0
+
+div.login
+  h1.failed
+    display none
+    color red
+
+  &.loading
+    background #fff url('/images/loader.gif') no-repeat center center
+    
+    form
+      visibility hidden
+    
+  &.failed
+    h1.default
+      display none
+    h1.failed
+      display block
