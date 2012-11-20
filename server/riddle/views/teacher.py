@@ -4,6 +4,7 @@ from riddle.models.Teacher import Teacher
 from riddle.models.Questionnaire import Questionnaire
 from riddle.models.Category import Category
 from riddle.models.Question import Question
+from riddle.models.Option import Option
 import json
 import recaptcha
 
