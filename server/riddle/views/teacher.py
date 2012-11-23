@@ -7,6 +7,8 @@ from riddle.models.Question import Question
 from riddle.models.Option import Option
 import json
 import recaptcha
+import string
+import random
 
 IS_CAPTCHA_ENABLED = False
 
@@ -15,7 +17,7 @@ captcha = recaptcha.RecaptchaClient(app.config['RECAPTCHA_PRIVATE_KEY'], app.con
 
 @teacher.route('/qaires/')
 @auth.login_required
-def show():
+def show_qaires():
     user = auth.get_logged_in_user()
     cats = Category.select().join(Teacher).where(Teacher.id == user.id)
     ret = []
@@ -64,6 +66,17 @@ def show_questions(qaire_id):
 
                 for opt in options:
                     ret['questions'][-1]['options'].append({'text': opt.text})
+
+    return json.dumps(ret)
+
+@teacher.route('/categories/')
+@auth.login_required
+def show_categories():
+    user = auth.get_logged_in_user()
+    cats = Category.select().where(Category.teacher == user)
+    ret = []
+    for c in cats:
+        ret.append({'name': c.name, 'id': c.id})
 
     return json.dumps(ret)
 
@@ -159,11 +172,52 @@ def check_captcha(request):
     else:
         return (False, 'captcha_incorrect')
 
+def random_public_id():
+    while True:
+        pubid = "".join([random.choice(string.ascii_letters + string.digits) for n in xrange(16)])
+
+        qions = Questionnaire.select().where(Questionnaire.public_id == pubid)
+        for qion in qions:
+            pass
+        else:
+            return pubid
+
 # TODO
 @teacher.route('/new-questionnaire/', methods=['POST'])
 @auth.login_required
 def new_questionnaire():
-    pass
+    user = auth.get_logged_in_user()
+
+    name = request.form['name']
+    category_id = request.form['category_id']
+    public_id = request.form['public_id']
+
+    if not public_id:
+        public_id = random_public_id()
+
+    ret = {}
+
+    cats = Category.select().where(Category.teacher == user).where(Category.id == category_id)
+
+    category = None
+
+    for cat in cats:
+        category = cat
+        break
+
+    if not category:
+        ret['response'] = 'error'
+        ret['reason'] = 'category_not_found'
+        return json.dumps(ret)
+
+    if not Questionnaire.create(name=name, public_id=public_id, category=category):
+        ret['response'] = 'error'
+        ret['reason'] = 'already_exists'
+        return json.dumps(ret)
+
+    ret['response'] = 'success'
+    ret['public_id'] = public_id
+    return json.dumps(ret)
 
 # TODO
 @teacher.route('/new-question/', methods=['POST'])

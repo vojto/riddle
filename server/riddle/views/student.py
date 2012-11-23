@@ -57,3 +57,8 @@ def settings():
 def submit_qaire():
     pass
 
+# TODO
+@student.route('/submit-comment/', methods=['POST'])
+def submit_comment():
+    pass
+

@@ -12,6 +12,12 @@ class Questionnaire(db.Model):
     def __unicode__(self):
         return "%s (ID: %s)" % (self.name, self.public_id)
 
+    class Meta:
+        indexes = (
+            (('public_id',), True),
+            (('name', 'category'), False)
+        )
+
 class QuestionnaireAdmin(ModelAdmin):
     columns = ('name', 'public_id', 'category')
 
