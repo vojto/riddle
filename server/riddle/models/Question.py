@@ -13,6 +13,6 @@ class Question(db.Model):
         return self.description
 
 class QuestionAdmin(ModelAdmin):
-    columns = ('description', 'typ', 'presented', 'questionnaire')
+    columns = ('description', 'typ', 'presented', 'questionnaire', 'id')
 
 model_classes.append((Question, QuestionAdmin))

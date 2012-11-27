@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from riddle import app, auth
+from riddle.views.helpers import *
 from riddle.models.Teacher import Teacher
 from riddle.models.Questionnaire import Questionnaire
 from riddle.models.Category import Category
@@ -14,6 +15,7 @@ IS_CAPTCHA_ENABLED = False
 
 teacher = Blueprint('teacher', __name__)
 captcha = recaptcha.RecaptchaClient(app.config['RECAPTCHA_PRIVATE_KEY'], app.config['RECAPTCHA_PUBLIC_KEY'])
+
 
 @teacher.route('/qaires/')
 @auth.login_required
@@ -58,7 +60,7 @@ def show_questions(qaire_id):
 
         for qion in questions:
             qtype = qtype2str(qion.typ)
-            ret['questions'].append({'type': qtype, 'description': qion.description, 'presented': qion.presented})
+            ret['questions'].append({'id': qion.id, 'type': qtype, 'description': qion.description, 'presented': qion.presented})
 
             if qtype == 'single' or qtype == 'multi':
                 ret['questions'][-1]['options'] = []
@@ -86,20 +88,13 @@ def add():
     user = auth.get_logged_in_user()
     name = request.form['name']
     cats = Category.select().join(Teacher).where(Teacher.id == user.id).where(Category.name == name);
-    ret = {}
 
     for c in cats:
-        ret['response'] = 'error'
-        ret['reason'] = 'already_exists'
-        return json.dumps(ret)
-
+        return response_error('already_exists')
 
     Category.insert(name=name, teacher=user).execute()
 
-    ret['response'] = 'success'
-
-    return json.dumps(ret)
-
+    return response_success()
 
 @teacher.route('/login/', methods=['POST'])
 def login():
@@ -108,26 +103,19 @@ def login():
 
     teacher = auth.authenticate(username, password)
 
-    ret = {}
-
     if teacher == False:
-        ret['response'] = 'error'
-        ret['reason'] = 'wrong_password'
-    else:
-        auth.login_user(teacher)
-        ret['response'] = 'success'
+        return response_error('wrong_password')
 
-    return json.dumps(ret)
+    auth.login_user(teacher)
+
+    return response_success()
 
 @teacher.route('/logout/')
 @auth.login_required
 def logout():
     auth.logout_user(auth.get_logged_in_user())
 
-    ret = {}
-    ret['response'] = 'success'
-
-    return json.dumps(ret)
+    return response_success()
 
 @teacher.route('/registration/', methods=['POST'])
 def registration():
@@ -139,20 +127,17 @@ def registration():
 
     captcha_result = check_captcha(request)
     if captcha_result[0] == False:
-        return json.dumps({'response': 'error', 'reason': captcha_result[1]})
+        return response_error(captcha_result[1])
 
     teachers = Teacher.select().where(Teacher.username == username)
     for teacher in teachers:
-        ret['response'] = 'error'
-        ret['reason'] = 'already_exists'
-        return json.dumps(ret)
+        return response_error('already_exists')
 
     teacher = Teacher(username=username, fullname=fullname, email=email, active=True, superuser=False)
     teacher.set_password(password)
     teacher.save()
 
-    ret['response'] = 'success'
-    return json.dumps(ret)
+    return response_success()
 
 def check_captcha(request):
     """Checks captcha from request. Returns (result:Boolean, error:String)."""
@@ -182,7 +167,6 @@ def random_public_id():
         else:
             return pubid
 
-# TODO
 @teacher.route('/new-questionnaire/', methods=['POST'])
 @auth.login_required
 def new_questionnaire():
@@ -206,24 +190,80 @@ def new_questionnaire():
         break
 
     if not category:
-        ret['response'] = 'error'
-        ret['reason'] = 'category_not_found'
-        return json.dumps(ret)
+        return response_error('category_not_found')
 
     if not Questionnaire.create(name=name, public_id=public_id, category=category):
-        ret['response'] = 'error'
-        ret['reason'] = 'already_exists'
-        return json.dumps(ret)
+        return response_error('already_exists')
 
-    ret['response'] = 'success'
+    ret = response_success(False)
     ret['public_id'] = public_id
     return json.dumps(ret)
+
+@teacher.route('/remove-questionnaire/', methods=['POST'])
+@auth.login_required
+def remove_questionnaire():
+    user = auth.get_logged_in_user()
+    public_id = request.form['public_id']
+
+    qaires = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.public_id == public_id)
+
+    for qaire in qaires:
+        qions = Question.select().where(Question.questionnaire == qaire)
+
+        for qion in qions:
+            Question.delete().where(Question.id == qion.id).execute()
+
+        if Questionnaire.delete().where(Questionnaire.id == qaire.id).execute():
+            return response_success()
+        else:
+            return response_error('questionnaire_not_found')
+
+        break
+
+    return response_error('questionnaire_not_found')
+
 
 # TODO
 @teacher.route('/new-question/', methods=['POST'])
 @auth.login_required
 def new_question():
-    pass
+    user = auth.get_logged_in_user()
+
+    description = request.form['description']
+    typ = request.form['type']
+    presented = request.form['presented']
+    public_id = request.form['public_id']
+
+    ret = {}
+
+    qaires = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.public_id == public_id)
+
+    for qaire in qaires:
+        if Question.create(description=description, typ=typ, presented=presented, questionnaire=qaire):
+            return response_success()
+        else:
+            return response_error('internal_error')
+
+        break
+
+
+    return response_error('questionnaire_not_found')
+
+@teacher.route('/remove-question/', methods=['POST'])
+@auth.login_required
+def remove_question():
+    user = auth.get_logged_in_user()
+    question_id = request.form['question_id']
+
+    qions = Question.select().join(Questionnaire).join(Category).where(Category.teacher == user).where(Question.id == question_id)
+
+    for qion in qions:
+        if Question.delete().where(Question.id == qion.id).execute():
+            return response_success()
+        else:
+            return response_error('question_not_found')
+
+    return response_error('question_not_found')
 
 # TODO
 @teacher.route('/settings/', methods=['POST'])

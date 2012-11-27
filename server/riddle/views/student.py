@@ -1,4 +1,5 @@
 from flask import Blueprint
+from riddle.views.helpers import *
 from riddle.models.Questionnaire import Questionnaire
 from riddle.models.Question import Question
 from riddle.models.Category import Category
@@ -43,8 +44,8 @@ def show(qaire_id):
                     ret['questions'][-1]['options'].append({'text': opt.text})
 
     if not ret:
-        ret['response'] = 'error'
-        ret['reason'] = 'not_found'
+        ret = response_error('not_found', False)
+
     return json.dumps(ret)
 
 # TODO
