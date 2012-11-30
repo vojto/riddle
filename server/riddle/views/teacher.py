@@ -192,11 +192,13 @@ def new_questionnaire():
     if not category:
         return response_error('category_not_found')
 
-    if not Questionnaire.create(name=name, public_id=public_id, category=category):
+    questionnaire = Questionnaire.create(name=name, public_id=public_id, category=category)
+    if not questionnaire:
         return response_error('already_exists')
 
     ret = response_success(False)
     ret['public_id'] = public_id
+    ret['id'] = questionnaire.id
     return json.dumps(ret)
 
 @teacher.route('/remove-questionnaire/', methods=['POST'])

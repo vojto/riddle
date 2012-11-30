@@ -32,7 +32,7 @@ class Category extends Spine.Model
   createCourseRemote: (data) ->
     data.category_id = @id
     Atmos.res.post '/new-questionnaire/', data, (res) =>
-      course = new Course({name: data.name, category: @, public_id: res.public_id})
+      course = new Course({id: res.id, name: data.name, category: @, public_id: res.public_id})
       course.save()
       @trigger('change')
 
