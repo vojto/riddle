@@ -22,5 +22,9 @@ class Category extends Spine.Model
           courseModel.save()
       
       callback()
+  
+  @createRemote: (data, callback) ->
+    Atmos.res.post '/new-category/', data, (res) ->
+      callback()
 
 module.exports = Category
