@@ -9,6 +9,5 @@ class Course extends Spine.Model
     Atmos.res.post '/remove-questionnaire/', {id: @id}, (res) =>
       @destroy()
       @category().trigger 'change'
-    
-
+  
 module.exports = Course
