@@ -10,7 +10,7 @@
     "spine": "~1.0.6",
     "jade": "*",
     "hem-jade": "*",
-    "spine-binding": "*",
+    "spine-binding": "git://github.com/vojto/spine-binding.git",
     "atmos2": "git://github.com/vojto/atmos2.git#lite"
   }
 }
