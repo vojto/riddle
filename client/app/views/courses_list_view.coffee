@@ -18,6 +18,7 @@ class CoursesListView extends View
     key: 'name'
 
   tag: 'ul'
+  className: 'course-list'
   
   constructor: (options) ->
     super

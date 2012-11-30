@@ -25,7 +25,7 @@ class CategoryListView extends View
     view: CategoryView
     key: 'name'
   
-  className: 'ul'
+  className: 'list'
 
   constructor: (options) ->
     super
