@@ -39,13 +39,6 @@ def show_questions(qaire_id):
 
     ret = {}
 
-    def qtype2str(n):
-        for ch in Question.typ.choices:
-            if ch[0] == n:
-                return ch[1]
-
-        return 0
-
     for qaire in qaires:
         category = Category.select().join(Questionnaire).where(Questionnaire.id == qaire.id)
         questions = Question.select().join(Questionnaire).where(Questionnaire.id == qaire.id)

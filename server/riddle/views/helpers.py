@@ -19,4 +19,10 @@ def response_error(reason=None, json_format=True):
 
     return ret
 
+def qtype2str(n):
+    for ch in Question.typ.choices:
+        if ch[0] == n:
+            return ch[1]
+
+    return 0
 
