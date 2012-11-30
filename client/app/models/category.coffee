@@ -18,7 +18,7 @@ class Category extends Spine.Model
         categoryModel.save()
 
         for course in category.questionnaires
-          courseModel = new Course({name: course.name, public_id: course.public_id, category: categoryModel})
+          courseModel = new Course({id: course.id, name: course.name, public_id: course.public_id, category: categoryModel})
           courseModel.save()
         
         categoryModel.trigger('change') # Because we added course

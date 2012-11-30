@@ -6,7 +6,7 @@ class Course extends Spine.Model
   @belongsTo 'category', 'models/category'
   
   deleteRemote: ->
-    Atmos.res.post '/remove-questionnaire/', {public_id: @public_id}, (res) =>
+    Atmos.res.post '/remove-questionnaire/', {id: @id}, (res) =>
       @destroy()
       @category().trigger 'change'
     

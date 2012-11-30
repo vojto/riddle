@@ -27,7 +27,7 @@ def show_qaires():
         ret.append({'id': c.id, 'category': c.name, 'questionnaires': []})
         qaires = Questionnaire.select().join(Category).where(Category.id == c.id)
         for q in qaires:
-            ret[-1]['questionnaires'].append({'name': q.name, 'public_id': q.public_id})
+            ret[-1]['questionnaires'].append({'id': q.id, 'name': q.name, 'public_id': q.public_id})
 
     return json.dumps(ret)
 
@@ -203,9 +203,9 @@ def new_questionnaire():
 @auth.login_required
 def remove_questionnaire():
     user = auth.get_logged_in_user()
-    public_id = request.form['public_id']
+    questionnaire_id = request.form['id']
 
-    qaires = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.public_id == public_id)
+    qaires = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.id == questionnaire_id)
 
     for qaire in qaires:
         qions = Question.select().where(Question.questionnaire == qaire)
