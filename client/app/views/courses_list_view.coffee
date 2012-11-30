@@ -19,10 +19,14 @@ class CoursesListView extends View
 
   tag: 'ul'
   className: 'course-list'
+  template: require('templates/dashboard/courses_list')
   
   constructor: (options) ->
     super
     @courses = options.courses
     @data @courses
+    @append @template()
+  
+  render: ->
 
 module.exports = CoursesListView
