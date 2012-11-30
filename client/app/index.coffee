@@ -3,6 +3,7 @@ require('lib/setup')
 Spine = require('spine')
 Atmos = require('atmos2')
 
+Modifiers = require('lib/modifiers')
 Session = require('models/session')
 
 LoginPage = require('pages/login_page')
@@ -14,20 +15,27 @@ class App extends Spine.Controller
   
   constructor: ->
     super
+    
+    # Modifier keys interceptor
+    Modifiers.setup()
+    
+    # Session
+    user = Session.user()
 
+    # Networking
     @atmos = new Atmos(base: 'http://localhost:5000')
     @atmos.bind 'auth_fail', @didFailAuth
     @atmos.bind 'response_error', @didFailResponse
     
+    # Routing
     @addRoutesForPages
       '/login'          : 'pages/login_page'
       '/dashboard'      : 'pages/dashboard_page'
       '/categories/new' : 'pages/category_add_page'
       '/error'          : 'pages/error_page'
-    
     Spine.Route.setup()
     
-    user = Session.user()
+    # Default route
     if user
       @navigate '/dashboard'
     else

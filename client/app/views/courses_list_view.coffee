@@ -1,3 +1,4 @@
+Modifiers = require('lib/modifiers')
 View = require('lib/view')
 
 class AddCourseView extends View
@@ -35,12 +36,21 @@ class AddCourseView extends View
 class CourseView extends View
   tag: 'li'
   
+  events:
+    'click': 'didClick'
+  
   constructor: ->
     super
     @render()
   
   render: ->
     @append @model.name
+  
+  didClick: ->
+    if Modifiers.alt
+      @model.deleteRemote()
+    else
+      console.log 'opening'
 
 class CoursesListView extends View
   @extend Spine.Binding
