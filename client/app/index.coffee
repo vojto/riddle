@@ -64,7 +64,7 @@ class App extends Spine.Controller
 
     if page
       page.show(match)
-      @el.children().detach()
+      # @el.children().detach()
       @append(page)
   
   didFailAuth: =>
