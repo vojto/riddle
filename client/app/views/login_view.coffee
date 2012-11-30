@@ -15,20 +15,26 @@ class LoginView extends View
   constructor: ->
     super
     @render()
-    @$el.bind 'ajaxSend', ->
-      $(@).addClass('loading')
-    @$el.bind 'ajaxComplete', ->
-      $(@).removeClass('loading')
+    # @$el.bind 'ajaxComplete', ->
+      # $(@).removeClass('loading')
   
   showFailed: ->
     @$el.addClass('failed')
   
   reset: ->
     @$el.removeClass('failed')
+    @$el.removeClass('loading')
+    @$el.removeClass('hidden')
+    @$form.find('input[type=text]').val('')
+    @$form.find('input[type=password]').val('')
+  
+  hide: ->
+    @$el.addClass('hidden')
   
   submit: (ev) ->
     ev.preventDefault()
-    
+
+    @$el.addClass('loading')
     data = @$form.serializeObject()
     @trigger 'login', data
 

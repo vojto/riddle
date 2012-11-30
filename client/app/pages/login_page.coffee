@@ -17,12 +17,15 @@ class LoginPage extends Page
     @loginView.bind 'login', @didLogin
     @append @loginView
   
+  show: ->
+    @loginView.reset()
+  
   didLogin: (user) =>
     Session.login user, (res) =>
       if res.response == 'error'
         @loginView.showFailed()
       else
-        @loginView.reset()
+        @loginView.hide()
         @logo.addClass('hidden')
         setTimeout =>
           Session.setUser(user)
