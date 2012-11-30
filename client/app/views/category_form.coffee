@@ -17,7 +17,6 @@ class CategoryForm extends View
   submit: (ev) ->
     ev.preventDefault()
     data = @$form.serializeObject()
-    console.log 'creating category', data
-    @navigate '/dashboard'
+    @trigger 'submit', data
 
 module.exports = CategoryForm
