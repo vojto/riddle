@@ -24,7 +24,7 @@ def show_qaires():
     cats = Category.select().join(Teacher).where(Teacher.id == user.id)
     ret = []
     for c in cats:
-        ret.append({'category': c.name, 'questionnaires': []})
+        ret.append({'id': c.id, 'category': c.name, 'questionnaires': []})
         qaires = Questionnaire.select().join(Category).where(Category.id == c.id)
         for q in qaires:
             ret[-1]['questionnaires'].append({'name': q.name, 'public_id': q.public_id})
@@ -174,7 +174,7 @@ def new_questionnaire():
 
     name = request.form['name']
     category_id = request.form['category_id']
-    public_id = request.form['public_id']
+    public_id = request.form.get('public_id')
 
     if not public_id:
         public_id = random_public_id()

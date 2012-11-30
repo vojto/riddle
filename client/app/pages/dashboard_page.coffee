@@ -1,8 +1,9 @@
 Atmos = require('atmos2')
 
+Page      = require('lib/page')
+
 Category  = require('models/category')
 Course    = require('models/course')
-Page      = require('lib/page')
 CategoryListView = require('views/category_list_view')
 
 class DashboardPage extends Page
@@ -23,8 +24,9 @@ class DashboardPage extends Page
   
   show: ->
     Category.fetch =>
-      @categories = Category.all()
-      @categoryList.setCategories(@categories)
+      Category.trigger('change')
+      # @categories = Category.all()
+      # @categoryList.setCategories(@categories)
   
   addCategory: ->
     @navigate '/categories/new'

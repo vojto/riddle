@@ -1,6 +1,8 @@
 View = require('lib/view')
 CoursesListView = require('views/courses_list_view')
 
+Category = require('models/category')
+
 class CategoryView extends View
   template: require('templates/category')
   
@@ -9,6 +11,10 @@ class CategoryView extends View
 
     @category = options.model
     @coursesListView = new CoursesListView(courses: @category.courses().all())
+    @coursesListView.bind 'createCourse', @createCourse
+    @category.bind 'change', =>
+      @coursesListView.courses = @category.courses().all()
+      @coursesListView.refresh()
     
     @render()
   
@@ -17,6 +23,9 @@ class CategoryView extends View
     @renderTemplate()
     @coursesListView.render()
     @append @coursesListView
+  
+  createCourse: (data) =>
+    @category.createCourseRemote(data)
 
 class CategoryListView extends View
   @extend Spine.Binding
@@ -29,10 +38,10 @@ class CategoryListView extends View
 
   constructor: (options) ->
     super
+    Category.bind 'change', @refresh
   
-  setCategories: (categories) ->
-    @categories = categories
+  refresh: =>
+    @categories = Category.all()
     @data @categories
-    
   
 module.exports = CategoryListView

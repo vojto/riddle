@@ -12,19 +12,28 @@ class Category extends Spine.Model
     # server is not in the form of simple collection, so we can't use Atmos2
     # fetching/caching facilities.
 
-    Atmos.res.get '/qaires/', (res) ->
+    Atmos.res.get '/qaires/', (res) =>
       for category in res
-        categoryModel = new Category({name: category.category})
+        categoryModel = new Category({name: category.category, id: category.id})
         categoryModel.save()
 
         for course in category.questionnaires
           courseModel = new Course({name: course.name, category: categoryModel})
           courseModel.save()
+        
+        categoryModel.trigger('change') # Because we added course
       
       callback()
   
   @createRemote: (data, callback) ->
     Atmos.res.post '/new-category/', data, (res) ->
       callback()
+  
+  createCourseRemote: (data) ->
+    data.category_id = @id
+    Atmos.res.post '/new-questionnaire/', data, (res) =>
+      course = new Course({name: data.name, category: @})
+      course.save()
+      @trigger('change')
 
 module.exports = Category

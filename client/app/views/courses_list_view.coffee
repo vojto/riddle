@@ -1,5 +1,37 @@
 View = require('lib/view')
 
+class AddCourseView extends View
+  tag: 'li'
+  className: 'add-course'
+  template: require('templates/dashboard/add_course')
+
+  elements:
+    'span': '$span'
+    'input': '$input'
+  
+  events:
+    'click span': 'activate'
+    'keyup input': 'type'
+  
+  constructor: ->
+    super
+    @render()
+  
+  activate: ->
+    @$el.addClass('active')
+    @$input.focus()
+  
+  deactivate: ->
+    @$el.removeClass('active')
+  
+  type: (e) ->
+    if e.keyCode == 27
+      @deactivate()
+    else if e.keyCode == 13
+      @deactivate()
+      @trigger 'createCourse', {name: @$input.val()}
+      @$input.val('')
+
 class CourseView extends View
   tag: 'li'
   
@@ -19,13 +51,19 @@ class CoursesListView extends View
 
   tag: 'ul'
   className: 'course-list'
-  template: require('templates/dashboard/courses_list')
   
   constructor: (options) ->
     super
     @courses = options.courses
     @data @courses
-    @append @template()
+    
+    @addCourseView = new AddCourseView()
+    @addCourseView.bind 'createCourse', (data) => @trigger 'createCourse', data
+    @append @addCourseView
+
+  refresh: ->
+    @data @courses
+    @append @addCourseView
   
   render: ->
 

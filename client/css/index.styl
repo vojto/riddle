@@ -165,7 +165,36 @@ ul.course-list
     background url(images/course.png) no-repeat 3px 0px
     cursor pointer
     margin-bottom 15px
+    border-box()
+    height 20px
     
-    &.add
+    &.add-course
       color #8c8c8c
       background url(images/add-button.png) no-repeat 0px 0px
+
+// Add course
+li.add-course
+  input
+    display none
+    background transparent
+    border-radius(3px)
+    border 1px solid #666
+    padding 3px 5px 3px 5px
+    font-size 14px
+    font-weight 500
+    text-shadow 0px 1px 1px #000
+    color #fff
+    position relative
+    top -4px
+    left -6px
+  input::-webkit-input-placeholder
+    color #888
+    opacity 0.5
+  span
+    display block
+  
+  &.active
+    input
+      display block
+    span
+      display none
