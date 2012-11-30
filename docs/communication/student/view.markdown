@@ -2,7 +2,7 @@
 
 ## Client -> Server
 Method: GET  
-Requires: Auth  
+Requires: Nothing  
 URL: `/view/<qaire_id>/`  
 Fields:  
 * qaire_id - questionnaire id

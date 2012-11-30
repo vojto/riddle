@@ -34,7 +34,7 @@ Examples:
 
   ```json
   {
-    "response": "success"
+    "response": "success",
     "public_id": "8x8rzvIxA0BOnRpw"
   }
   ```

@@ -4,6 +4,7 @@ from riddle.models.Questionnaire import Questionnaire
 from riddle.models.Question import Question
 from riddle.models.Category import Category
 from riddle.models.Option import Option
+from riddle.models.Answer import Answer
 import json
 
 student = Blueprint('student', __name__)
@@ -53,10 +54,33 @@ def show(qaire_id):
 def settings():
     pass
 
-# TODO
-@student.route('/submit-qaire/', methods=['POST'])
-def submit_qaire():
-    pass
+# TODO: Check if this works.
+@student.route('/submit-answer/', methods=['POST'])
+def submit_answer():
+    question_id = request.form['question_id']
+
+    qions = Question.select().where(Question.id == question_id)
+
+    for qion in qions:
+        qion_type = qtype2str(qion.typ)
+
+        if qion_type == 'text':
+            qion_text = request.form['text_answer']
+            Answer.create(text=answer, question=qion)
+        else:
+            option_ids = request.form.getlist('option_ids')
+            if len(option_ids) < 1:
+                return response_error('missing_options')
+
+            if qion_type == 'single':
+                option_ids = option_ids[:1]
+
+            for oid in option_ids:
+                Answer.create(option=oid, question=qion)
+
+        return response_success()
+
+    return response_error('question_not_found')
 
 # TODO
 @student.route('/submit-comment/', methods=['POST'])
