@@ -61,8 +61,8 @@ def student_session(fn):
 
     def inner(*args, **kwargs):
         (student, created) = get_create_student()
-        response = make_response(fn(*args, **kwargs))
         g.student = student
+        response = make_response(fn(*args, **kwargs))
 
         if created:
             response.set_cookie('student_id', student.session_id, expires=datetime.datetime(2038, 1, 1))

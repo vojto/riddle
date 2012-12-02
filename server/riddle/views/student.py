@@ -50,16 +50,27 @@ def show(qaire_id):
 
     return json.dumps(ret)
 
-# TODO
-@student.route('/settings/', methods=['POST'])
+@student.route('/get-settings/')
 @student_session
-def settings():
-    pass
+def get_settings():
+    student = get_current_student()
 
-# TODO: Check if this works.
+    return json.dumps({'name': student.name})
+
+@student.route('/set-settings/', methods=['POST'])
+@student_session
+def set_settings():
+    student = get_current_student()
+    name = request.form['name']
+    student.name = name
+    student.save()
+
+    return response_success()
+
 @student.route('/submit-answer/', methods=['POST'])
 @student_session
 def submit_answer():
+    student = get_current_student()
     question_id = request.form['question_id']
 
     qions = Question.select().where(Question.id == question_id)
@@ -69,7 +80,7 @@ def submit_answer():
 
         if qion_type == 'text':
             qion_text = request.form['text_answer']
-            Answer.create(text=answer, question=qion)
+            Answer.create(text=answer, question=qion, student=student)
         else:
             option_ids = request.form.getlist('option_ids')
             if len(option_ids) < 1:
@@ -79,7 +90,7 @@ def submit_answer():
                 option_ids = option_ids[:1]
 
             for oid in option_ids:
-                Answer.create(option=oid, question=qion)
+                Answer.create(option=oid, question=qion, student=student)
 
         return response_success()
 
