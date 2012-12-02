@@ -10,6 +10,7 @@ import json
 student = Blueprint('student', __name__)
 
 @student.route('/view/<qaire_id>/')
+@student_session
 def show(qaire_id):
     qaires = Questionnaire.select().where(Questionnaire.public_id == qaire_id)
     ret = {}
@@ -51,11 +52,13 @@ def show(qaire_id):
 
 # TODO
 @student.route('/settings/', methods=['POST'])
+@student_session
 def settings():
     pass
 
 # TODO: Check if this works.
 @student.route('/submit-answer/', methods=['POST'])
+@student_session
 def submit_answer():
     question_id = request.form['question_id']
 
@@ -84,6 +87,7 @@ def submit_answer():
 
 # TODO
 @student.route('/submit-comment/', methods=['POST'])
+@student_session
 def submit_comment():
     pass
 

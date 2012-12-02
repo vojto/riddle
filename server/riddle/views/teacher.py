@@ -156,7 +156,7 @@ def random_public_id():
 
         qions = Questionnaire.select().where(Questionnaire.public_id == pubid)
         for qion in qions:
-            pass
+            break
         else:
             return pubid
 
