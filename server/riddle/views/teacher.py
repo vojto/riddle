@@ -197,7 +197,7 @@ def new_questionnaire():
 
 @teacher.route('/edit-questionnaire/', methods=['POST'])
 @auth.login_required
-def new_questionnaire():
+def edit_questionnaire():
     user = auth.get_logged_in_user()
 
     questionnaire_id = request.form['id']
