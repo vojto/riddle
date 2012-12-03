@@ -9,6 +9,6 @@ class Comment(db.Model):
     questionnaire = ForeignKeyField(Questionnaire)
 
 class CommentAdmin(ModelAdmin):
-    columns = ('response', 'questionnaire')
+    columns = ('subject', 'body', 'questionnaire')
 
 model_classes.append((Comment, CommentAdmin))
