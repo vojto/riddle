@@ -5,9 +5,8 @@ from riddle.models.Question import Question
 from riddle.models.Category import Category
 from riddle.models.Option import Option
 from riddle.models.Answer import Answer
+from riddle.models.Comment import Comment
 import json
-from tokenize import Comment
-from win32con import NULL
 
 student = Blueprint('student', __name__)
 
@@ -98,20 +97,19 @@ def submit_answer():
 
     return response_error('question_not_found')
 
-# TODO
 @student.route('/submit-comment/', methods=['POST'])
 @student_session
 def submit_comment():
     student = get_current_student()
     qaire_id = request.form['qaire_id']
+    subject = request.form['subject']
+    body = request.form['body']
+
     qaires = Questionnaire.select().where(Questionnaire.public_id == qaire_id)
-    comment_id = request.form['comment_id']
-    
-    if comment_id!= None:
-        Comment.create(response=comment_id, questionnaire=qaires)
+
+    for qaire in qaires:
+        Comment.create(subject=subject, body=body, questionnaire=qaire)
         return response_success()
-    else:
-        return response_error('missing_comment')
-    
-    
+
+    return response_error('questionnaire_not_found')
 

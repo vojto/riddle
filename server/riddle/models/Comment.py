@@ -4,7 +4,8 @@ from riddle.models.Questionnaire import Questionnaire
 from flask_peewee.admin import ModelAdmin
 
 class Comment(db.Model):
-    response = TextField()
+    subject = CharField()
+    body = TextField()
     questionnaire = ForeignKeyField(Questionnaire)
 
 class CommentAdmin(ModelAdmin):
