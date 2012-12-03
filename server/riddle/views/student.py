@@ -6,6 +6,8 @@ from riddle.models.Category import Category
 from riddle.models.Option import Option
 from riddle.models.Answer import Answer
 import json
+from tokenize import Comment
+from win32con import NULL
 
 student = Blueprint('student', __name__)
 
@@ -100,5 +102,16 @@ def submit_answer():
 @student.route('/submit-comment/', methods=['POST'])
 @student_session
 def submit_comment():
-    pass
+    student = get_current_student()
+    qaire_id = request.form['qaire_id']
+    qaires = Questionnaire.select().where(Questionnaire.public_id == qaire_id)
+    comment_id = request.form['comment_id']
+    
+    if comment_id!= None:
+        Comment.create(response=comment_id, questionnaire=qaires)
+        return response_success()
+    else:
+        return response_error('missing_comment')
+    
+    
 
