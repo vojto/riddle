@@ -1,5 +1,6 @@
 from flask import request, make_response, g
 from riddle.models.Student import Student
+from riddle.models.Question import Question
 import json
 import datetime
 import functools

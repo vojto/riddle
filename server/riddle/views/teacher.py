@@ -49,7 +49,7 @@ def show_questions(qaire_id):
             catname = cat.name
             break
 
-        ret = {'name': qaire.name, 'category': catname, 'questions' : []}
+        ret = {'id': qaire.id, 'name': qaire.name, 'category': catname, 'questions' : []}
 
         for qion in questions:
             qtype = qtype2str(qion.typ)
@@ -60,7 +60,7 @@ def show_questions(qaire_id):
                 options = Option.select().join(Question).where(Question.id == qion.id)
 
                 for opt in options:
-                    ret['questions'][-1]['options'].append({'text': opt.text})
+                    ret['questions'][-1]['options'].append({'id': opt.id, 'text': opt.text})
 
     return json.dumps(ret)
 
@@ -291,12 +291,62 @@ def remove_question():
     qions = Question.select().join(Questionnaire).join(Category).where(Category.teacher == user).where(Question.id == question_id)
 
     for qion in qions:
-        if Question.delete().where(Question.id == qion.id).execute():
-            return response_success()
-        else:
-            return response_error('question_not_found')
+        qion.delete_instance()
+        return response_success()
 
     return response_error('question_not_found')
+
+@teacher.route('/new-option/', methods=['POST'])
+@auth.login_required
+def new_option():
+    user = auth.get_logged_in_user()
+    question_id = request.form['question_id']
+    text = request.form['text']
+
+    qions = Question.select().join(Questionnaire).join(Category).where(Category.teacher == user).where(Question.id == question_id)
+
+    for qion in qions:
+        typ = qtype2str(qion.typ)
+        if typ == 'single' or typ == 'multi':
+            option = Option.create(text=text, question=qion)
+            ret = response_success(False)
+            ret['option_id'] = option.id
+            return json.dumps(ret)
+        else:
+            return response_error('options_not_supported')
+
+    return response_error('question_not_found')
+
+@teacher.route('/edit-option/', methods=['POST'])
+@auth.login_required
+def edit_option():
+    user = auth.get_logged_in_user()
+    option_id = request.form['option_id']
+    text = request.form['text']
+
+    opts = Option.select().join(Question).join(Questionnaire).join(Category).where(Category.teacher == user).where(Option.id == option_id)
+
+    for opt in opts:
+        opt.text = text
+        opt.save()
+        return response_success()
+
+    return response_error('option_not_found')
+
+@teacher.route('/remove-option/', methods=['POST'])
+@auth.login_required
+def remove_option():
+    user = auth.get_logged_in_user()
+    option_id = request.form['option_id']
+
+    opts = Option.select().join(Question).join(Questionnaire).join(Category).where(Category.teacher == user).where(Option.id == option_id)
+
+    for opt in opts:
+        opt.delete_instance()
+        return response_success()
+
+    return response_error('option_not_found')
+
 
 # TODO
 @teacher.route('/settings/', methods=['POST'])
