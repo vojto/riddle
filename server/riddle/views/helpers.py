@@ -31,7 +31,7 @@ def qtype2str(n):
         if ch[0] == n:
             return ch[1]
 
-    return 0
+    return None
 
 def random_student_id():
     while True:

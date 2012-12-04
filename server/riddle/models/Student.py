@@ -6,6 +6,9 @@ class Student(db.Model):
     name = CharField()
     session_id = CharField()
 
+    def __unicode__(self):
+        return self.name
+
 class StudentAdmin(ModelAdmin):
     columns = ('name', 'session_id')
 

@@ -5,7 +5,7 @@ Method: Form POST
 Requires: Auth  
 URL: `/edit-questionnaire/`  
 Fields:  
-* questionnaire_id
+* id - questonnaire ID
 * name (optional)
 * category_id (optional)
 * public_id (optional)

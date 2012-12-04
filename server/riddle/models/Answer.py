@@ -6,12 +6,11 @@ from riddle.models.Student import Student
 from flask_peewee.admin import ModelAdmin
 
 class Answer(db.Model):
-    text = TextField()
+    text = TextField(null=True)
     option = ForeignKeyField(Option)
-    question = ForeignKeyField(Question)
     student = ForeignKeyField(Student)
 
 class AnswerAdmin(ModelAdmin):
-    columns = ('text', 'option', 'question')
+    columns = ('id', 'text', 'option', 'student')
 
 model_classes.append((Answer, AnswerAdmin))
