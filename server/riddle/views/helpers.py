@@ -1,6 +1,7 @@
 from flask import request, make_response, g
 from riddle.models.Student import Student
 from riddle.models.Question import Question
+from riddle.models.Questionnaire import Questionnaire
 import json
 import datetime
 import functools
@@ -70,4 +71,32 @@ def student_session(fn):
 
         return response
     return inner
+
+def check_captcha(request):
+    """Checks captcha from request. Returns (result:Boolean, error:String)."""
+    
+    if not IS_CAPTCHA_ENABLED:
+        return (True, None)
+    
+    captcha_challenge = request.form.get('recaptcha_challenge_field', None)
+    captcha_solution = request.form.get('recaptcha_response_field', None)
+    try:
+        is_correct = captcha.is_solution_correct(captcha_solution, captcha_challenge, request.remote_addr)
+    except recaptcha.RecaptchaException as ex:
+        return (False, 'internal_error')
+    
+    if is_correct:
+        return (True, None)
+    else:
+        return (False, 'captcha_incorrect')
+
+def random_public_id():
+    while True:
+        pubid = "".join([random.choice(string.ascii_letters + string.digits) for n in xrange(16)])
+
+        qions = Questionnaire.select().where(Questionnaire.public_id == pubid)
+        for qion in qions:
+            break
+        else:
+            return pubid
 
