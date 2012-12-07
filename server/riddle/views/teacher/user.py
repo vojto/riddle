@@ -48,3 +48,37 @@ def registration():
 
     return response_success()
 
+@teacher.route('/get-teacher-settings/')
+@auth.login_required
+def get_teacher_settings():
+    user = auth.get_logged_in_user()
+
+    return json.dumps({'username': user.username, 'fullname': user.fullname, 'email': user.email})
+
+@teacher.route('/set-teacher-settings/', methods=['POST'])
+@auth.login_required
+def set_teacher_settings():
+    user = auth.get_logged_in_user()
+
+    fullname = request.form.get('fullname')
+    old_password = request.form.get('old_password')
+    new_password = request.form.get('new_password')
+    email = request.form.get('email')
+
+    if fullname:
+        user.fullname = fullname
+
+    if email:
+        user.email = email
+
+    if old_password and new_password:
+        u = auth.authenticate(user.username, old_password)
+        if not u:
+            return response_error('wrong_old_password')
+
+        user.set_password(new_password)
+
+    user.save()
+
+    return response_success()
+
