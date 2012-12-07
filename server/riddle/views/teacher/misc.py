@@ -7,6 +7,7 @@ from riddle.models.Questionnaire import Questionnaire
 from riddle.models.Category import Category
 from riddle.models.Option import Option
 from riddle.models.Teacher import Teacher
+from riddle.models.Comment import Comment
 
 @teacher.route('/qaires/')
 @auth.login_required
@@ -54,4 +55,19 @@ def show_questions(qaire_id):
                     ret['questions'][-1]['options'].append({'id': opt.id, 'text': opt.text})
 
     return json.dumps(ret)
+
+@teacher.route('/remove-comment/', methods=['POST'])
+@auth.login_required
+def remove_comment():
+    user = auth.get_logged_in_user()
+
+    comment_id = request.form['id']
+    
+    comments = Comment.select().join(Questionnaire).join(Category).where(Category.teacher == user).where(Comment.id == comment_id)
+
+    for comment in comments:
+        comment.delete_instance(recursive=True, delete_nullable=True)
+        return response_success()
+
+    return response_error('comment_not_found')
 

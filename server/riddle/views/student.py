@@ -7,6 +7,7 @@ from riddle.models.Option import Option
 from riddle.models.Answer import Answer
 from riddle.models.Comment import Comment
 import json
+import datetime
 
 student = Blueprint('student', __name__)
 
@@ -26,18 +27,18 @@ def show(qaire_id):
             catname = cat.name
             break
 
-        ret = {'name': qaire.name, 'category': catname, 'questions' : []}
+        ret = {'id': qaire.id, 'name': qaire.name, 'category': catname, 'questions' : []}
 
         for qion in questions:
             qtype = qtype2str(qion.typ)
-            ret['questions'].append({'type': qtype, 'description': qion.description})
+            ret['questions'].append({'id': qion.id, 'type': qtype, 'description': qion.description})
 
             if qtype == 'single' or qtype == 'multi':
                 ret['questions'][-1]['options'] = []
                 options = Option.select().join(Question).where(Question.id == qion.id)
 
                 for opt in options:
-                    ret['questions'][-1]['options'].append({'text': opt.text})
+                    ret['questions'][-1]['options'].append({'id': opt.id, 'text': opt.text})
 
     if not ret:
         ret = response_error('not_found', False)
@@ -98,11 +99,33 @@ def submit_comment():
     subject = request.form['subject']
     body = request.form['body']
 
-    qaires = Questionnaire.select().where(Questionnaire.public_id == qaire_id)
+    qaires = Questionnaire.select().where(Questionnaire.id == qaire_id)
 
     for qaire in qaires:
-        Comment.create(subject=subject, body=body, questionnaire=qaire)
+        Comment.create(author=student.name, subject=subject, body=body, questionnaire=qaire, datetime=datetime.datetime.now())
         return response_success()
 
     return response_error('questionnaire_not_found')
 
+
+@student.route('/view-comments/', methods=['POST'])
+@student_session
+def view_comments():
+    student = get_current_student()
+    qaire_id = request.form['qaire_id']
+    offset = request.form.get('offset')
+    limit = 10
+
+    if not offset:
+        offset = 0
+    else:
+        offset = int(offset)
+
+    comments = Comment.select().where(Comment.questionnaire == qaire_id).limit(limit).offset(offset)
+
+    ret = []
+
+    for comment in comments:
+        ret.append({'id': comment.id, 'author': comment.author, 'subject': comment.subject, 'body': comment.body, 'datetime': comment.datetime.isoformat()})
+
+    return json.dumps(ret)
