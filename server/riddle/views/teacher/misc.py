@@ -8,6 +8,7 @@ from riddle.models.Category import Category
 from riddle.models.Option import Option
 from riddle.models.Teacher import Teacher
 from riddle.models.Comment import Comment
+from riddle.models.Answer import Answer
 
 @teacher.route('/qaires/')
 @auth.login_required
@@ -70,4 +71,55 @@ def remove_comment():
         return response_success()
 
     return response_error('comment_not_found')
+
+@teacher.route('/results-options/', methods=['POST'])
+@auth.login_required
+def results_options():
+    user = auth.get_logged_in_user()
+    question_id = request.form['question_id']
+
+    qions = Question.select().join(Questionnaire).join(Category).where(Category.teacher == user).where(Question.id == question_id)
+    for qion in qions:
+        strtype = qtype2str(qion.typ)
+
+        ret = {'question_type': strtype, 'question_answers': []}
+
+        if strtype == 'single' or strtype == 'multi':
+            opts = Option.select().where(Option.question == qion).annotate(Answer)
+
+            for opt in opts:
+                ret['question_answers'].append({'option_id': opt.id, 'option_text': opt.text, 'answers': opt.count})
+        else:
+            return response_error('wrong_question_type')
+
+        return json.dumps(ret)
+
+    return response_error('question_not_found')
+
+@teacher.route('/results-texts/', methods=['POST'])
+@auth.login_required
+def results_texts():
+    user = auth.get_logged_in_user()
+    question_id = request.form['question_id']
+
+    qions = Question.select().join(Questionnaire).join(Category).where(Category.teacher == user).where(Question.id == question_id)
+
+    for qion in qions:
+        strtype = qtype2str(qion.typ)
+
+        ret = {'question_type': strtype, 'question_answers': []}
+
+        if strtype == 'text':
+            answers = Answer.select(Answer, Student).where(Answer.question == qion)
+
+            for answer in answers:
+                ret['question_answers'].append({'text': answer.text, 'student': answer.student.name});
+
+        else:
+            return response_error('wrong_question_type')
+
+        return json.dumps(ret)
+
+    return response_error('question_not_found')
+
 

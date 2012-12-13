@@ -74,8 +74,8 @@ def submit_answer():
         qion_type = qtype2str(qion.typ)
 
         if qion_type == 'text':
-            qion_text = request.form['text_answer']
-            Answer.create(text=answer, question=qion, student=student)
+            text_answer = request.form['text_answer']
+            Answer.create(text=text_answer, question=qion, student=student)
         else:
             option_ids = request.form.getlist('option_ids')
             if len(option_ids) < 1:

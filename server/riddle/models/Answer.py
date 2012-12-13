@@ -7,7 +7,8 @@ from flask_peewee.admin import ModelAdmin
 
 class Answer(db.Model):
     text = TextField(null=True)
-    option = ForeignKeyField(Option)
+    option = ForeignKeyField(Option, null=True)
+    question = ForeignKeyField(Question)
     student = ForeignKeyField(Student)
 
 class AnswerAdmin(ModelAdmin):
