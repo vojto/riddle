@@ -38,7 +38,7 @@ class App extends Spine.Controller
     
     # Default route
     if user
-      @navigate '/dashboard'
+      # @navigate '/dashboard'
     else
       @navigate '/login'
   
@@ -52,7 +52,9 @@ class App extends Spine.Controller
     input = match.match.input
     matchedRoute = null
     for route in Spine.Route.routes
-      matchedRoute = route if route.route.exec(input) 
+      if route.route.exec(input) 
+        matchedRoute = route
+        break
     
     pagePath = @pageTable[route.path]
     

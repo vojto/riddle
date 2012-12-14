@@ -10,4 +10,16 @@ class Course extends Spine.Model
       @destroy()
       @category().trigger 'change'
   
+  @fetchOne: (id, callback) ->
+    Atmos.res.get "/qaires/#{id}", (res) ->
+      questions = res.questions
+      delete res.questions
+      course = new Course(res)
+      
+      # TODO: For each question, create question object
+      # and associate it with course object.
+      
+      callback(course)
+      
+  
 module.exports = Course
