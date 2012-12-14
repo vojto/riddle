@@ -63,6 +63,7 @@ class App extends Spine.Controller
       page = @pageInstances[pagePath] = new pageClass
 
     if page
+      @constructor.page = page # TODO: Come up with better way than global
       page.show(match)
       # @el.children().detach()
       @append(page)
@@ -75,4 +76,5 @@ class App extends Spine.Controller
     Session.logout()
     @navigate '/error'
 
+window.App = App
 module.exports = App

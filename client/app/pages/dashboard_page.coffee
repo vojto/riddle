@@ -11,9 +11,12 @@ class DashboardPage extends Page
   
   events:
     'click a.add-category': 'addCategory'
+    'click a.edit': 'edit'
   
   constructor: ->
     super
+    
+    @isEditing = false
     
     @addLoginStatus()
     
@@ -30,5 +33,15 @@ class DashboardPage extends Page
   
   addCategory: ->
     @navigate '/categories/new'
+  
+  edit: ->
+    @isEditing = !@isEditing
+    if @isEditing
+      $('a.edit').text('Done')
+      @$el.addClass('edit')
+    else
+      $('a.edit').text('Edit')
+      @$el.removeClass('edit')
+    
 
 module.exports = DashboardPage

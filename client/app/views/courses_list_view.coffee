@@ -47,7 +47,7 @@ class CourseView extends View
     @append @model.name
   
   didClick: ->
-    if Modifiers.alt
+    if App.page.isEditing
       @model.deleteRemote()
     else
       console.log 'opening'
