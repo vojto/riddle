@@ -13,7 +13,7 @@ def new_question():
 
     description = request.form['description']
     typ = request.form['type']
-    presented = request.form['presented']
+    presented = request.form.get('presented', False)
     public_id = request.form['public_id']
 
     ret = {}

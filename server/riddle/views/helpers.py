@@ -29,7 +29,7 @@ def response_error(reason=None, json_format=True):
 
 def qtype2str(n):
     for ch in Question.typ.choices:
-        if ch[0] == n:
+        if ch[0] == int(n):
             return ch[1]
 
     return None
@@ -74,17 +74,17 @@ def student_session(fn):
 
 def check_captcha(request):
     """Checks captcha from request. Returns (result:Boolean, error:String)."""
-    
+
     if not IS_CAPTCHA_ENABLED:
         return (True, None)
-    
+
     captcha_challenge = request.form.get('recaptcha_challenge_field', None)
     captcha_solution = request.form.get('recaptcha_response_field', None)
     try:
         is_correct = captcha.is_solution_correct(captcha_solution, captcha_challenge, request.remote_addr)
     except recaptcha.RecaptchaException as ex:
         return (False, 'internal_error')
-    
+
     if is_correct:
         return (True, None)
     else:
