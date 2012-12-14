@@ -33,6 +33,7 @@ class App extends Spine.Controller
       '/dashboard'      : 'pages/dashboard_page'
       '/categories/new' : 'pages/category_add_page'
       '/error'          : 'pages/error_page'
+      '/course/:id'     : 'pages/course_page'
     Spine.Route.setup()
     
     # Default route
@@ -49,7 +50,11 @@ class App extends Spine.Controller
     
   didChangeRoute: (match) =>
     input = match.match.input
-    pagePath = @pageTable[input]
+    matchedRoute = null
+    for route in Spine.Route.routes
+      matchedRoute = route if route.route.exec(input) 
+    
+    pagePath = @pageTable[route.path]
     
     if !pagePath
       console.log 'Routing error: ', match

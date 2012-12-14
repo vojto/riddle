@@ -50,7 +50,7 @@ class CourseView extends View
     if App.page.isEditing
       @model.deleteRemote()
     else
-      console.log 'opening'
+      @navigate '/course', @model.public_id
 
 class CoursesListView extends View
   @extend Spine.Binding
