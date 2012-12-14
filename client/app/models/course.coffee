@@ -1,9 +1,12 @@
 Atmos = require('atmos2')
 Spine = require('spine')
 
+Question = require('models/question')
+
 class Course extends Spine.Model
   @configure 'Course', 'name', 'public_id'
   @belongsTo 'category', 'models/category'
+  @hasMany 'questions', 'models/question'
   
   deleteRemote: ->
     Atmos.res.post '/remove-questionnaire/', {id: @id}, (res) =>
@@ -15,10 +18,13 @@ class Course extends Spine.Model
       questions = res.questions
       delete res.questions
       course = new Course(res)
+      course.save()
       
-      # TODO: For each question, create question object
-      # and associate it with course object.
-      
+      for questionData in questions
+        questionData.course = course
+        question = new Question(questionData)
+        question.save()
+
       callback(course)
       
   
