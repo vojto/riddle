@@ -3,6 +3,12 @@
 // Layout
 // ----------------------------------------------------------------------------
 
+@keyframes spinnerRotate
+  from
+    -webkit-transform rotate(360deg)
+  to
+    -webkit-transform rotate(0deg)
+
 *
   margin 0
 
@@ -21,6 +27,23 @@ html, body
   top 0px
   right 0px
   background url(/images/linen.jpg)
+
+loaderSize = 50px
+body > div.loader
+  width loaderSize
+  height loaderSize
+  background red
+  position fixed
+  top 50%
+  left 50%
+  margin-left -(loaderSize/2)
+  margin-top -(loaderSize/2)
+  background url(/images/spinner.png) no-repeat center center
+  -webkit-animation-name spinnerRotate
+  -webkit-animation-duration 0.5s
+  -webkit-animation-iteration-count infinite
+  -webkit-animation-timing-function linear
+
 
 body
   background url(/images/linen.jpg)

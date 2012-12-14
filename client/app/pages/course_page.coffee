@@ -34,8 +34,7 @@ class CoursePage extends Page
   # Actions
 
   addQuestion: =>
-    console.log @course
-    @navigate '/courses', @course.public_id, 'questions', 'new'
+    @navigate '/course', @course.public_id, 'question', 'new'
   
 class ButtonsView extends View
   template: require('templates/course/buttons')

@@ -34,7 +34,7 @@ class App extends Spine.Controller
       '/categories/new' : 'pages/category_add_page'
       '/error'          : 'pages/error_page'
       '/course/:id'     : 'pages/course_page'
-      '/course/:id/question/new' : 'pages/question_form_page'
+      '/course/:course_id/question/new' : 'pages/question_form_page'
     Spine.Route.add '/': => @navigate('/dashboard')
     Spine.Route.setup()
     
@@ -43,6 +43,9 @@ class App extends Spine.Controller
       # @navigate '/dashboard'
     else
       @navigate '/login'
+
+    # Views
+    @setupLoaderView()
   
   addRoutesForPages: (table) ->
     ### Table is in format route -> class path ###
@@ -84,6 +87,18 @@ class App extends Spine.Controller
   didFailResponse: =>
     Session.logout()
     @navigate '/error'
+
+  # Views
+
+  setupLoaderView: ->
+    @$loader = $('<div />').addClass('loader')
+    @$loader.hide()
+    @append @$loader
+
+    @$loader.bind 'ajaxStart', ->
+      $(@).show()
+    @$loader.bind 'ajaxComplete', ->
+      $(@).hide()
 
 window.App = App
 module.exports = App
