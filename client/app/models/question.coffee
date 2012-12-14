@@ -12,8 +12,10 @@ class Question extends Spine.Model
       public_id: @course().public_id
     }
     console.log 'creating question with data: ', data
-    Atmos.res.post '/new-question/', data, (res) ->
-      console.log 'finished', res
+    Atmos.res.post '/new-question/', data, (res) =>
+      # TODO: Handle error
+      @id = res.question_id
+      callback(@)
 
 
 module.exports = Question

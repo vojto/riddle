@@ -32,7 +32,8 @@ class QuestionFormPage extends Page
     # 02 Create the object
     data.course = @course
     question = new Question(data)
-    question.createRemote ->
-      console.log 'question created'
+    question.createRemote =>
+      console.log 'created question'
+      @navigate '/course', @course.public_id
 
 module.exports = QuestionFormPage
