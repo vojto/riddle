@@ -14,9 +14,13 @@ class CoursePage extends Page
     
     @questionListView = new QuestionListView
     @append @questionListView
+    
+    @buttonsView = new ButtonsView
+    @buttonsView.bind('addQuestion', @addQuestion)
+    @append @buttonsView.render()
   
   show: (options) ->
-    Course.fetchOne options.id, (course) =>      
+    Course.fetchOne options.id, (course) =>   
       @course = course
       @update()
   
@@ -26,7 +30,22 @@ class CoursePage extends Page
     
     @questionListView.course = @course
     @questionListView.update()
+
+  # Actions
+
+  addQuestion: =>
+    console.log @course
+    @navigate '/courses', @course.public_id, 'questions', 'new'
   
+class ButtonsView extends View
+  template: require('templates/course/buttons')
+
+  events:
+    'click a.add-question': 'addQuestion'
+
+  addQuestion: ->
+    @trigger 'addQuestion'
+
 # Course view
 # -----------------------------------------------------------------------------
 
@@ -58,6 +77,8 @@ class QuestionListView extends View
   
   update: ->
     @questions = @course.questions().all()
+    for q, i in @questions
+      q.number = i+1
     @data @questions
 
 

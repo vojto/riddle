@@ -6,6 +6,7 @@ class View extends Spine.Controller
   
   render: ->
     @renderTemplate()
+    @
   
   renderTemplate: ->
     @html @template(@) if @template
