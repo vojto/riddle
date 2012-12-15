@@ -4,8 +4,8 @@ View = require('lib/view')
 Course = require('models/course')
 Question = require('models/question')
 
-# Course page
-# -----------------------------------------------------------------------------
+## Course page
+## ----------------------------------------------------------------------------
 
 class CoursePage extends Page
   constructor: ->
@@ -61,8 +61,9 @@ class ButtonsView extends View
   present: -> @trigger 'present'
 
 
-# Info view
-# -----------------------------------------------------------------------------
+## Info view
+## ----------------------------------------------------------------------------
+
 class InfoView extends View
   ### This view represents info box with the QR code and URL ###
 
@@ -88,14 +89,14 @@ class InfoView extends View
   show: ->
     @$el.show()
 
-# Course view
-# -----------------------------------------------------------------------------
+## Course view
+## ----------------------------------------------------------------------------
 
 class CourseView extends View
   template: require('templates/course/course')
 
-# Question list
-# -----------------------------------------------------------------------------
+## Question list
+## ----------------------------------------------------------------------------
 
 class QuestionView extends View
   template: require('templates/course/question')
