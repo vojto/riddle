@@ -8,6 +8,8 @@ Question = require('models/question')
 ## ----------------------------------------------------------------------------
 
 class CoursePage extends Page
+  className: 'has-header'
+
   constructor: ->
     super
     @courseView = new CourseView
@@ -82,7 +84,6 @@ class InfoView extends View
     host = window.location.host
     @url = "http://#{host}/#/#{@course.public_id}"
     encodedURL = encodeURIComponent(@url)
-    console.log encodedURL
     @qr = "#{App.base}/qrcode?url=#{encodedURL}"
     @render()
 

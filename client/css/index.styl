@@ -20,7 +20,6 @@ html, body
   height auto !important
   height 100%
   padding 20px
-  padding-top 40px
   color #eee
   overflow auto
   position absolute
@@ -28,6 +27,14 @@ html, body
   top 0px
   right 0px
   background url(/images/linen.jpg)
+
+  &.has-header
+    padding-top 40px
+
+
+  &.light
+    background #fff
+    color #000
 
 loaderSize = 50px
 body > div.loader

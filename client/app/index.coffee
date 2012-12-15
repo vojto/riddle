@@ -6,10 +6,6 @@ Atmos = require('atmos2')
 Modifiers = require('lib/modifiers')
 Session = require('models/session')
 
-LoginPage = require('pages/login_page')
-DashboardPage = require('pages/dashboard_page')
-CategoryAddPage = require('pages/category_add_page')
-
 class App extends Spine.Controller
   className: 'app'
 
@@ -31,14 +27,18 @@ class App extends Spine.Controller
 
     # Routing
     @addRoutesForPages
-      '/login'          : 'pages/login_page'
-      '/registration'   : 'pages/registration_page'
-      '/dashboard'      : 'pages/dashboard_page'
-      '/categories/new' : 'pages/category_add_page'
-      '/error'          : 'pages/error_page'
-      '/course/:id'     : 'pages/course_page'
-      '/course/:course_id/question/new' : 'pages/question_form_page'
-      '/course/:course_id/question/:id' : 'pages/question_form_page'
+      # Teacher
+      '/login'                          : 'pages/teacher/login_page'
+      '/registration'                   : 'pages/teacher/registration_page'
+      '/dashboard'                      : 'pages/teacher/dashboard_page'
+      '/categories/new'                 : 'pages/teacher/category_add_page'
+      '/error'                          : 'pages/teacher/error_page'
+      '/course/:id'                     : 'pages/teacher/course_page'
+      '/course/:course_id/question/new' : 'pages/teacher/question_form_page'
+      '/course/:course_id/question/:id' : 'pages/teacher/question_form_page'
+      # Student
+      '/:course_id'                     : 'pages/student/course/show_page'
+      '/student/login'                  : 'pages/student/login_page'
 
     defaultRoute = if user then '/dashboard' else '/login'
     Spine.Route.add '/': => @navigate(defaultRoute)
@@ -86,7 +86,7 @@ class App extends Spine.Controller
 
   didFailResponse: =>
     Session.logout()
-    @navigate '/error'
+    @navigate '/error', shim: true
 
   # Views
 
