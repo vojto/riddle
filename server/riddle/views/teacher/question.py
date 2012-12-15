@@ -18,23 +18,25 @@ def new_question():
     public_id = request.form['public_id']
     options = request.form.getlist('options[]')
 
-    # Find questionnaire
-    qaire = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.public_id == public_id).get()
+    try:
+        # Find questionnaire
+        qaire = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.public_id == public_id).get()
 
-    # Create question
-    if qtype2str(typ) is None:
-        return response_error('unknown_question_type')
-    question = Question.create(description=description, typ=typ, presented=presented, questionnaire=qaire)
+        # Create question
+        if qtype2str(typ) is None:
+            return response_error('unknown_question_type')
+        question = Question.create(description=description, typ=typ, presented=presented, questionnaire=qaire)
 
-    # Create option
-    for option_text in options:
-        option = Option.create(question=question, text=option_text)
+        # Create option
+        for option_text in options:
+            option = Option.create(question=question, text=option_text)
 
-    ret = response_success(False)
-    ret['question_id'] = question.id
-    return json.dumps(ret)
+        ret = response_success(False)
+        ret['question_id'] = question.id
+        return json.dumps(ret)
 
-    return response_error('public_id_not_found')
+    except Questionnaire.DoesNotExist:
+        return response_error('public_id_not_found')
 
 @teacher.route('/edit-question/', methods=['POST'])
 @auth.login_required
