@@ -61,12 +61,14 @@ class QuestionView extends View
 
   events:
     'click a.delete': 'remove'
+    'click a.edit-question': 'edit'
 
   constructor: ->
     super
+    @model.bind 'change', @render
     @render()
 
-  render: ->
+  render: =>
     super
 
   # Actions
@@ -74,6 +76,10 @@ class QuestionView extends View
   remove: (ev) ->
     ev.preventDefault()
     @model.deleteRemote()
+
+  edit: (ev) ->
+    ev.preventDefault()
+    @navigate '/course', @model.course().public_id, 'question', @model.id
 
 
 class QuestionListView extends View

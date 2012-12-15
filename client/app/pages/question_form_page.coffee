@@ -12,6 +12,8 @@ class QuestionFormPage extends Page
 
   elements:
     'form': '$form'
+    'input[name=description]': '$descriptionField'
+    'select[name=type]': '$typeSelect'
 
   events:
     'submit form': 'submit'
@@ -26,8 +28,25 @@ class QuestionFormPage extends Page
     @$('div.options').append(@optionListView.$el)
 
   show: (options) ->
-    Course.fetchOne options.course_id, (course) =>
+    courseID = options.course_id
+    questionID = options.id
+
+    @isEditing = !!questionID
+    Course.fetchOne courseID, (course) =>
       @course = course
+      if @isEditing
+        @question = @course.questions().find(questionID)
+        @question.bind 'change', @update
+      @update()
+
+  update: =>
+    ### Updates the form and options list ###
+    if @question
+      @$descriptionField.val(@question.description)
+      @$typeSelect.val(@question.type)
+      @optionListView.options = @question.options().all()
+    @optionListView.update()
+
 
   # Actions
 
@@ -38,11 +57,10 @@ class QuestionFormPage extends Page
     data = @$form.serializeObject()
     # return unless data.description # TODO: Could use real validation
 
-    # 02 Create the object
-    @question = new Question
+    # 02 Create the object if needed
+    @question or= new Question
     @question.course_id = @course.id
     @question.load(data)
-    @question.save()
 
     # 03 Get options
     options = for option in @optionListView.nonEmptyOptions()
@@ -51,7 +69,7 @@ class QuestionFormPage extends Page
       option
 
     console.log 'creating question', @question
-    @question.createRemote =>
+    @question.updateOrCreateRemote =>
       console.log 'created question'
       @navigate '/course', @course.public_id
 
@@ -64,15 +82,19 @@ class QuestionFormPage extends Page
 class OptionView extends View
   template: require('templates/question/option')
 
+  elements:
+    'input': '$input'
+
   events:
     'keyup input': 'updateModel'
 
   constructor: ->
     super
     @render()
+    @$input.val(@model.text)
 
   updateModel: ->
-    @model.text = @$('input').val()
+    @model.text = @$input.val()
 
 # OptionListView
 # -----------------------------------------------------------------------------

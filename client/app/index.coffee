@@ -35,6 +35,7 @@ class App extends Spine.Controller
       '/error'          : 'pages/error_page'
       '/course/:id'     : 'pages/course_page'
       '/course/:course_id/question/new' : 'pages/question_form_page'
+      '/course/:course_id/question/:id' : 'pages/question_form_page'
     Spine.Route.add '/': => @navigate('/dashboard')
     Spine.Route.setup()
 
