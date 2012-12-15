@@ -12,13 +12,13 @@ CategoryAddPage = require('pages/category_add_page')
 
 class App extends Spine.Controller
   className: 'app'
-  
+
   constructor: ->
     super
-    
+
     # Modifier keys interceptor
     Modifiers.setup()
-    
+
     # Session
     user = Session.user()
 
@@ -26,7 +26,7 @@ class App extends Spine.Controller
     @atmos = new Atmos(base: 'http://localhost:5000')
     @atmos.bind 'auth_fail', @didFailAuth
     @atmos.bind 'response_error', @didFailResponse
-    
+
     # Routing
     @addRoutesForPages
       '/login'          : 'pages/login_page'
@@ -37,7 +37,7 @@ class App extends Spine.Controller
       '/course/:course_id/question/new' : 'pages/question_form_page'
     Spine.Route.add '/': => @navigate('/dashboard')
     Spine.Route.setup()
-    
+
     # Default route
     if user
       # @navigate '/dashboard'
@@ -46,23 +46,23 @@ class App extends Spine.Controller
 
     # Views
     @setupLoaderView()
-  
+
   addRoutesForPages: (table) ->
     ### Table is in format route -> class path ###
     @pageTable = table
     for routeName, path of table
       Spine.Route.add routeName, @didChangeRoute
-    
+
   didChangeRoute: (match) =>
     input = match.match.input
     matchedRoute = null
     for route in Spine.Route.routes
-      if route.route.exec(input) 
+      if route.route.exec(input)
         matchedRoute = route
         break
-    
+
     pagePath = @pageTable[route.path]
-    
+
     if !pagePath
       console.log 'Routing error: ', match
 
@@ -79,11 +79,11 @@ class App extends Spine.Controller
       page.show(match)
       # @el.children().detach()
       @append(page)
-  
+
   didFailAuth: =>
     Session.logout()
     @navigate '/login'
-  
+
   didFailResponse: =>
     Session.logout()
     @navigate '/error'
