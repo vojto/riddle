@@ -75,7 +75,11 @@ class InfoView extends View
     super
 
   update: ->
-    @qr = "#{App.base}/qrcode/#{@course.public_id}" # TODO: Dynamic URL or smt
+    host = window.location.host
+    @url = "http://#{host}/#/#{@course.public_id}"
+    encodedURL = encodeURIComponent(@url)
+    console.log encodedURL
+    @qr = "#{App.base}/qrcode?url=#{encodedURL}"
     @render()
 
   hide: ->

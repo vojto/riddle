@@ -13,17 +13,11 @@ def show():
     return render_template('index.html')
 #    return "Welcome to Riddle, the best page in the universe."
 
-@common.route('/qrcode/<qaire_id>/')
-def qr_code(qaire_id):
-    qaires = Questionnaire.select().where(Questionnaire.public_id == qaire_id)
-
-    qrstr = ''
-    for qaire in qaires:
-        qrstr = url_for('student.show', qaire_id=qaire.public_id, _external=True)
-        break
-
+@common.route('/qrcode/')
+def qr_code():
+    url = request.args.get('url')
     output = StringIO.StringIO()
-    img = qrcode.make(qrstr)
+    img = qrcode.make(url)
     img.save(output)
     imgdata = output.getvalue()
     output.close()
