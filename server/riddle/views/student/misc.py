@@ -5,6 +5,7 @@ from riddle.models.Questionnaire import Questionnaire
 from riddle.models.Category import Category
 from riddle.models.Option import Option
 from riddle.models.Answer import Answer
+from riddle.models.Rating import Rating
 
 @student.route('/view/<qaire_id>/')
 @student_session
@@ -78,4 +79,30 @@ def submit_answer():
         return response_success()
 
     return response_error('question_not_found')
+
+@student.route('/submit-rating/', methods=['POST'])
+@student_session
+def submit_rating():
+    student = get_current_student()
+    qaire_id = request.form['qaire_id']
+    like = request.form['like']
+
+    qaires = Questionnaire.select().where(Questionnaire.id == qaire_id)
+
+    for qaire in qaires:
+        ratings = Rating.select().where(Rating.student == student).where(Rating.questionnaire == qaire)
+        for rating in ratings:
+            return response_error('already_rated')
+
+        if like == "1" or like == "true":
+            like = True
+        else:
+            like = False
+
+        Rating.create(like=like, student=student, questionnaire=qaire)
+
+        return response_success()
+
+    return response_error('questionnaire_not_found')
+
 
