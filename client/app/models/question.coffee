@@ -16,7 +16,7 @@ class Question extends Spine.Model
     }
     Atmos.res.post '/new-question/', data, (res) =>
       # TODO: Handle error
-      @id = res.question_id
+      @changeID(res.question_id)
       callback(@)
 
 
