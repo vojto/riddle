@@ -25,6 +25,9 @@ class CoursePage extends Page
     @infoView.hide()
     @append @infoView
 
+    @statusView = new StatusView
+    @append @statusView
+
   show: (options) ->
     Course.fetchOne options.id, (course) =>
       @course = course
@@ -88,6 +91,21 @@ class InfoView extends View
 
   show: ->
     @$el.show()
+
+## Status view
+## ----------------------------------------------------------------------------
+
+class StatusView extends View
+  ### Presentation status view ###
+
+  template: require('templates/course/status')
+  className: 'presentation-status'
+
+  constructor: ->
+    super
+    @connectedUsers = 0
+    @currentQuestion = null
+    @render()
 
 ## Course view
 ## ----------------------------------------------------------------------------

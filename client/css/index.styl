@@ -20,6 +20,7 @@ html, body
   height auto !important
   height 100%
   padding 20px
+  padding-top 40px
   color #eee
   overflow auto
   position absolute
@@ -210,7 +211,8 @@ ul.course-list
 .edit ul.course-list li:not(.add-course)
   background url(images/delete-button.png) no-repeat 0px 0px
 
-// Add course
+/// Add course
+/// ---------------------------------------------------------------------------
 li.add-course
   input
     display none
@@ -237,7 +239,8 @@ li.add-course
     span
       display none
 
-// Course info
+/// Course info
+/// ---------------------------------------------------------------------------
 infoSize = 500px
 div.course-info
   position fixed
@@ -247,3 +250,21 @@ div.course-info
   left 50%
   margin-top -(infoSize/2)
   margin-left -(infoSize/2)
+
+/// Presentation status
+/// ---------------------------------------------------------------------------
+div.presentation-status
+  position fixed
+  top 0
+  left 0
+  right 0
+  padding 10px
+  height 15px
+  background blue
+  color #fff
+
+  .left
+    float left
+
+  .right
+    float right
