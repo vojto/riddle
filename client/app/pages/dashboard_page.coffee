@@ -8,32 +8,33 @@ CategoryListView = require('views/category_list_view')
 
 class DashboardPage extends Page
   className: 'dashboard-page'
-  
+
   events:
     'click a.add-category': 'addCategory'
     'click a.edit': 'edit'
-  
+
   constructor: ->
     super
-    
+
     @isEditing = false
-    
+
     @addLoginStatus()
-    
+
     @append require('templates/dashboard/buttons')() # TODO: Ugly
 
     @categoryList = new CategoryListView
     @append @categoryList
-  
+
   show: ->
+    console.log 'loading dashboard'
     Category.fetch =>
       Category.trigger('change')
       # @categories = Category.all()
       # @categoryList.setCategories(@categories)
-  
+
   addCategory: ->
     @navigate '/categories/new'
-  
+
   edit: ->
     @isEditing = !@isEditing
     if @isEditing
@@ -42,6 +43,6 @@ class DashboardPage extends Page
     else
       $('a.edit').text('Edit')
       @$el.removeClass('edit')
-    
+
 
 module.exports = DashboardPage

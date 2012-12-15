@@ -17,6 +17,7 @@ class Course extends Spine.Model
     Atmos.res.get "/qaires/#{id}", (res) ->
       questions = res.questions
       delete res.questions
+      delete res.category
       course = new Course(res)
       course.save()
 

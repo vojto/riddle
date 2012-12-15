@@ -9,22 +9,22 @@ class AddCourseView extends View
   elements:
     'span': '$span'
     'input': '$input'
-  
+
   events:
     'click span': 'activate'
     'keyup input': 'type'
-  
+
   constructor: ->
     super
     @render()
-  
+
   activate: ->
     @$el.addClass('active')
     @$input.focus()
-  
+
   deactivate: ->
     @$el.removeClass('active')
-  
+
   type: (e) ->
     if e.keyCode == 27
       @deactivate()
@@ -35,17 +35,17 @@ class AddCourseView extends View
 
 class CourseView extends View
   tag: 'li'
-  
+
   events:
     'click': 'didClick'
-  
+
   constructor: ->
     super
     @render()
-  
+
   render: ->
     @append @model.name
-  
+
   didClick: ->
     if App.page.isEditing
       @model.deleteRemote()
@@ -54,19 +54,19 @@ class CourseView extends View
 
 class CoursesListView extends View
   @extend Spine.Binding
-  
+
   @binding
     view: CourseView
-    key: 'name'
+    key: 'id'
 
   tag: 'ul'
   className: 'course-list'
-  
+
   constructor: (options) ->
     super
     @courses = options.courses
     @data @courses
-    
+
     @addCourseView = new AddCourseView()
     @addCourseView.bind 'createCourse', (data) => @trigger 'createCourse', data
     @append @addCourseView
@@ -74,7 +74,5 @@ class CoursesListView extends View
   refresh: ->
     @data @courses
     @append @addCourseView
-  
-  render: ->
 
 module.exports = CoursesListView
