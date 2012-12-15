@@ -1,3 +1,4 @@
+from flask import make_response
 from riddle.views.student import student
 from riddle.views.helpers import *
 from riddle.models.Question import Question
@@ -16,11 +17,14 @@ def status():
     else:
         return json.dumps(None)
 
-@student.route('/student/login')
+@student.route('/student/login/', methods=['POST'])
 def login():
-    name = request.args.get('name')
-    get_current_student(name)
-    return response_success()
+    name = request.form.get('name')
+    (student, created) = get_create_student(name)
+
+    response = make_response(response_success())
+    response.set_cookie('student_id', student.session_id, expires=datetime.datetime(2038, 1, 1))
+    return response
 
 @student.route('/view/<qaire_id>/')
 @student_session
