@@ -46,7 +46,7 @@ def show_questions(qaire_id):
 
         for qion in questions:
             qtype = qtype2str(qion.typ)
-            ret['questions'].append({'id': qion.id, 'type': qtype, 'description': qion.description, 'presented': qion.presented})
+            ret['questions'].append({'id': qion.id, 'type': qion.typ, 'description': qion.description, 'presented': qion.presented})
 
             if qtype == 'single' or qtype == 'multi':
                 ret['questions'][-1]['options'] = []
@@ -63,7 +63,7 @@ def remove_comment():
     user = auth.get_logged_in_user()
 
     comment_id = request.form['id']
-    
+
     comments = Comment.select().join(Questionnaire).join(Category).where(Category.teacher == user).where(Comment.id == comment_id)
 
     for comment in comments:
