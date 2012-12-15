@@ -6,6 +6,21 @@ from riddle.models.Category import Category
 from riddle.models.Option import Option
 from riddle.models.Answer import Answer
 from riddle.models.Rating import Rating
+import json
+
+@student.route('/student/status')
+def status():
+    student = get_student()
+    if student:
+        return student.to_json()
+    else:
+        return json.dumps(None)
+
+@student.route('/student/login')
+def login():
+    name = request.args.get('name')
+    get_current_student(name)
+    return response_success()
 
 @student.route('/view/<qaire_id>/')
 @student_session

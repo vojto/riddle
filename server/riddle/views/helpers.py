@@ -48,16 +48,21 @@ def random_student_id():
         else:
             return student_id
 
-def get_create_student():
+def get_student():
     student_id = request.cookies.get('student_id')
-    student = None
-
     if student_id:
         students = Student.select().where(Student.session_id == student_id)
         for s in students:
-            return (s, False)
+            return s
+    return None
 
-    return (Student.create(name="Anonymous", session_id=random_student_id()), True)
+def get_create_student(name='Anonymous'):
+    student = get_student()
+
+    if student:
+        return (student, False)
+    else:
+        return (Student.create(name=name, session_id=random_student_id()), True)
 
 def get_current_student():
     return g.student
