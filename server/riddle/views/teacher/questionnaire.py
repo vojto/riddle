@@ -15,7 +15,7 @@ def new_questionnaire():
     public_id = request.form.get('public_id')
 
     if not public_id:
-        public_id = random_public_id()
+        public_id = public_id_from_name(name)
 
     ret = {}
 

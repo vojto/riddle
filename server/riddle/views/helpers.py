@@ -7,6 +7,8 @@ import datetime
 import functools
 import random
 import string
+import unidecode
+import re
 
 IS_CAPTCHA_ENABLED = False
 
@@ -101,4 +103,15 @@ def random_public_id():
             break
         else:
             return pubid
+
+def public_id_from_name(name):
+    name = unidecode.unidecode(name).lower()
+    pubid = re.sub(r'\W+','-', name)
+
+    while True:
+        count = Questionnaire.select().where(Questionnaire.public_id == pubid).count()
+        if count == 0:
+            return pubid
+        else:
+            pubid = "%s-1" % pubid
 
