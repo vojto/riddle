@@ -3,6 +3,7 @@ from riddle import app, auth
 from riddle.views.teacher import teacher
 from riddle.views.helpers import *
 from riddle.models.Question import Question
+from riddle.models.Option import Option
 from riddle.models.Questionnaire import Questionnaire
 from riddle.models.Category import Category
 
@@ -15,20 +16,23 @@ def new_question():
     typ = request.form['type']
     presented = request.form.get('presented', False)
     public_id = request.form['public_id']
+    options = request.form.getlist('options[]')
 
-    ret = {}
+    # Find questionnaire
+    qaire = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.public_id == public_id).get()
 
-    qaires = Questionnaire.select().join(Category).where(Category.teacher == user).where(Questionnaire.public_id == public_id)
+    # Create question
+    if qtype2str(typ) is None:
+        return response_error('unknown_question_type')
+    question = Question.create(description=description, typ=typ, presented=presented, questionnaire=qaire)
 
-    for qaire in qaires:
-        if qtype2str(typ) is None:
-            return response_error('unknown_question_type')
+    # Create option
+    for option_text in options:
+        option = Option.create(question=question, text=option_text)
 
-        question = Question.create(description=description, typ=typ, presented=presented, questionnaire=qaire)
-
-        ret = response_success(False)
-        ret['question_id'] = question.id
-        return json.dumps(ret)
+    ret = response_success(False)
+    ret['question_id'] = question.id
+    return json.dumps(ret)
 
     return response_error('public_id_not_found')
 
