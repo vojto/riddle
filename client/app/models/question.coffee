@@ -19,5 +19,9 @@ class Question extends Spine.Model
       @changeID(res.question_id)
       callback(@)
 
+  deleteRemote: ->
+    Atmos.res.post '/remove-question/', {id: @id}, (res) =>
+      console.log 'deleted question lol', res
+    @destroy()
 
 module.exports = Question
