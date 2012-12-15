@@ -13,6 +13,8 @@ CategoryAddPage = require('pages/category_add_page')
 class App extends Spine.Controller
   className: 'app'
 
+  @base: 'http://localhost:5000'
+
   constructor: ->
     super
 
@@ -23,7 +25,7 @@ class App extends Spine.Controller
     user = Session.user()
 
     # Networking
-    @atmos = new Atmos(base: 'http://localhost:5000')
+    @atmos = new Atmos(base: @constructor.base)
     @atmos.bind 'auth_fail', @didFailAuth
     @atmos.bind 'response_error', @didFailResponse
 

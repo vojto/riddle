@@ -18,7 +18,12 @@ class CoursePage extends Page
 
     @buttonsView = new ButtonsView
     @buttonsView.bind('addQuestion', @addQuestion)
+    @buttonsView.bind('present', @present)
     @append @buttonsView.render()
+
+    @infoView = new InfoView
+    @infoView.hide()
+    @append @infoView
 
   show: (options) ->
     Course.fetchOne options.id, (course) =>
@@ -32,19 +37,52 @@ class CoursePage extends Page
     @questionListView.course = @course
     @questionListView.update()
 
+    @infoView.course = @course
+    @infoView.update()
+
   # Actions
 
   addQuestion: =>
     @navigate '/course', @course.public_id, 'question', 'new'
+
+  present: =>
+    @infoView.show()
+    # Start it
+
 
 class ButtonsView extends View
   template: require('templates/course/buttons')
 
   events:
     'click a.add-question': 'addQuestion'
+    'click a.present': 'present'
 
-  addQuestion: ->
-    @trigger 'addQuestion'
+  addQuestion: -> @trigger 'addQuestion'
+  present: -> @trigger 'present'
+
+
+# Info view
+# -----------------------------------------------------------------------------
+class InfoView extends View
+  ### This view represents info box with the QR code and URL ###
+
+  template: require('templates/course/info')
+  className: 'course-info'
+  events:
+    'click': 'hide'
+
+  constructor: ->
+    super
+
+  update: ->
+    @qr = "#{App.base}/qrcode/#{@course.public_id}" # TODO: Dynamic URL or smt
+    @render()
+
+  hide: ->
+    @$el.hide()
+
+  show: ->
+    @$el.show()
 
 # Course view
 # -----------------------------------------------------------------------------
