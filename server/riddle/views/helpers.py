@@ -8,6 +8,8 @@ import functools
 import random
 import string
 
+IS_CAPTCHA_ENABLED = False
+
 def response_success(json_format=True):
     ret = {'response': 'success'}
 

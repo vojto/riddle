@@ -14,7 +14,7 @@
 
 html, body
   height 100%
-  
+
 .page
   min-height 100%
   height auto !important
@@ -61,7 +61,7 @@ div.background-logo
   -webkit-filter blur(0px)
   -webkit-transition: -webkit-filter 0.5s linear, opacity 0.5s linear, -webkit-transform 1s linear;
   -webkit-transform: scale(1)
-  
+
   &.hidden
     -webkit-filter blur(50px)
     opacity 0
@@ -111,16 +111,16 @@ a
 form
   div.line
     padding 5px
-    
+
     label
       width 100px
       float left
       padding-top 14px
-    
+
     input
       padding 10px
       width 150px
-      
+
 // Buttons
 .button
   background #3F6AC2
@@ -148,11 +148,14 @@ div.login
   transform(scale(1))
   opacity 1
   // -webkit-transition opacity 0.3s linear, -webkit-transform 0.3s linear
-  
+
   h1
     text-align center
     margin 0
-  
+
+  a
+    color black
+
   &.hidden
     -webkit-transform scale(1)
     opacity 0
@@ -164,10 +167,10 @@ div.login
 
   &.loading
     background #fff url('/images/loader.gif') no-repeat center center
-    
+
     form
       visibility hidden
-    
+
   &.failed
     h1.default
       display none
@@ -191,7 +194,7 @@ ul.course-list
   font-size 14px
   font-weight 500
   text-shadow 0px 1px 1px #000
-  
+
   li
     padding 1px 0 2px 30px
     background url(images/course.png) no-repeat 3px 0px
@@ -199,7 +202,7 @@ ul.course-list
     margin-bottom 15px
     border-box()
     height 20px
-    
+
     &.add-course
       color #8c8c8c
       background url(images/add-button.png) no-repeat 0px 0px
@@ -227,7 +230,7 @@ li.add-course
     opacity 0.5
   span
     display block
-  
+
   &.active
     input
       display block

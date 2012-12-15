@@ -1,16 +1,23 @@
-h1.default Login to Riddle
-h1.failed Login failed
+h1 Sign up for Riddle
+
+div.error
 
 form
   div.line
     label Username
     input(type='text', name='username')
   div.line
+    label Full name
+    input(type='text', name='fullname')
+  div.line
     label Password
     input(type='password', name='password')
+  div.line
+    label Email
+    input(type='text', name='email')
   div.line
     label
     input.button(type='submit')
   div.line
     label
-    a.registration(href='#') Sign up
+    a.registration(href='#/login') Cancel

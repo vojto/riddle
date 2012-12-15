@@ -30,20 +30,17 @@ class App extends Spine.Controller
     # Routing
     @addRoutesForPages
       '/login'          : 'pages/login_page'
+      '/registration'   : 'pages/registration_page'
       '/dashboard'      : 'pages/dashboard_page'
       '/categories/new' : 'pages/category_add_page'
       '/error'          : 'pages/error_page'
       '/course/:id'     : 'pages/course_page'
       '/course/:course_id/question/new' : 'pages/question_form_page'
       '/course/:course_id/question/:id' : 'pages/question_form_page'
-    Spine.Route.add '/': => @navigate('/dashboard')
-    Spine.Route.setup()
 
-    # Default route
-    if user
-      # @navigate '/dashboard'
-    else
-      @navigate '/login'
+    defaultRoute = if user then '/dashboard' else '/login'
+    Spine.Route.add '/': => @navigate(defaultRoute)
+    Spine.Route.setup()
 
     # Views
     @setupLoaderView()
