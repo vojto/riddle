@@ -17,18 +17,37 @@ class ShowPage extends Page
       if !res
         @navigate '/student/login', course_id: @courseID, shim: true
       else
-        @loadCourse()
+        @studentID = res.id
+        @showAfterAuth()
 
-  loadCourse: ->
+  showAfterAuth: ->
+    # Fetch the course
     Course.fetchOne @courseID, (course) =>
       @course = course
       @render()
+
+      @notifier = new StudentPresenceNotifier(studentID: @studentID, courseID: @courseID)
 
   render: ->
     super
     return unless @course
     console.log 'rendering', @course
     @html @template(@)
+
+## Student presence notifier
+
+class StudentPresenceNotifier extends Spine.Module
+  constructor: (options) ->
+    @courseID = options.courseID
+    @studentID = options.studentID
+
+    @notify()
+
+  notify: =>
+    console.log 'pinging...'
+    Atmos.res.get "/student/ping/#{@courseID}/", (res) =>
+      console.log 'completed ping', res
+      setTimeout(@notify, 2000)
 
 
 module.exports = ShowPage

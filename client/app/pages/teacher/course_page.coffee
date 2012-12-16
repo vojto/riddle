@@ -1,3 +1,4 @@
+Atmos = require('atmos2')
 Page = require('lib/page')
 View = require('lib/view')
 
@@ -44,6 +45,9 @@ class CoursePage extends Page
 
     @infoView.course = @course
     @infoView.update()
+
+    @statusView.course = @course
+    @statusView.update()
 
   # Actions
 
@@ -107,6 +111,19 @@ class StatusView extends View
     @connectedUsers = 0
     @currentQuestion = null
     @render()
+
+  update: ->
+    @refreshRemote()
+
+  refreshRemote: =>
+    return unless @course
+    console.log 'refreshing...'
+    Atmos.res.get "/status/#{@course.public_id}", (res) =>
+      console.log 'status', res
+      @connectedUsers = res.student_count
+      @render()
+      setTimeout @refreshRemote, 2000
+
 
 ## Course view
 ## ----------------------------------------------------------------------------
