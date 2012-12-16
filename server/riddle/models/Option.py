@@ -10,6 +10,11 @@ class Option(db.Model):
     def __unicode__(self):
         return self.text
 
+    def as_json(self):
+      return {
+        'text': self.text
+      }
+
 class OptionAdmin(ModelAdmin):
     columns = ('text', 'question')
 

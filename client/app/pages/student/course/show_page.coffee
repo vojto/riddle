@@ -1,15 +1,23 @@
 Atmos = require('atmos2')
 
 Page = require('lib/page')
+View = require('lib/view')
 
 Course = require('models/course')
+Question = require('models/question')
+
+## Show page
 
 class ShowPage extends Page
   template: require('templates/student/course/show')
   className: 'light'
 
+  ## Lifecycle
+
   constructor: ->
     super
+    @question = null
+    @questionView = new QuestionView
 
   show: (options) ->
     @courseID = options.course_id
@@ -26,28 +34,39 @@ class ShowPage extends Page
       @course = course
       @render()
 
-      @notifier = new StudentPresenceNotifier(studentID: @studentID, courseID: @courseID)
+      @refreshRemote()
 
   render: ->
     super
     return unless @course
-    console.log 'rendering', @course
     @html @template(@)
+    @append @questionView
 
-## Student presence notifier
+  update: ->
+    @questionView.question = @question
+    @questionView.update()
 
-class StudentPresenceNotifier extends Spine.Module
-  constructor: (options) ->
-    @courseID = options.courseID
-    @studentID = options.studentID
+  ## Pinging
 
-    @notify()
-
-  notify: =>
+  refreshRemote: =>
     console.log 'pinging...'
-    Atmos.res.get "/student/ping/#{@courseID}/", (res) =>
-      console.log 'completed ping', res
-      setTimeout(@notify, 2000)
+    Atmos.res.get "/student/ping/#{@course.public_id}/", (res) =>
+      if res.presented_question
+        @question = Question.find(res.presented_question)
+
+      @update()
+
+      setTimeout(@refreshRemote, 2000)
+
+## Question view
+
+class QuestionView extends View
+  template: require('templates/student/course/question')
+
+  update: ->
+    if @question
+      @options = @question.options().all()
+    @render()
 
 
 module.exports = ShowPage

@@ -20,12 +20,16 @@ class Question(db.Model):
       self.presented = True
       self.save()
 
+    def options(self):
+      from riddle.models.Option import Option
+      return [o for o in Option.select().where(Option.question == self)]
 
     def as_json(self):
       return {
         'description': self.description,
-        'typ': self.typ,
-        'presented': self.presented
+        'type': self.typ,
+        'presented': self.presented,
+        'options': [o.as_json() for o in self.options()]
       }
 
 

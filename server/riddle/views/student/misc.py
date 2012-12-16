@@ -21,13 +21,19 @@ def status():
 
 @student.route('/student/ping/<qid>/')
 def student_ping(qid):
-    print qid
+    """Updates user last ping timestamp and returns current question"""
+
+    # Get models
     student = get_student()
     questionnaire = Questionnaire.select().where(Questionnaire.public_id == qid).get()
 
+    # Update presence
     StudentPresence.update_latest(student, questionnaire)
 
-    return response_success()
+    # Get current question
+    question = questionnaire.presented_question()
+
+    return json.dumps({'presented_question': question.id})
 
 @student.route('/student/login/', methods=['POST'])
 def login():

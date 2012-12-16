@@ -1,0 +1,10 @@
+if question
+  | lol question #{question.description}
+
+  each option in options
+    input(type='radio')
+    label= option.text
+
+else
+  | no question lol
+
