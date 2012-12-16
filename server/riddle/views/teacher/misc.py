@@ -9,6 +9,23 @@ from riddle.models.Option import Option
 from riddle.models.Teacher import Teacher
 from riddle.models.Comment import Comment
 from riddle.models.Answer import Answer
+from riddle.models.StudentPresence import StudentPresence
+
+@teacher.route('/status/<qid>/')
+def presentation_status(qid):
+    """Returns number of connected users for questionnaire"""
+    # TODO: For now we'll just return status for questionnaire
+    # In the future, we'll want to check which questionnaire is being presented
+    # by user, and return info for that questionnaire
+
+    try:
+        questionnaire = Questionnaire.get(Questionnaire.public_id == qid)
+    except Questionnaire.DoesNotExist:
+        return response_error('not_found')
+
+    count = StudentPresence.count_active(questionnaire)
+
+    return json.dumps({student_count: count})
 
 @teacher.route('/qaires/')
 @auth.login_required
