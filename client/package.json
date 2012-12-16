@@ -11,6 +11,7 @@
     "jade": "*",
     "hem-jade": "*",
     "spine-binding": "git://github.com/vojto/spine-binding.git",
-    "atmos2": "git://github.com/vojto/atmos2.git#lite"
+    "atmos2": "git://github.com/vojto/atmos2.git#lite",
+    "d3": "*"
   }
 }
