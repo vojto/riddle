@@ -7,6 +7,7 @@ class Question extends Spine.Model
   @configure 'Question', 'presented', 'type', 'description'
   @belongsTo 'course', 'models/course'
   @hasMany 'options', 'models/option'
+  @hasMany 'comments', 'models/comment'
 
   updateOrCreateRemote: (callback) ->
     optionsData = @options().all().map (o) -> o.text

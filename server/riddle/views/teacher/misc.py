@@ -130,14 +130,11 @@ def results_texts():
 
         ret = {'question_type': strtype, 'question_answers': []}
 
-        if strtype == 'text':
-            answers = Answer.select(Answer, Student).where(Answer.question == qion)
+        answers = Answer.select(Answer, Student).where(Answer.question == qion)
 
-            for answer in answers:
-                ret['question_answers'].append({'text': answer.text, 'student': answer.student.name});
+        for answer in answers:
+            ret['question_answers'].append({'text': answer.text, 'student': answer.student.name, 'id': answer.id})
 
-        else:
-            return response_error('wrong_question_type')
 
         return json.dumps(ret)
 

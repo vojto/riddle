@@ -1,7 +1,9 @@
 Atmos = require('atmos2')
 Page = require('lib/page')
+View = require('lib/view')
 
 Course = require('models/course')
+Comment = require('models/comment')
 
 class QuestionPage extends Page
   ###
@@ -20,6 +22,9 @@ class QuestionPage extends Page
     @html @template(@)
     @question = null
 
+    @commentsView = new CommentsView
+    @append @commentsView
+
   show: (options) ->
     courseID = options.course_id
     questionID = options.id
@@ -34,7 +39,9 @@ class QuestionPage extends Page
       @fetchResults()
 
   fetchResults: =>
-    Atmos.res.post '/results-options/', {question_id: @question.id}, (res) =>
+    data = {question_id: @question.id}
+
+    Atmos.res.post '/results-options/', data, (res) =>
       options = @question.options()
       answers = res.question_answers
       for optionData in answers
@@ -43,7 +50,18 @@ class QuestionPage extends Page
         option.save()
       @update()
 
-      setTimeout @fetchResults, 2000
+    Atmos.res.post '/results-texts/', data, (res) =>
+      for commentData in res.question_answers
+        commentData.question = @question
+        try
+          comment = @question.comments().exists(commentData.id)
+        catch e
+          comment = new Comment(commentData)
+        comment.save()
+      @commentsView.comments = @question.comments().all()
+      @commentsView.update()
+
+    setTimeout @fetchResults, 2000
 
   renderGraph: =>
     console.log 'rendering graph'
@@ -101,5 +119,28 @@ class QuestionPage extends Page
     if @question
       @$h1.text(@question.description)
       @renderGraph()
+
+## Comments view
+
+class CommentView extends View
+  template: require('templates/question/comment')
+
+  constructor: ->
+    super
+    @render()
+
+class CommentsView extends View
+  @extend Spine.Binding
+
+  @binding
+    view: CommentView
+    key: 'id'
+
+  constructor: ->
+    super
+    @append 'comments go here'
+
+  update: ->
+    @data @comments
 
 module.exports = QuestionPage
