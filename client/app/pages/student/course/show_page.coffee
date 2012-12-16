@@ -53,9 +53,10 @@ class ShowPage extends Page
     console.log 'pinging...'
     Atmos.res.get "/student/ping/#{@course.public_id}/", (res) =>
       if res.presented_question
-        @question = Question.find(res.presented_question)
-
-      @update()
+        question = Question.find(res.presented_question)
+        if !@question or (@question.id != question.id)
+          @question = question
+          @update()
 
       setTimeout(@refreshRemote, 2000)
 
@@ -64,10 +65,32 @@ class ShowPage extends Page
 class QuestionView extends View
   template: require('templates/student/course/question')
 
+  events:
+    'submit form': 'submit'
+
+  elements:
+    'form': '$form'
+
   update: ->
     if @question
       @options = @question.options().all()
     @render()
+
+  ## Actions
+
+  submit: (ev) ->
+    ev.preventDefault()
+    console.log 'submitting'
+
+    data = @$form.serializeObject()
+    data.question_id = @question.id
+
+    console.log 'submitting answer', data
+    Atmos.res.post "/submit-answer/", data, (res) =>
+      @question.isSubmitted = true
+      @question.save()
+      console.log 'submitted answer', res
+      @update()
 
 
 module.exports = ShowPage

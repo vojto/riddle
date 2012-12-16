@@ -1,10 +1,15 @@
 if question
-  | lol question #{question.description}
-
-  each option in options
-    input(type='radio')
-    label= option.text
+  if question.isSubmitted
+    div Thank you, please wait for the next question.
+  else
+    form
+      h2= question.description
+      each option in options
+        div
+          input(type='radio', name='option_ids[]', value=option.id)
+          label= option.text
+      div
+        input.button(type='submit')
 
 else
-  | no question lol
-
+  div Please wait for the next question.

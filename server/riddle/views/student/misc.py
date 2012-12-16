@@ -52,7 +52,7 @@ def show(qaire_id):
 
     for qaire in qaires:
         category = Category.select().join(Questionnaire).where(Questionnaire.id == qaire.id)
-        questions = Question.select().join(Questionnaire).where(Questionnaire.id == qaire.id).where(Question.presented == True)
+        questions = Question.select().join(Questionnaire).where(Questionnaire.id == qaire.id)
 
         catname = ''
 
@@ -93,7 +93,7 @@ def submit_answer():
             text_answer = request.form['text_answer']
             Answer.create(text=text_answer, question=qion, student=student)
         else:
-            option_ids = request.form.getlist('option_ids')
+            option_ids = request.form.getlist('option_ids[]')
             if len(option_ids) < 1:
                 return response_error('missing_options')
 
