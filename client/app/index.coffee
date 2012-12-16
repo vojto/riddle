@@ -34,7 +34,8 @@ class App extends Spine.Controller
       '/error'                          : 'pages/teacher/error_page'
       '/course/:id'                     : 'pages/teacher/course_page'
       '/course/:course_id/question/new' : 'pages/teacher/question_form_page'
-      '/course/:course_id/question/:id' : 'pages/teacher/question_form_page'
+      '/course/:course_id/question/:id/edit' : 'pages/teacher/question_form_page'
+      '/course/:course_id/question/:id' : 'pages/teacher/question_page'
     defaultRoute = if user then '/dashboard' else '/login'
     Spine.Route.add '/': => @navigate(defaultRoute)
 
