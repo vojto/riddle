@@ -13,7 +13,8 @@ class Student(db.Model):
     def to_json(self):
       data = {
         'name': self.name,
-        'session_id': self.session_id
+        'session_id': self.session_id,
+        'id': self.id
       }
       return json.dumps(data)
 
@@ -22,4 +23,3 @@ class StudentAdmin(ModelAdmin):
     columns = ('name', 'session_id')
 
 model_classes.append((Student, StudentAdmin))
-

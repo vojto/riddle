@@ -1,1 +1,1 @@
-import Answer, Category, Option, Questionnaire, Question, Rating, Student, Teacher, Comment
+import Answer, Category, Option, Questionnaire, Question, Rating, Student, Teacher, Comment, StudentPresence

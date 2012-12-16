@@ -7,6 +7,8 @@ from riddle.models.Category import Category
 from riddle.models.Option import Option
 from riddle.models.Answer import Answer
 from riddle.models.Rating import Rating
+from riddle.models.Student import Student
+from riddle.models.StudentPresence import StudentPresence
 import json
 
 @student.route('/student/status')
@@ -16,6 +18,16 @@ def status():
         return student.to_json()
     else:
         return json.dumps(None)
+
+@student.route('/student/ping/<qid>/')
+def student_ping(qid):
+    print qid
+    student = get_student()
+    questionnaire = Questionnaire.select().where(Questionnaire.public_id == qid).get()
+
+    StudentPresence.update_latest(student, questionnaire)
+
+    return response_success()
 
 @student.route('/student/login/', methods=['POST'])
 def login():
