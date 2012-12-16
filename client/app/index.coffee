@@ -66,7 +66,6 @@ class App extends Spine.Controller
     pagePath = @pageTable[route.path]
 
     if !pagePath
-      debugger
       console.log 'Routing error: ', match
 
     pageClass = require(pagePath)
