@@ -4,6 +4,7 @@ from peewee import *
 from flask_peewee.admin import ModelAdmin
 from riddle.models.Student import Student
 from riddle.models.Questionnaire import Questionnaire
+from datetime import datetime
 
 class StudentPresence(db.Model):
     student = ForeignKeyField(Student)
@@ -21,8 +22,14 @@ class StudentPresence(db.Model):
     def update_latest(cls, student, questionnaire):
       # Try to find the last presence record
       print 'updating', student, questionnaire
-      pres = cls.select().where((cls.student == student) & (cls.questionnaire == questionnaire)).get()
-      print 'found pres', pres
+      now = datetime.now()
+      try:
+        pres = cls.get(cls.student == student, cls.questionnaire == questionnaire)
+        pres.last_ping = now
+      except cls.DoesNotExist:
+        pres = cls(student=student, questionnaire=questionnaire, last_ping=now)
+      pres.save()
+      print 'found and updated pres', pres
 
 
 class StudentPresenceAdmin(ModelAdmin):
