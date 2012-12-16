@@ -15,7 +15,7 @@ class Course extends Spine.Model
 
   @fetchOne: (id, callback) ->
     Atmos.res.get "/qaires/#{id}", (res) ->
-      questions = res.questions
+      questions = res.questions || []
       delete res.questions
       delete res.category
       course = new Course(res)

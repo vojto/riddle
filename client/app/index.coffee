@@ -25,9 +25,8 @@ class App extends Spine.Controller
     @atmos.bind 'auth_fail', @didFailAuth
     @atmos.bind 'response_error', @didFailResponse
 
-    # Routing
+    # Teacher routes
     @addRoutesForPages
-      # Teacher
       '/login'                          : 'pages/teacher/login_page'
       '/registration'                   : 'pages/teacher/registration_page'
       '/dashboard'                      : 'pages/teacher/dashboard_page'
@@ -36,12 +35,14 @@ class App extends Spine.Controller
       '/course/:id'                     : 'pages/teacher/course_page'
       '/course/:course_id/question/new' : 'pages/teacher/question_form_page'
       '/course/:course_id/question/:id' : 'pages/teacher/question_form_page'
-      # Student
+    defaultRoute = if user then '/dashboard' else '/login'
+    Spine.Route.add '/': => @navigate(defaultRoute)
+
+    # Student routes
+    @addRoutesForPages
       '/:course_id'                     : 'pages/student/course/show_page'
       '/student/login'                  : 'pages/student/login_page'
 
-    defaultRoute = if user then '/dashboard' else '/login'
-    Spine.Route.add '/': => @navigate(defaultRoute)
     Spine.Route.setup()
 
     # Views
@@ -49,7 +50,8 @@ class App extends Spine.Controller
 
   addRoutesForPages: (table) ->
     ### Table is in format route -> class path ###
-    @pageTable = table
+    @pageTable or= {}
+    $.extend(@pageTable, table)
     for routeName, path of table
       Spine.Route.add routeName, @didChangeRoute
 
@@ -64,6 +66,7 @@ class App extends Spine.Controller
     pagePath = @pageTable[route.path]
 
     if !pagePath
+      debugger
       console.log 'Routing error: ', match
 
     pageClass = require(pagePath)
