@@ -18,6 +18,7 @@ class ShowPage extends Page
     super
     @question = null
     @questionView = new QuestionView
+    @commentView = new CommentFormView
 
   show: (options) ->
     @courseID = options.course_id
@@ -42,10 +43,13 @@ class ShowPage extends Page
     return unless @course
     @html @template(@)
     @append @questionView
+    @append @commentView
 
   update: ->
     @questionView.question = @question
     @questionView.update()
+    @commentView.question = @question
+    @commentView.update()
 
   ## Pinging
 
@@ -92,5 +96,39 @@ class QuestionView extends View
       console.log 'submitted answer', res
       @update()
 
+## Comment form view
+
+class CommentFormView extends View
+  template: require('templates/student/course/comment_form')
+
+  events:
+    'submit form': 'submit'
+
+  elements:
+    'form': '$form'
+
+  constructor: ->
+    super
+    @update()
+
+  submit: (ev) ->
+    ev.preventDefault()
+    {comment} = @$form.serializeObject()
+    return if comment == ''
+
+    data = {
+      question_id: @question.id,
+      text_answer: comment
+    }
+
+    Atmos.res.post '/submit-answer/', data, (res) ->
+      console.log 'submitted answer', res
+
+    @isSubmitted = true
+    @render()
+
+  update: ->
+    @isSubmitted = false
+    @render()
 
 module.exports = ShowPage

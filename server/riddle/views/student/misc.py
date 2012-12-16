@@ -89,14 +89,12 @@ def submit_answer():
     for qion in qions:
         qion_type = qtype2str(qion.typ)
 
-        if qion_type == 'text':
-            text_answer = request.form['text_answer']
+        text_answer = request.form.get('text_answer')
+        if text_answer:
             Answer.create(text=text_answer, question=qion, student=student)
-        else:
-            option_ids = request.form.getlist('option_ids[]')
-            if len(option_ids) < 1:
-                return response_error('missing_options')
 
+        option_ids = request.form.getlist('option_ids[]')
+        if len(option_ids) > 0:
             if qion_type == 'single':
                 option_ids = option_ids[:1]
 
