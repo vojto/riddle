@@ -13,9 +13,11 @@ class QuestionPage extends Page
 
   elements:
     'svg#graph': '$graph'
+    'h1': '$h1'
 
   constructor: ->
     super
+    @html @template(@)
     @question = null
 
   show: (options) ->
@@ -25,32 +27,31 @@ class QuestionPage extends Page
     Course.fetchOne courseID, (course) =>
       @course = course
       @question = @course.questions().find(questionID)
-      options = @question.options()
 
       @update()
 
       # Get the results
-      Atmos.res.post '/results-options/', {question_id: @question.id}, (res) =>
-        answers = res.question_answers
-        for optionData in answers
-          option = options.find(optionData.option_id)
-          option.answerCount = optionData.answers
-          option.save()
-        @update()
+      @fetchResults()
 
-  render: ->
-    super
-    if @course and @question
-      # Render the template
-      @options = @question.options().all()
-      @html @template(@)
+  fetchResults: =>
+    Atmos.res.post '/results-options/', {question_id: @question.id}, (res) =>
+      options = @question.options()
+      answers = res.question_answers
+      for optionData in answers
+        option = options.find(optionData.option_id)
+        option.answerCount = optionData.answers
+        option.save()
+      @update()
 
-      # Render the graph!
-      @renderGraph()
+      setTimeout @fetchResults, 2000
 
-  renderGraph: ->
-    data = [{label: 'foo', value: 5}, {label: 'bar', value: 10}]
+  renderGraph: =>
+    console.log 'rendering graph'
+
+    options = @question.options().all()
+    data = options.map (o) -> {label: o.text, value: o.answerCount}
     maxValue = d3.max(data, (d) -> d.value)
+    maxValue = 1 if maxValue == 0 # division by zero
 
     totalWidth = 400
     totalHeight = 200
@@ -62,30 +63,43 @@ class QuestionPage extends Page
     x = (d, i) -> i * (width + padding)
     color = d3.scale.category20c()
 
-    graph3 = d3.select(@$graph.get(0))
-    graph3.attr('width', totalWidth).attr('height', totalHeight + 20)
-    enter = graph3.selectAll('rect')
-      .data(data)
-      .enter()
-    enter.append('rect')
+    @graph3 = d3.select(@$graph.get(0))
+    @graph3.attr('width', totalWidth).attr('height', totalHeight + 20)
+
+    bars = @graph3.selectAll('rect').data(data)
+    bars.enter().append('rect')
+      .attr('width', width)
+      .attr('y', totalHeight)
       .attr('x', x)
-      .attr('y', (d) -> totalHeight-y(d))
+      .attr('fill', (d, i) -> color(i))
+    bars.transition()
+      .attr('x', x)
+      .attr('y', (d, i) -> totalHeight-y(d, i))
       .attr('width', width)
       .attr('height', y)
-      .attr('fill', (d, i) -> color(i))
-    enter.append('text')
-      .attr('x', (d, i) -> x(d, i) + 10)
+
+    values = @graph3.selectAll('text.value').data(data)
+    values.enter().append('text')
+      .attr('class', 'value')
+      .attr('fill', '#fff')
+      .attr('y', totalHeight+20)
+    values.transition().attr('x', (d, i) -> x(d, i) + 10)
       .attr('y', (d) -> totalHeight-y(d)+20)
       .text((d) -> d.value)
-      .attr('fill', '#fff')
-    enter.append('text')
-      .attr('x', (d, i) -> x(d, i) + 10)
-      .attr('y', (d) -> totalHeight + 20)
-      .text((d) -> d.label)
+
+    labels = @graph3.selectAll('text.label').data(data)
+    labels.enter().append('text')
+      .attr('class', 'label')
       .attr('fill', '#000')
       .style('font-weight', 'bold')
+    labels.attr('x', (d, i) -> x(d, i) + 10)
+      .attr('y', (d) -> totalHeight + 20)
+      .text((d) -> d.label)
+
 
   update: ->
-    @render()
+    if @question
+      @$h1.text(@question.description)
+      @renderGraph()
 
 module.exports = QuestionPage
