@@ -121,6 +121,10 @@ class StatusView extends View
     Atmos.res.get "/status/#{@course.public_id}", (res) =>
       console.log 'status', res
       @connectedUsers = res.student_count
+      if res.presented_question
+        @currentQuestion = new Question(res.presented_question)
+        console.log @currentQuestion
+
       @render()
       setTimeout @refreshRemote, 2000
 
@@ -141,6 +145,7 @@ class QuestionView extends View
   events:
     'click a.delete': 'remove'
     'click a.edit-question': 'edit'
+    'click a.present': 'present'
 
   constructor: ->
     super
@@ -159,6 +164,11 @@ class QuestionView extends View
   edit: (ev) ->
     ev.preventDefault()
     @navigate '/course', @model.course().public_id, 'question', @model.id
+
+  present: (ev) ->
+    ev.preventDefault()
+    console.log 'presenting question', @model
+    @model.presentRemote()
 
 
 class QuestionListView extends View

@@ -1,2 +1,6 @@
-div.left Current qeustion:
+div.left
+  if currentQuestion
+    | Current qeustion: #{currentQuestion.description}
+  else
+    | No question presented
 div.right Connected users: #{connectedUsers}

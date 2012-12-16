@@ -13,7 +13,10 @@ from riddle.models.StudentPresence import StudentPresence
 
 @teacher.route('/status/<qid>/')
 def presentation_status(qid):
-    """Returns number of connected users for questionnaire"""
+    """
+    For a questionnaire, returns number of connected users and the
+    question that is currently presented.
+    """
     # TODO: For now we'll just return status for questionnaire
     # In the future, we'll want to check which questionnaire is being presented
     # by user, and return info for that questionnaire
@@ -24,8 +27,9 @@ def presentation_status(qid):
         return response_error('not_found')
 
     count = StudentPresence.count_active(questionnaire)
+    question = questionnaire.presented_question()
 
-    return json.dumps({'student_count': count})
+    return json.dumps({'student_count': count, 'presented_question': question.as_json()})
 
 @teacher.route('/qaires/')
 @auth.login_required

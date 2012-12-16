@@ -35,6 +35,10 @@ class Question extends Spine.Model
       console.log 'deleted question lol', res
     @destroy()
 
+  presentRemote: ->
+    Atmos.res.get "/present-question/#{@id}/", (res) ->
+      console.log 'presneted question', res
+
   load: (data) ->
     super
     if data.options

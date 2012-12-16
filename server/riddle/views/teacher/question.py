@@ -102,3 +102,11 @@ def remove_question():
         return response_success()
 
     return response_error('question_not_found')
+
+@teacher.route('/present-question/<qid>/')
+@auth.login_required
+def present_question(qid):
+    question = Question.get(Question.id == qid)
+    question.present()
+    print 'presenting question', question
+    return response_success()
