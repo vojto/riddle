@@ -60,11 +60,11 @@ def show(qaire_id):
             catname = cat.name
             break
 
-        ret = {'id': qaire.id, 'name': qaire.name, 'category': catname, 'questions' : []}
+        ret = {'id': qaire.id, 'public_id': qaire.public_id, 'name': qaire.name, 'category': catname, 'questions' : []}
 
         for qion in questions:
             qtype = qtype2str(qion.typ)
-            ret['questions'].append({'id': qion.id, 'type': qtype, 'description': qion.description})
+            ret['questions'].append({'id': qion.id, 'type': qion.typ, 'description': qion.description})
 
             if qtype == 'single' or qtype == 'multi':
                 ret['questions'][-1]['options'] = []

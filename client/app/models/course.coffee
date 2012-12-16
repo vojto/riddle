@@ -14,7 +14,8 @@ class Course extends Spine.Model
       @category().trigger 'change'
 
   @fetchOne: (id, callback) ->
-    Atmos.res.get "/qaires/#{id}", (res) ->
+    path = if @studentMode then "/view/#{id}" else "/qaires/#{id}"
+    Atmos.res.get path, (res) ->
       questions = res.questions || []
       delete res.questions
       delete res.category

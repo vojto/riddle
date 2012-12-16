@@ -30,6 +30,7 @@ class ShowPage extends Page
 
   showAfterAuth: ->
     # Fetch the course
+    Course.studentMode = true
     Course.fetchOne @courseID, (course) =>
       @course = course
       @render()
