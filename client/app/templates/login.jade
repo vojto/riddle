@@ -1,16 +1,15 @@
-h1.default Login to Riddle
-h1.failed Login failed
+div.box
+  h1.default Presenter login
+  h1.failed Login failed
 
-form
-  div.line
-    label Username
-    input(type='text', name='username')
-  div.line
-    label Password
-    input(type='password', name='password')
-  div.line
-    label
-    input.button(type='submit')
-  div.line
-    label
-    a.registration(href='#') Sign up
+  form
+    div.line
+      label Username
+      input(type='text', name='username')
+    div.line
+      label Password
+      input(type='password', name='password')
+    div.line.center
+      input.button(type='submit')
+
+a.registration(href='#') Sign up for Riddle

@@ -63,7 +63,7 @@ div.background-logo
   top 10px
   left 50%
   margin-left -95px
-  top 60%
+  top 70%
   background url(/images/logo.png)
   opacity 0.1
   -webkit-filter blur(0px)
@@ -96,8 +96,8 @@ h1.error
   color darken(#393A3C, 10)
   text-shadow 0 1px 0px rgba(255, 255, 255, 0.15)
 
-// Typo
-// ----------------------------------------------------------------------------
+/// Typo
+/// ---------------------------------------------------------------------------
 
 body, input
   font-family 'Helvetica Neue', 'Helvetica', 'Arial'
@@ -112,24 +112,29 @@ h2
 a
   color #fff
 
-// Elements
-// ----------------------------------------------------------------------------
+/// Elements
+/// ---------------------------------------------------------------------------
 
-// Forms
+/// Forms
 form
   div.line
     padding 5px
 
+    &.center
+      text-align center
+
     label
       width 100px
-      float left
+      display block
       padding-top 14px
+      color #8b8b8b
+      margin-bottom 5px
 
     input
+      display block
       padding 10px
-      width 150px
 
-// Buttons
+/// Buttons
 .button
   background #3F6AC2
   border none
@@ -139,27 +144,54 @@ form
   padding 10px 15px
   cursor pointer
 
-// Views
-// ----------------------------------------------------------------------------
-
-// Login
-div.login
+/// Box
+boxWidth = 300px
+div.box
   background #fff
   box-shadow(2px 2px 15px rgba(0,0,0,0.5))
   position absolute
   left 50%
-  margin-left -150px
+  margin-left -(boxWidth/2)
   margin-top 200px
-  width 300px
+  width boxWidth
   color #000
   padding 10px
+  padding-bottom 15px
   transform(scale(1))
   opacity 1
+  border-radius(5px)
   // -webkit-transition opacity 0.3s linear, -webkit-transform 0.3s linear
 
   h1
     text-align center
-    margin 0
+    margin 15px 0 0 0
+    color lighten(#323232, 5)
+    text-transform uppercase
+    font-size 22px
+    font-weight 400
+
+  form
+    padding 0 20px
+
+    label
+      font-size 11px
+      font-weight 500
+
+    input[type=text], input[type=password]
+      width 205px
+      background darken(#fff, 5)
+      inset-box-shadow(0 1px 3px rgba(0,0,0,0.3))
+      border none
+      font-weight bold
+      padding 12px 20px
+
+    .button
+      vbg-gradient(#627ebf, #3f5997)
+      border-radius(5px)
+      padding 10px 25px
+      font-weight 500
+      font-size 13px
+      display inline-block
 
   a
     color black
@@ -167,6 +199,35 @@ div.login
   &.hidden
     -webkit-transform scale(1)
     opacity 0
+
+/// Pages
+/// ---------------------------------------------------------------------------
+
+div.login-page
+  a.registration
+    position absolute
+    top 510px
+    left 0
+    width 100%
+    display block
+    margin-left 8px
+    text-align center
+    font-size 12px
+    color darken(#fff, 50)
+
+/// Views
+/// ---------------------------------------------------------------------------
+
+/// List
+
+div.list
+  h1
+    font-weight 200
+    font-size 30px
+    color #969697
+    text-shadow 0px 1px 1px #000
+
+/// Login
 
 div.login
   h1.failed
@@ -185,16 +246,7 @@ div.login
     h1.failed
       display block
 
-// List
-
-div.list
-  h1
-    font-weight 200
-    font-size 30px
-    color #969697
-    text-shadow 0px 1px 1px #000
-
-// Course list
+/// Course list
 ul.course-list
   list-style-type none
   margin-top 20px
