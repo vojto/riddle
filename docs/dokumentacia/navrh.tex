@@ -34,19 +34,80 @@
     
  
 \subsection{Detailnı návrh aplikácie}
-\lipsum[2]
-~~~~~     
-\subsubsection{Pouívate¾ské rozhranie}    
-\lipsum[2]
+    
+    
+    
 \subsubsection{Registrácia}    
- Na titulnej strane je potrebné kliknú na tlaèidlo SIGN UP. Následne sa zobrazí dialóg v . 
-\subsubsection{Pouívate¾ské akcie}    
-\lipsum[2]
+ Registrácia pouívate¾a prebieha pomocou formuláru. Pouívate¾ vyplní formulár v tvare nick, pouívate¾ské meno, heslo a email.
+ Následne potvrdí stlaèením tlaèidla Odosla.
+ 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{pics/registraciaCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Prihlásenie} 
+ Prihlásenie pouívate¾a prebieha pomocou formuláru, kde pouívate¾ zadá svoj nick a heslo.
+ Následne potvrdí stlaèením tlaèidla Odosla. \\
+ Po úspešnom prihlásení ho aplikácia presunie na stránku obsahujúcu kategórie a pod nich spadajúce dotazníky.
+ 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{pics/loginCROP.png}
+\end{figure}   
+
+\newpage
 \subsubsection{Správa dotazníkov}   
-\lipsum[2] 
-\subsubsection{Vytváranie ankety}     
-\lipsum[2]  
-\subsubsection{Rozhranie študenta}     
-\lipsum[2]  
-\subsubsection{Akcie študenta}     
-\lipsum[2] 
+Na tejto stránke pouŸívate¾ preh¾adne vidí svoje vytvorené dotazníky rozdelené do kategórií. \\
+V pravom hornom rohu aplikácie sa nachádza meno pouívate¾a pouívate¾a a pod ním monos odhlásenia sa z aplikácie.\\
+Po kliknutí na danı dotazník sa pouívate¾ovi otvorí okno, kde uvidí zoznam otázok, ktoré dotazník obsahuje.\\
+Po kliknutí na tlaèidlo Add category sa pouívate¾ovi zobrazí okno, kde môe prida novú kategóriu.\\
+Po kliknutí na tlaèidlo Edit má monost editova dotazník.\\
+Pre rıchle vytvorenie nového dotazníka je k dispozícii vdy na konci kategórie tlaèidlo Add lecture.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.90]{pics/dashboardCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Pridanie kategórie}   
+Na tejto stránke má pouívate¾ monos prida novú kategóriu a to zadaním názvu novej kategórie a následnım kliknutím na tlaèidlo Odosla.
+Potom bude presmerovanı naspä na stránku so správou dotazníkov. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/add-categoryCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Zobrazenie otázok}     
+Na tejto stránke pouívate¾ vidí zoznam otázok vytvorenıch v tomto dotazníku.\\
+Pri kadej otázke je monost editova, zmaza alebo prezentova danú otázku. \\
+Pri oznaèení otázky prezentova stlaèením tlaèidla Present sa stane otázka vidite¾nou pre študentov.\\
+V spodnej èasti sa nachádzajú tlaèidlá pridanie otázky a prezentova.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/view-questionsCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Editovanie dotazníka}    
+Na tejto stránke má pouívate¾ monos editova dotazník. \\
+V¾avej hornej èasti je pole oznaèené ako Title, kde je moné zmeni názov otázky.\\
+Pod ním je combo box s monosou zmeny typu otázky z multiple choice na sigle choice alebo textovú.\\
+V pravej èasti sa nachádzajú polia s aktuálnymi monosami.\\
+Hore sa nachádza tlaèidlo, ktoré pridá ïalšiu monos.\\
+Ïalej je moné premenova aktuálne monosti.\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/add-questionCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Publikovanie dotazníka}     
+Pri publikovaní dotazníka sa zobrazí QR kód a link na stránku, kde môu študenti hlasova.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/qrANDlinkCROP.png}
+\end{figure}
