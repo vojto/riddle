@@ -2,6 +2,8 @@ Atmos = require('atmos2')
 Page = require('lib/page')
 View = require('lib/view')
 
+StatusView = require('views/status_view')
+
 Course = require('models/course')
 Comment = require('models/comment')
 
@@ -11,7 +13,7 @@ class QuestionPage extends Page
   ###
 
   template: require('templates/question/show')
-  className: 'light halfling'
+  className: 'has-header light'
 
   elements:
     'svg#graph': '$graph'
@@ -25,7 +27,12 @@ class QuestionPage extends Page
     @commentsView = new CommentsView
     @append @commentsView
 
+    @statusView = new StatusView
+    @append @statusView
+
   show: (options) ->
+    @setupHalfling()
+
     courseID = options.course_id
     questionID = options.id
 
@@ -44,6 +51,7 @@ class QuestionPage extends Page
     Atmos.res.post '/results-options/', data, (res) =>
       options = @question.options()
       answers = res.question_answers
+      return unless answers
       for optionData in answers
         option = options.find(optionData.option_id)
         option.answerCount = optionData.answers
@@ -116,9 +124,16 @@ class QuestionPage extends Page
 
 
   update: ->
+    @statusView.course = @course
+    @statusView.update()
+
     if @question
       @$h1.text(@question.description)
-      @renderGraph()
+      if @question.type == 3
+        @$graph.hide()
+      else
+        @$graph.show()
+        @renderGraph()
 
 ## Comments view
 

@@ -2,6 +2,8 @@ Atmos = require('atmos2')
 Page = require('lib/page')
 View = require('lib/view')
 
+StatusView = require('views/status_view')
+
 Course = require('models/course')
 Question = require('models/question')
 
@@ -98,34 +100,6 @@ class InfoView extends View
 
   show: ->
     @$el.show()
-
-## Status view
-## ----------------------------------------------------------------------------
-
-class StatusView extends View
-  ### Presentation status view ###
-
-  template: require('templates/course/status')
-  className: 'presentation-status'
-
-  constructor: ->
-    super
-    @connectedUsers = 0
-    @currentQuestion = null
-    @render()
-
-  update: ->
-    @refreshRemote()
-
-  refreshRemote: =>
-    return unless @course
-    Atmos.res.get "/status/#{@course.public_id}", (res) =>
-      @connectedUsers = res.student_count
-      if res.presented_question
-        @currentQuestion = new Question(res.presented_question)
-
-      @render()
-      setTimeout @refreshRemote, 2000
 
 
 ## Course view
