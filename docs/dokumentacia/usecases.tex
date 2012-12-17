@@ -4,14 +4,13 @@
  \subsection{Teacher}
 
  	\subsubsection{Registrácia.}
-  \paragraph{}  ~~~~~\\
 \begin{enumerate}
 	\item Aplikácia vyiada registraèné údaje.
-	\item Pouívate¾ zadá registraèné údaje (meno, priezvisko, heslo, e-mail).
+	\item Uèite¾ (ïalej len pouívate¾) zadá registraèné údaje (meno, priezvisko, heslo, e-mail).
 	\item Aplikácia overí registraèné údaje.
-	\item Aplikácia prihlási pouívate¾a.
-	\item Aplikácia sprístupní funkcie pre správu dotazníkov.
+	\item Aplikácia vytvorí nového pouívate¾a v systéme.
 \end{enumerate}
+
  	\subsubsection{Prihlásenie.}
 \begin{enumerate}
 	\item Aplikácia vyiada prihlasovacie údaje.
@@ -20,13 +19,48 @@
 	\item Aplikácia prihlási pouívate¾a.
 	\item Aplikácia sprístupní funkcie pre správu dotazníkov.
 \end{enumerate}
+
+ 	\subsubsection{Správa dotazníkov.}
+ 	\begin{enumerate}
+	\item Aplikácia zobrazí u vytvorené dotazníky rozdelené do kategórii.
+	\item Pouívate¾ môe vytvori novı dotazník, alebo zverejni u vytvorenı.
+	\item Pri zverejnení dotazníka aplikácia nastaví premennú published pre danı dotazník na true a vygeneruje link a QR kód.  
+	\item Link a QR kód zobrazí pouívate¾ovi.
+	\item Následne môu študenti pristupova na stránku.
+\end{enumerate}
+ 
+  \subsubsection{Vytvorenie/Nastavenie dotazníka}
+ 	\begin{enumerate}
+	\item Pouívate¾ si zvolí monos vytvori novı dotazník v u existujúcej kategórii, prípadne vytvorí novú kategóriu a v nej novı dotazník.
+	\item V novom dotazníku si zvolí typy otázok a ¾ubovolnı poèet otázok.
+	\item Aplikácia uloí vytvorenı dotazník do databázy.
+	\end{enumerate}
+ 	
+  	\subsubsection{Zobrazenie vısledkov.}
+ 	\begin{enumerate}
+	\item 
+	\item 
+	\item 
+	\item 
+	\item 
+\end{enumerate}
+
  \subsection{Student}
  
- 	\subsubsection{Prihlásenie.}
- 	\lipsum[1]
+ 	\subsubsection{Hlasovanie.}
+ 	\begin{enumerate}
+	\item Študent pristúpi na stránku zverejneného dotazníka.
+	\item Vyplni môe anonymne alebo môe napísa svoje meno.
+	\item Po vyplnení dotazníka odošle údaje.
+	\item Aplikácia spracuje prijaté údaje a okamite aktualizuje grafické alebo textové zobrazenie.
+
+\end{enumerate}
   ~~~~~ 
-  
- \subsection{Vytvorenie/Nastavenie dotazníka a ankiet}
- 	\lipsum[2] 
- \subsection{a co dalej ?}  
- 	\lipsum[2]
+  \subsubsection{Spätná väzba.}
+   	\begin{enumerate}
+  \item Študent pristúpi na stránku zverejneného dotazníka.
+	\item Študent môe napísa komentár k dotazníku alebo da svoj like alebo dislike.
+	\item Aplikácia spracuje údaje a sprístupní prihlásenému pouívate¾ovi monosti prezrie si komentáre.
+	\item Aplikácia na stránke s vyhodnotením údajov hlasovania zobrazí graf v podobe poètu like-ov a dislike-ov.
+	\end{enumerate}
+	
