@@ -1,7 +1,7 @@
 @import './mixin'
 
-// Layout
-// ----------------------------------------------------------------------------
+/// Layout
+/// ---------------------------------------------------------------------------
 
 @keyframes spinnerRotate
   from
@@ -14,6 +14,21 @@
 
 html, body
   height 100%
+
+errorColor = #ab2424
+div.error-message
+  position absolute
+  top 0
+  left 0
+  width 100%
+  vbg-gradient(errorColor, darken(errorColor, 5))
+  z-index 999
+  color #fff
+  text-align center
+  font-size 13px
+  font-weight 500
+  padding 10px
+  box-shadow(0px 1px 1px rgba(0,0,0,0.3))
 
 .page
   min-height 100%
@@ -28,6 +43,7 @@ html, body
   right 0px
   background url(/images/linen.jpg)
   background-attachment fixed
+  z-index 10
 
   &.has-header
     padding-top 40px
@@ -214,6 +230,12 @@ a.boxlink
   padding-left 10px
   border-box()
 
+.loading .box
+  background #fff url('/images/loader.gif') no-repeat center center
+
+  form
+    visibility hidden
+
 /// Views
 /// ---------------------------------------------------------------------------
 
@@ -232,12 +254,6 @@ div.login
   h1.failed
     display none
     color red
-
-  &.loading .box
-    background #fff url('/images/loader.gif') no-repeat center center
-
-    form
-      visibility hidden
 
   // &.failed
   //   h1.default

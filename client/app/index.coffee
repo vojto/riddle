@@ -14,6 +14,8 @@ class App extends Spine.Controller
   constructor: ->
     super
 
+    App.instance = @
+
     # Modifier keys interceptor
     Modifiers.setup()
 
@@ -48,6 +50,7 @@ class App extends Spine.Controller
 
     # Views
     @setupLoaderView()
+    @setupErrorView()
 
   addRoutesForPages: (table) ->
     ### Table is in format route -> class path ###
@@ -91,7 +94,7 @@ class App extends Spine.Controller
     Session.logout()
     @navigate '/error', shim: true
 
-  # Views
+  ## Views
 
   setupLoaderView: ->
     @$loader = $('<div />').addClass('loader')
@@ -102,6 +105,28 @@ class App extends Spine.Controller
       $(@).show()
     @$loader.bind 'ajaxComplete', ->
       $(@).hide()
+
+  ## Showing error
+
+  setupErrorView: ->
+    @$error = $('<div />').addClass('error-message').text('error here')
+    @$error.hide()
+    @append @$error
+
+  @showError: (text) ->
+    @instance.showError(text)
+
+  showError: (text) ->
+    @$error.text(text)
+    @$error.gfx({rotate3d: "1,0,0,90deg"}, {duration: 0})
+    @$error.show()
+    @$error.gfx({rotate3d: "1,0,0,0deg"}, {duration: 250})
+    setTimeout =>
+      @$error.gfx({rotate3d: "1,0,0,90deg"}, {duration: 250, complete: =>
+        @$error.hide()
+      })
+    , 3500
+
 
 window.App = App
 module.exports = App

@@ -30,6 +30,8 @@ class LoginView extends View
       @$el.find('.box').gfx({scale: 1}, {duration: 250})
     , 300
 
+    App.showError('Login failed')
+
   reset: ->
     @$el.removeClass('failed')
     @$el.removeClass('loading')
