@@ -26,6 +26,7 @@ class StatusView extends View
         @currentQuestion = new Question(res.presented_question)
 
       @render()
-      setTimeout @refreshRemote, 2000
+      clearTimeout(@timeout)
+      @timeout = setTimeout @refreshRemote, 2000
 
 module.exports = StatusView
