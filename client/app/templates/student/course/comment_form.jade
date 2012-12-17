@@ -1,10 +1,11 @@
-h1 Add comment
+div.comment-form
+  h1 Add comment
 
-if isSubmitted
-  | Thank you!
-else
-  form
-    div
-      textarea(name='comment', rows='6', cols='40')
-    div
-      input.button(type='submit')
+  if isSubmitted
+    | Thank you!
+  else
+    form
+      div
+        textarea(name='comment', rows='6', cols='40')
+      div
+        input.primary.button(type='submit')

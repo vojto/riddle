@@ -1,15 +1,12 @@
 if question
   if question.isSubmitted
-    div Thank you, please wait for the next question.
+    div.info Thank you, please wait for the next question.
   else
     form
-      h2= question.description
-      each option in options
-        div
-          input(type='radio', name='option_ids[]', value=option.id)
-          label= option.text
-      div
-        input.button(type='submit')
+      h1= question.description
+      ul.options
+        each option in options
+          li.option('data-id'=option.id)= option.text
 
 else
   div Please wait for the next question.

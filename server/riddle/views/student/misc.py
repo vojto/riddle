@@ -60,7 +60,7 @@ def show(qaire_id):
             catname = cat.name
             break
 
-        ret = {'id': qaire.id, 'public_id': qaire.public_id, 'name': qaire.name, 'category': catname, 'questions' : []}
+        ret = {'id': qaire.id, 'public_id': qaire.public_id, 'name': qaire.name, 'category': catname, 'questions' : [], 'category_name': category.get().name}
 
         for qion in questions:
             qtype = qtype2str(qion.typ)

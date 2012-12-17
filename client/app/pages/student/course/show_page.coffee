@@ -10,7 +10,10 @@ Question = require('models/question')
 
 class ShowPage extends Page
   template: require('templates/student/course/show')
-  className: 'light'
+  className: 'light student-question'
+
+  elements:
+    'div.content': '$content'
 
   ## Lifecycle
 
@@ -34,6 +37,7 @@ class ShowPage extends Page
     Course.studentMode = true
     Course.fetchOne @courseID, (course) =>
       @course = course
+      console.log course
       @render()
 
       @refreshRemote()
@@ -42,8 +46,8 @@ class ShowPage extends Page
     super
     return unless @course
     @html @template(@)
-    @append @questionView
-    @append @commentView
+    @$content.append(@questionView.el)
+    @$content.append(@commentView.el)
 
   update: ->
     @questionView.question = @question
@@ -54,7 +58,6 @@ class ShowPage extends Page
   ## Pinging
 
   refreshRemote: =>
-    console.log 'pinging...'
     Atmos.res.get "/student/ping/#{@course.public_id}/", (res) =>
       if res.presented_question
         question = Question.find(res.presented_question)
@@ -70,31 +73,38 @@ class QuestionView extends View
   template: require('templates/student/course/question')
 
   events:
-    'submit form': 'submit'
+    'tap li.option': 'selectOption'
 
   elements:
     'form': '$form'
+    'ul': '$ul'
 
   update: ->
     if @question
       @options = @question.options().all()
     @render()
 
-  ## Actions
 
-  submit: (ev) ->
-    ev.preventDefault()
-    console.log 'submitting'
+  ## Event handlers
 
-    data = @$form.serializeObject()
-    data.question_id = @question.id
+  selectOption: (ev) ->
+    @$ul.find('li').removeClass('active')
+    $option = $(ev.currentTarget)
+    id = $option.attr('data-id')
+    $option.addClass('active')
+    console.log 'selecting option lol'
 
-    console.log 'submitting answer', data
+    data = {
+      'option_ids[]': id,
+      question_id: @question.id
+    }
+
     Atmos.res.post "/submit-answer/", data, (res) =>
       @question.isSubmitted = true
       @question.save()
       console.log 'submitted answer', res
       @update()
+
 
 ## Comment form view
 
