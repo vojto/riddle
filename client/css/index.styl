@@ -19,7 +19,7 @@ html, body
   min-height 100%
   height auto !important
   height 100%
-  padding 20px
+  padding 0
   color #eee
   overflow auto
   position absolute
@@ -27,6 +27,7 @@ html, body
   top 0px
   right 0px
   background url(/images/linen.jpg)
+  background-attachment fixed
 
   &.has-header
     padding-top 40px
@@ -126,7 +127,7 @@ form
     label
       width 100px
       display block
-      padding-top 14px
+      padding-top 5px
       color #8b8b8b
       margin-bottom 5px
 
@@ -164,7 +165,7 @@ div.box
 
   h1
     text-align center
-    margin 15px 0 0 0
+    margin 15px 0 5px 0
     color lighten(#323232, 5)
     text-transform uppercase
     font-size 22px
@@ -178,12 +179,12 @@ div.box
       font-weight 500
 
     input[type=text], input[type=password]
-      width 205px
+      width 215px
       background darken(#fff, 5)
       inset-box-shadow(0 1px 3px rgba(0,0,0,0.3))
       border none
       font-weight bold
-      padding 12px 20px
+      padding 12px 15px
 
     .button
       vbg-gradient(#627ebf, #3f5997)
@@ -192,6 +193,7 @@ div.box
       font-weight 500
       font-size 13px
       display inline-block
+      text-shadow 0px 1px 0px rgba(0,0,0,0.5)
 
   a
     color black
@@ -200,20 +202,17 @@ div.box
     -webkit-transform scale(1)
     opacity 0
 
-/// Pages
-/// ---------------------------------------------------------------------------
-
-div.login-page
-  a.registration
-    position absolute
-    top 510px
-    left 0
-    width 100%
-    display block
-    margin-left 8px
-    text-align center
-    font-size 12px
-    color darken(#fff, 50)
+a.boxlink
+  position absolute
+  bottom 40px
+  left 0
+  width 100%
+  display block
+  text-align center
+  font-size 12px
+  color darken(#fff, 50)
+  padding-left 10px
+  border-box()
 
 /// Views
 /// ---------------------------------------------------------------------------
@@ -234,17 +233,17 @@ div.login
     display none
     color red
 
-  &.loading
+  &.loading .box
     background #fff url('/images/loader.gif') no-repeat center center
 
     form
       visibility hidden
 
-  &.failed
-    h1.default
-      display none
-    h1.failed
-      display block
+  // &.failed
+  //   h1.default
+  //     display none
+  //   h1.failed
+  //     display block
 
 /// Course list
 ul.course-list

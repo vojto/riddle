@@ -14,3 +14,6 @@ require('spine-binding')
 require('lib/jquery_ext')
 
 require('d3/d3.v2')
+
+require('vendor/gfx/gfx')
+require('vendor/gfx/gfx.effects')

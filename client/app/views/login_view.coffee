@@ -23,6 +23,13 @@ class LoginView extends View
     @$el.removeClass('loading')
     @$el.addClass('failed')
 
+    # Shake the box to show failure
+    # @$el.find('.box').gfxShake()
+    @$el.find('.box').gfx({scale: 1.2}, {duration: 250})
+    setTimeout =>
+      @$el.find('.box').gfx({scale: 1}, {duration: 250})
+    , 300
+
   reset: ->
     @$el.removeClass('failed')
     @$el.removeClass('loading')
