@@ -17,7 +17,10 @@ def login():
 
     auth.login_user(teacher)
 
-    return response_success()
+    return json.dumps({
+        'response': 'success',
+        'user': teacher.as_json()
+    })
 
 @teacher.route('/logout/')
 @auth.login_required

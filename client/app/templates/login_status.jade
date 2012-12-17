@@ -1,7 +1,5 @@
 if this.user
-  | Logged in: 
-  = user.username
-  | 
+  img.avatar(src=gravatar)
+  = user.fullname
+  br
   a.log-out(href='#') Log out
-else
-  | Not logged in

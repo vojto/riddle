@@ -1,6 +1,7 @@
 View = require('lib/view')
 
 Session = require('models/session')
+md5 = require('vendor/md5')
 
 class LoginStatusView extends View
   template: require('templates/login_status')
@@ -16,6 +17,8 @@ class LoginStatusView extends View
 
   render: =>
     @user = Session.user()
+    @gravatar = "http://gravatar.com/avatar/#{md5(@user.email)}"
+
     super
 
   logOut: (ev) ->

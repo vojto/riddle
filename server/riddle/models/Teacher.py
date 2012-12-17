@@ -2,6 +2,7 @@ from riddle import app, db, model_classes
 from peewee import *
 from flask_peewee.auth import BaseUser
 from flask_peewee.admin import ModelAdmin
+import json
 
 class Teacher(db.Model, BaseUser):
     username = CharField()
@@ -13,6 +14,13 @@ class Teacher(db.Model, BaseUser):
 
     def __unicode__(self):
         return '%s (%s)' % (self.username, self.fullname)
+
+    def as_json(self):
+        return {
+            'username': self.username,
+            'fullname': self.fullname,
+            'email': self.email
+        }
 
 class TeacherAdmin(ModelAdmin):
     columns = ('username', 'fullname', 'password', 'superuser')
