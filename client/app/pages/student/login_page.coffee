@@ -8,6 +8,7 @@ class LoginPage extends Page
 
   events:
     'submit form': 'submit'
+    'tap input.button': 'submit'
 
   elements:
     'form': '$form'

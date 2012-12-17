@@ -113,6 +113,7 @@ class CommentFormView extends View
 
   events:
     'submit form': 'submit'
+    'tap input.button': 'submit'
 
   elements:
     'form': '$form'

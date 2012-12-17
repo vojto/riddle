@@ -150,7 +150,7 @@ class QuestionListView extends View
 
   @binding
     view: QuestionView
-    key: 'cid'
+    key: 'id'
 
   tag: 'ul'
   className: 'list question-list'

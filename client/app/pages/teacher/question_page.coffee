@@ -40,6 +40,9 @@ class QuestionPage extends Page
       @course = course
       @question = @course.questions().find(questionID)
 
+      # Reset the whole view
+      @html @template(@)
+
       @update()
 
       # Get the results
@@ -69,7 +72,8 @@ class QuestionPage extends Page
       @commentsView.comments = @question.comments().all()
       @commentsView.update()
 
-    setTimeout @fetchResults, 2000
+    clearTimeout(@fetchTimeout)
+    @fetchTimeout = setTimeout @fetchResults, 2000
 
   renderGraph: =>
     console.log 'rendering graph'
