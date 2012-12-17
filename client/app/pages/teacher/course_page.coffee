@@ -140,6 +140,7 @@ class CourseView extends View
 class QuestionView extends View
   template: require('templates/course/question')
   tag: 'li'
+  className: 'clearfix'
 
   events:
     'click a.delete': 'remove'
@@ -178,6 +179,7 @@ class QuestionListView extends View
     key: 'cid'
 
   tag: 'ul'
+  className: 'list question-list'
 
   constructor: ->
     super

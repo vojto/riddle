@@ -33,6 +33,8 @@ class QuestionFormPage extends Page
   show: (options) ->
     @setupHalfling()
 
+    @course = null
+
     courseID = options.course_id
     questionID = options.id
 

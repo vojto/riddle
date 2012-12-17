@@ -1,6 +1,7 @@
-= model.number
-strong= model.description
+div.number= model.number
+h3= model.description
 
-a.edit-question(href='#') Edit
-a.delete(href='#') Delete
-a.present(href='#') Present
+div.inline-buttons
+  a.button.edit-question(href='#') Edit
+  a.button.delete(href='#') Delete
+  a.button.primary.present(href='#') Present

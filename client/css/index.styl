@@ -18,6 +18,9 @@ div.right
   h2
     margin-top 10px
 
+.clearfix
+  clearfix()
+
 /// Layout
 /// ---------------------------------------------------------------------------
 
@@ -51,6 +54,7 @@ div.error-message
   padding 10px
   box-shadow(0px 1px 1px rgba(0,0,0,0.3))
 
+lightPageBackground = #ededed
 .page
   min-height 100%
   height auto !important
@@ -72,7 +76,7 @@ div.error-message
 
 
   &.light
-    background #ededed
+    background lightPageBackground
     color #000
 
     a
@@ -223,6 +227,7 @@ form
     color #000
 
 /// Buttons
+
 buttonColor = darken(#686869, 2)
 buttonPrimaryColor = lighten(#686869, 5)
 .button
@@ -254,6 +259,10 @@ buttonLightPrimaryColor = #4D72B0
       color #fff
       border 1px solid buttonLightPrimaryColor
 
+.inline-buttons
+  .button
+    padding 5px
+    text-decoration none
 
 /// Box
 boxWidth = 300px
@@ -357,7 +366,9 @@ div.login-status
     border-box()
 
 /// List
-
+ul.list
+  list-style-type none
+  padding 0
 
 /// Login
 
@@ -461,3 +472,48 @@ div.presentation-status
 .halfling
   .presentation-status
     left halflingMargin
+
+/// Question list
+/// ---------------------------------------------------------------------------
+
+numberSize = 35px
+buttonColor = lighten(#797979, 20)
+buttonPrimaryColor = #4e76b8
+.page ul.question-list
+  margin-top 15px
+
+  li
+    margin-bottom 25px
+
+  .button
+    margin-right 10px
+    font-size 11px
+    font-weight 600
+    color buttonColor
+    border 1px solid buttonColor
+    padding 5px 10px
+
+    &.primary
+      color buttonPrimaryColor
+      border 1px solid buttonPrimaryColor
+      background none
+
+  h3
+    font-weight 300
+    font-size 16px
+    margin-bottom 10px
+    color #797979
+
+  div.number
+    float left
+    margin-right 10px
+    background #b2b2b2
+    display block
+    width numberSize
+    height numberSize
+    font-size 30px
+    font-weight 500
+    text-align center
+    padding 8px
+    color lightPageBackground
+    border-radius(50px)
