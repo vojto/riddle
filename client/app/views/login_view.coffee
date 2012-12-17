@@ -8,6 +8,7 @@ class LoginView extends View
 
   elements:
     'form': '$form'
+    '.box': '$box'
 
   events:
     'submit form': 'submit'
@@ -38,10 +39,10 @@ class LoginView extends View
     @$el.removeClass('hidden')
     @$form.find('input[type=text]').val('')
     @$form.find('input[type=password]').val('')
-    @$el.gfx({opacity: 1, scale: 1}, {duration: 500})
+    @$box.gfx({opacity: 1, scale: 1}, {duration: 0})
 
   hide: ->
-    @$el.gfx({opacity: 0, scale: 0.9}, {duration: 500, complete: =>
+    @$box.gfx({opacity: 0, scale: 0.9}, {duration: 500, complete: =>
       @$el.addClass('hidden')
     })
 
