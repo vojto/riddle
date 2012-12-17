@@ -6,10 +6,16 @@ Atmos = require('atmos2')
 Modifiers = require('lib/modifiers')
 Session = require('models/session')
 
+if window.isProduction
+  appBase = 'http://riddle.rinik.net'
+else
+  appBase = 'http://localhost:5000'
+
+
 class App extends Spine.Controller
   className: 'app'
 
-  @base: 'http://localhost:5000'
+  @base: appBase
 
   constructor: ->
     super

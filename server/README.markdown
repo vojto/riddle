@@ -6,3 +6,4 @@ Install the following Python modules:
 - `flask_peewee`
 - `qrcode`
 - `recaptcha`
+- `unidecode`
