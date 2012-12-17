@@ -13,6 +13,7 @@ class CoursePage extends Page
 
   constructor: ->
     super
+
     @courseView = new CourseView
     @append @courseView
 
@@ -32,6 +33,7 @@ class CoursePage extends Page
     @append @statusView
 
   show: (options) ->
+    @setupHalfling()
     Course.fetchOne options.id, (course) =>
       @course = course
       @update()

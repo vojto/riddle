@@ -20,7 +20,7 @@ class App extends Spine.Controller
     Modifiers.setup()
 
     # Session
-    user = Session.user()
+    @user = Session.user()
 
     # Networking
     @atmos = new Atmos(base: @constructor.base)
@@ -38,7 +38,7 @@ class App extends Spine.Controller
       '/course/:course_id/question/new' : 'pages/teacher/question_form_page'
       '/course/:course_id/question/:id/edit' : 'pages/teacher/question_form_page'
       '/course/:course_id/question/:id' : 'pages/teacher/question_page'
-    defaultRoute = if user then '/dashboard' else '/login'
+    defaultRoute = if @user then '/dashboard' else '/login'
     Spine.Route.add '/': => @navigate(defaultRoute)
 
     # Student routes
@@ -46,11 +46,22 @@ class App extends Spine.Controller
       '/:course_id'                     : 'pages/student/course/show_page'
       '/student/login'                  : 'pages/student/login_page'
 
+    # Special pages
+    @bind 'willShowPage', @willShowPage
+
     Spine.Route.setup()
 
     # Views
     @setupLoaderView()
     @setupErrorView()
+
+  willShowPage: (page) =>
+    if page.constructor.name == 'CoursePage' and @user
+      @showPageAtPath('pages/teacher/dashboard_page', {})
+
+
+  ## Page routing
+  #  To be refactored into a general class
 
   addRoutesForPages: (table) ->
     ### Table is in format route -> class path ###
@@ -72,8 +83,11 @@ class App extends Spine.Controller
     if !pagePath
       console.log 'Routing error: ', match
 
-    pageClass = require(pagePath)
+    @showPageAtPath(pagePath, match)
+
+  showPageAtPath: (pagePath, match) ->
     @pageInstances or= {}
+    pageClass = require(pagePath)
 
     if @pageInstances[pagePath]
       page = @pageInstances[pagePath]
@@ -82,6 +96,7 @@ class App extends Spine.Controller
 
     if page
       @constructor.page = page # TODO: Come up with better way than global
+      @trigger 'willShowPage', page
       page.show(match)
       # @el.children().detach()
       @append(page)

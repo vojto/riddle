@@ -11,7 +11,7 @@ class QuestionPage extends Page
   ###
 
   template: require('templates/question/show')
-  className: 'light'
+  className: 'light halfling'
 
   elements:
     'svg#graph': '$graph'

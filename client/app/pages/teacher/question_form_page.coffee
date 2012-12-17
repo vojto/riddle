@@ -9,7 +9,7 @@ Option = require('models/option')
 # -----------------------------------------------------------------------------
 class QuestionFormPage extends Page
   template: require('templates/question/form')
-  className: 'light'
+  className: 'light halfling'
 
   elements:
     'form': '$form'

@@ -9,11 +9,14 @@
   to
     -webkit-transform rotate(0deg)
 
+halflingMargin = 80px
+
 *
   margin 0
 
 html, body
   height 100%
+  background url(/images/linen.jpg)
 
 errorColor = #ab2424
 div.error-message
@@ -53,6 +56,10 @@ div.error-message
   &.light
     background #fff
     color #000
+
+  &.halfling
+    left halflingMargin
+    box-shadow(-10px 0px 20px rgba(0,0,0,0.5))
 
 loaderSize = 50px
 body > div.loader
@@ -109,6 +116,15 @@ h1.error
   color darken(#393A3C, 10)
   text-shadow 0 1px 0px rgba(255, 255, 255, 0.15)
 
+.halfling-close
+  position absolute
+  left 0
+  width halflingMargin
+  background rgba(0,0,0,0.3)
+  top 0
+  height 100%
+  z-index 200
+
 /// Typo
 /// ---------------------------------------------------------------------------
 
@@ -153,14 +169,15 @@ form
       color #8b8b8b
       margin-bottom 5px
 
-    input[type=text]
+    input[type=text], input[type=password]
       display block
       width 220px
+      color #000
 
 /// Dark form
 
 form
-  input[type=text]
+  input[type=text], input[type=password]
     background rgba(20, 20, 20, 0.4)
     border none
     border-bottom 1px solid rgba(255, 255, 255, 0.15)
@@ -229,6 +246,7 @@ div.box
     text-transform uppercase
     font-size 22px
     font-weight 400
+    text-shadow none
 
   form
     padding 0 20px
@@ -404,3 +422,7 @@ div.presentation-status
 
   .right
     float right
+
+.halfling
+  .presentation-status
+    left halflingMargin

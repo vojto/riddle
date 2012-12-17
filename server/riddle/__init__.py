@@ -23,6 +23,11 @@ app.config.from_pyfile("settings.cfg", silent=True)
 
 db = Database(app)
 
+@app.before_request
+def sleep_app():
+    import time
+    # time.sleep(1)
+
 print "Starting!"
 
 model_classes = []
