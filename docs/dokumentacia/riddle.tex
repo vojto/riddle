@@ -1,0 +1,90 @@
+%Technická univerzita v Košiciach, Fakulta elektrotechniky a informatiky
+%Katedra poèítaèov a informatiky
+%\renewcommand{\contentsname}{Whatever}
+
+%\documentclass[12pt]{article}
+\documentclass[parskip=full]{scrartcl}
+\usepackage[slovak]{babel}
+\usepackage{slovak}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{verbatim} 
+\usepackage{lipsum}% just to generate text for the example
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+%\usepackage{hyperref}
+%\hypersetup{pdftex,colorlinks=true,allcolors=blue}
+%\usepackage{hypcap}
+%\begin{comment}
+\usepackage[]{hyperref}
+\hypersetup{
+    pdftitle={Your title here},
+    pdfauthor={Your name here},
+    pdfsubject={Your subject here},
+    pdfkeywords={keyword1, keyword2},
+    bookmarksnumbered=true,     
+    bookmarksopen=true,         
+    bookmarksopenlevel=1,       
+    colorlinks=true,            
+    pdfstartview=Fit,           
+    pdfpagemode=UseOutlines,    % this is the option you were lookin for
+  %  pdfpagelayout=TwoPageRight
+}
+%\end{comment}
+\pagestyle{fancy}
+\lhead{\footnotesize \parbox{11cm}{Riddle} }
+\lfoot{\footnotesize \parbox{11cm}{\textit{Technická univerzita v Košiciach, Fakulta elektrotechniky a informatiky , 2012}}}
+\cfoot{}
+\rhead{\footnotesize }
+\rfoot{\footnotesize Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headheight}{24pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\parindent}{1cm}
+
+
+\title{Riddle\\ Webové technológie}
+\author{
+				\\\\\\\\\\\\\\\\\\autori:\\
+         Bc. ¼ubomír Remák \\
+          % \and
+        Bc. Patrik Ragan\\
+         %\and
+         Bc. Vojtech Riník\\
+   \\
+   \\
+   \\
+   \\
+   \\
+   \\
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+%uvod
+\include{uvod}
+%prieskum trhu
+\include{prieskum}
+%konceptualny datovy model
+\include{konceptualny}
+%detailny navrh
+\include{navrh}
+%use case
+\include{usecases}
+%pouzita literatura
+\include{literatura}
+
+\bibliographystyle{abbrv}
+\bibliography{simple}
+
+\end{document}
+This is never printed
