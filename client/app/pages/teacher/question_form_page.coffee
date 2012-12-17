@@ -45,7 +45,7 @@ class QuestionFormPage extends Page
       @course = course
       if @isEditing
         @question = @course.questions().find(questionID)
-        @question.bind 'change', @update
+        # @question.bind 'change', @update
       @update()
 
   update: =>
@@ -120,7 +120,7 @@ class OptionListView extends View
 
   @binding
     view: OptionView
-    key: 'cid'
+    key: 'id'
 
   constructor: ->
     super

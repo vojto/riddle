@@ -43,9 +43,14 @@ class Question extends Spine.Model
   load: (data) ->
     super
     if data.options
+      console.log data
+      console.log 'updating from options', @id, data.options.length
       for optionData in data.options
-        optionData.question = @
-        option = new Option(optionData)
-        option.save()
+        try
+          option = @options().find(optionData.id)
+        catch e
+          optionData.question = @
+          option = new Option(optionData)
+          option.save()
 
 module.exports = Question
