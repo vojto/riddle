@@ -9,7 +9,7 @@ Question = require('models/question')
 ## ----------------------------------------------------------------------------
 
 class CoursePage extends Page
-  className: 'has-header'
+  className: 'has-header light'
 
   constructor: ->
     super

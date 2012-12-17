@@ -47,7 +47,7 @@ div.error-message
   z-index 10
 
   &.has-header
-    padding-top 40px
+    padding-top 55px
 
 
   &.light
@@ -128,6 +128,13 @@ h2
 a
   color #fff
 
+.page.light
+  color #000
+  h1
+    color #000
+    text-shadow none
+
+
 /// Elements
 /// ---------------------------------------------------------------------------
 
@@ -180,6 +187,22 @@ buttonPrimaryColor = lighten(#686869, 5)
   cursor pointer
   &.primary
     vbg-gradient(buttonPrimaryColor, darken(buttonPrimaryColor, 10))
+
+buttonLightColor = lighten(#444, 20)
+buttonLightPrimaryColor = #4D72B0
+.page.light
+  .button
+    box-shadow(none)
+    background none
+    border 1px solid buttonLightColor
+    color darken(buttonLightColor, 100)
+    text-shadow none
+
+    &.primary
+      background buttonLightPrimaryColor
+      color #fff
+      border 1px solid buttonLightPrimaryColor
+
 
 /// Box
 boxWidth = 300px
@@ -370,8 +393,11 @@ div.presentation-status
   right 0
   padding 10px
   height 15px
-  background blue
-  color #fff
+  vbg-gradient(#5b80be, #4065a3)
+  color #99b3e0
+  font-weight 500
+  text-shadow 0px 1px 0px rgba(0,0,0,0.3)
+  // box-shadow(0px 1px 1px rgba(0,0,0,0.3))
 
   .left
     float left

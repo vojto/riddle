@@ -28,8 +28,9 @@ def presentation_status(qid):
 
     count = StudentPresence.count_active(questionnaire)
     question = questionnaire.presented_question()
+    questionData = question.as_json() if question else None
 
-    return json.dumps({'student_count': count, 'presented_question': question.as_json()})
+    return json.dumps({'student_count': count, 'presented_question': questionData})
 
 @teacher.route('/qaires/')
 @auth.login_required
