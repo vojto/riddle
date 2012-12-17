@@ -1,39 +1,40 @@
-\section{Konceptuálny dátovy model}
+\section{Konceptuálny dátovı model}
 
 \subsection{Popis základnıch entít}
 
 \paragraph{Teacher} ~~~~~\\
- Entita Teacher reprezentuje pouívate¾a, predpokladá sa uèite¾, ktorı je v systéme registrovanı a prihlásenı.
-Pri registrácia sa vyplnia poloky name,fullname,password. Pre administrátora je urèena poloka superuser.
+ Entita Teacher reprezentuje pouívate¾a. Predpokladá sa uèite¾, ktorı je v systéme registrovanı a prihlásenı.
+Pri registrácii sa vyplnia poloky name, fullname, password. Pre administrátora je urèená poloka superuser.
 
 \paragraph{Student} ~~~~~\\
-Entita Student je jednou z k¾úèovıch entít, pretoe uchováva dáta o pouívate¾och, ktorı navštívili danú anketu.
+Entita Student je jednou z k¾úèovıch entít, pretoe uchováva dáta o pouívate¾och, ktorí navštívili danú anketu.
 Klient sa identifikuje vo forme session id. Študent môe ma priradené svoje meno, ale nemusí. Z toho vyplıva, e hlasovanie môe by do istej formy anonymné.
 
 \paragraph{Category}  ~~~~~\\
- Entita Category, Kategória, reprezentuje rozdelenie dotazníkov do jednotlivıch skupín/kategórií pre lepšiu správu a preh¾adnos. 
-kategórie sú rozdelené pod¾a názvu a prístup k ním má prihlásenı pouívate¾.
+ Entita Category reprezentuje rozdelenie dotazníkov do jednotlivıch skupín/kategórií pre lepšiu správu a preh¾adnos. 
+Kategórie sú rozdelené pod¾a názvu a prístup k nim má prihlásenı pouívate¾.
 
-\paragraph{Questionaire} ~~~~~\\
-Entita Questionaire reprezentuje dané dotazníky, ktoré sa nachádzajú v kategóriach. Obsahujú názov a public id, ktoré je potrebné pri zobrazení daného dotazníka študentom.
+\paragraph{Questionnaire} ~~~~~\\
+Entita Questionnaire reprezentuje dané dotazníky, ktoré sa nachádzajú v kategóriach. Obsahujú názov a public id, ktoré je potrebné pri zobrazení daného dotazníka študentom.
 
 \paragraph{Question} ~~~~~\\
-Entita Question reprezentuje dané otázky v systéme. Questionaire môe obsahova viacero otázok. Prvky, z ktorıch pozostáva Question je typ otázky, to znamená, èi je single, multi alebo text. Pri single môe by oznaèená jedna odpoveï. 
-Pri multi môe by oznaèenıch viacero odpovedí a pri text je poadovaná odpoveï v textovej forme. 
+Entita Question reprezentuje dané otázky v systéme. Questionnaire môe obsahova viacero otázok.
+Medzi prvky, z ktorıch pozostáva Question, patrí hlavne typ otázky. Tento typ môe by single, multi alebo text.
+Pri single môe by oznaèená jedna odpoveï, pri multi môe by oznaèenıch viacero odpovedí a pri text je poadovaná odpoveï v textovej forme.
 Ïalej monos presented znaèí, èi u bola anketa publikovaná alebo nie. 
 
 \paragraph{Comment} ~~~~~\\
-Entita Comment reprezentuje komentár k danému Questionaire. Cie¾ jej pouitia je podpora feedbacku. 
-Pozostáva z autora, subjektu , ïalej obsahuje telo, kde bude umiestnené samotne jadro komentára a nakoniec timestamp.
+Entita Comment reprezentuje komentár k danému Questionnaire. Cie¾ jej pouitia je podpora spätnej väzby. 
+Pozostáva z mena (prezıvky) autora, nadpisu, tela, kde bude umiestnené samotné jadro komentára, a nakoniec èasu a dátumu odoslania.
 
 \paragraph{Option} ~~~~~\\
-Entita Option obsahuje text konkrétnej otázky. Vzahuje sa na entitu Question. Prekadú monost je vytvorená textová reprezentácia.
+Entita Option obsahuje text konkrétnej otázky. Vzahuje sa na entitu Question. Pre kadú monos je vytvorená textová reprezentácia.
 
 \paragraph{Answer} ~~~~~\\
-Entita Answer sa vzahuje na entitu Question a entitu Student. Úlohou je zaznamena, e bola prijatá konkretna odpoveï na otázku. 
+Entita Answer sa vzahuje na entitu Question a entitu Student. Úlohou je zaznamena, e bola prijatá konkrétna odpoveï na otázku. 
 
 \paragraph{Rating} ~~~~~\\
-Entita Rating vzahuje na entitu Questionaire a entitu Student a poskytuje pouívate¾om (študentom) monos vyjardri svoju spokojnos s danım dotazníkom tım, e danému dotazníku dajú like alebo dislike. Vïaka tejto entite sa následne zobrazí úroveò spokojnosti s dotazníkom.
+Entita Rating sa vzahuje na entitu Questionnaire a entitu Student a poskytuje pouívate¾om (študentom) monos vyjardri svoju spokojnos s danım dotazníkom tım, e mu dajú like alebo dislike. Vïaka tejto entite sa následne zobrazí úroveò spokojnosti s dotazníkom.
 
 \paragraph{Student presence} ~~~~~\\
 co to robi ?????
