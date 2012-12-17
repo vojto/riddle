@@ -123,7 +123,7 @@ class QuestionView extends View
 
   constructor: ->
     super
-    @model.bind 'change', @render
+    # @model.bind 'change', @render
     @render()
 
   render: =>
