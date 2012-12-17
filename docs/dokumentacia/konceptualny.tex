@@ -46,41 +46,51 @@ Táto entita si uchováva informácie o prítomnosti študentov (entita Student) na d
 \includegraphics[scale=0.65]{pics/FyzickyFinal.png}
 
 \subsection{Databázový skript}
-CREATE TABLE ’’answer’’
-CREATE TABLE ’’answer’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’text’’ TEXT, ’’option\_id’’ INTEGER NOT NULL REFERENCES ’’option’’ (’’id’’) , ’’student\_id’’ INTEGER NOT NULL REFERENCES ’’student’’ (’’id’’) ); 
+CREATE TABLE ''answer'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''text'' TEXT, ''option\_id'' INTEGER REFERENCES ''option'' (''id'') , ''question\_id'' INTEGER NOT NULL REFERENCES ''question'' (''id'') , ''student\_id'' INTEGER NOT NULL REFERENCES ''student'' (''id'') );
 
-CREATE TABLE ’’category’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’name’’ VARCHAR(255) NOT NULL, ’’teacher\_id’’ INTEGER NOT NULL REFERENCES ’’teacher’’ (’’id’’) ); 
+CREATE TABLE ''category'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''name'' VARCHAR(255) NOT NULL, ''teacher\_id'' INTEGER NOT NULL REFERENCES ''teacher'' (''id'') );
 
-CREATE TABLE ’’comment’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’author’’ VARCHAR(255) NOT NULL, ’’subject’’ VARCHAR(255) NOT NULL, ’’body’’ TEXT NOT NULL, ’’questionnaire\_id’’ INTEGER NOT NULL REFERENCES ’’questionnaire’’ (’’id’’) , ’’datetime’’ DATETIME NOT NULL); 
+CREATE TABLE ''comment'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''author'' VARCHAR(255) NOT NULL, ''subject'' VARCHAR(255) NOT NULL, ''body'' TEXT NOT NULL, ''questionnaire\_id'' INTEGER NOT NULL REFERENCES ''questionnaire'' (''id'') , ''datetime'' DATETIME NOT NULL);
 
-CREATE TABLE ’’option’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’text’’ TEXT NOT NULL, ’’question\_id’’ INTEGER NOT NULL REFERENCES ’’question’’ (’’id’’) ); 
+CREATE TABLE ''option'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''text'' TEXT NOT NULL, ''question\_id'' INTEGER NOT NULL REFERENCES ''question'' (''id'') );
 
-CREATE TABLE ’’question’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’description’’ TEXT NOT NULL, ’’typ’’ INTEGER NOT NULL, ’’presented’’ SMALLINT NOT NULL, ’’questionnaire\_id’’ INTEGER NOT NULL REFERENCES ’’questionnaire’’ (’’id’’) ); 
+CREATE TABLE ''question'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''description'' TEXT NOT NULL, ''typ'' INTEGER NOT NULL, ''presented'' SMALLINT NOT NULL, ''questionnaire\_id'' INTEGER NOT NULL REFERENCES ''questionnaire'' (''id'') );
 
-CREATE TABLE ’’questionnaire’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’name’’ VARCHAR(255) NOT NULL, ’’public\_id’’ VARCHAR(255) NOT NULL, ’’category\_id’’ INTEGER NOT NULL REFERENCES ’’category’’ (’’id’’) ); 
+CREATE TABLE ''questionnaire'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''name'' VARCHAR(255) NOT NULL, ''public\_id'' VARCHAR(255) NOT NULL, ''category\_id'' INTEGER NOT NULL REFERENCES ''category'' (''id'') );
 
-CREATE TABLE ’’rating’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’like’’ SMALLINT NOT NULL, ’’questionnaire\_id’’ INTEGER NOT NULL REFERENCES ’’questionnaire’’ (’’id’’) ); 
+CREATE TABLE ''rating'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''like'' SMALLINT NOT NULL, ''student\_id'' INTEGER NOT NULL REFERENCES ''student'' (''id'') , ''questionnaire\_id'' INTEGER NOT NULL REFERENCES ''questionnaire'' (''id'') );
 
-CREATE TABLE ’’student’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’name’’ VARCHAR(255) NOT NULL, ’’session\_id’’ VARCHAR(255) NOT NULL); 
+CREATE TABLE ''student'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''name'' VARCHAR(255) NOT NULL, ''session\_id'' VARCHAR(255) NOT NULL);
 
-CREATE TABLE ’’teacher’’ (’’id’’ INTEGER NOT NULL PRIMARY KEY, ’’username’’ VARCHAR(255) NOT NULL, ’’fullname’’ VARCHAR(255) NOT NULL, ’’email’’ VARCHAR(255) NOT NULL, ’’password’’ VARCHAR(255) NOT NULL, ’’active’’ SMALLINT NOT NULL, ’’superuser’’ SMALLINT NOT NULL);
+CREATE TABLE ''studentpresence'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''student\_id'' INTEGER NOT NULL REFERENCES ''student'' (''id'') , ''questionnaire\_id'' INTEGER NOT NULL REFERENCES ''questionnaire'' (''id'') , ''last\_ping'' DATETIME NOT NULL);
 
-CREATE INDEX ’’answer\_option\_id’’ ON ’’answer’’ (’’option\_id’’);
+CREATE TABLE ''teacher'' (''id'' INTEGER NOT NULL PRIMARY KEY, ''username'' VARCHAR(255) NOT NULL, ''fullname'' VARCHAR(255) NOT NULL, ''email'' VARCHAR(255) NOT NULL, ''password'' VARCHAR(255) NOT NULL, ''active'' SMALLINT NOT NULL, ''superuser'' SMALLINT NOT NULL);
 
-CREATE INDEX ’’answer\_student\_id’’ ON ’’answer’’ (’’student\_id’’);
+CREATE INDEX ''answer\_option\_id'' ON ''answer'' (''option\_id'');
 
-CREATE INDEX ’’category\_teacher\_id’’ ON ’’category’’ (’’teacher\_id’’);
+CREATE INDEX ''answer\_question\_id'' ON ''answer'' (''question\_id'');
 
-CREATE INDEX ’’comment\_questionnaire\_id’’ ON ’’comment’’ (’’questionnaire\_id’’);
+CREATE INDEX ''answer\_student\_id'' ON ''answer'' (''student\_id'');
 
-CREATE INDEX ’’option\_question\_id’’ ON ’’option’’ (’’question\_id’’);
+CREATE INDEX ''category\_teacher\_id'' ON ''category'' (''teacher\_id'');
 
-CREATE INDEX ’’question\_questionnaire\_id’’ ON ’’question’’ (’’questionnaire\_id’’);
+CREATE INDEX ''comment\_questionnaire\_id'' ON ''comment'' (''questionnaire\_id'');
 
-CREATE INDEX ’’questionnaire\_category\_id’’ ON ’’questionnaire’’ (’’category\_id’’);
+CREATE INDEX ''option\_question\_id'' ON ''option'' (''question\_id'');
 
-CREATE INDEX ’’questionnaire\_name\_category\_id’’ ON ’’questionnaire’’ (’’name’’, ’’category\_id’’);
+CREATE INDEX ''question\_questionnaire\_id'' ON ''question'' (''questionnaire\_id'');
 
-CREATE UNIQUE INDEX ’’questionnaire\_public\_id’’ ON ’’questionnaire’’ (’’public\_id’’);
+CREATE INDEX ''questionnaire\_category\_id'' ON ''questionnaire'' (''category\_id'');
 
-CREATE INDEX ’’rating\_questionnaire\_id’’ ON ’’rating’’ (’’questionnaire\_id’’);
+CREATE INDEX ''questionnaire\_name\_category\_id'' ON ''questionnaire'' (''name'', ''category\_id'');
+
+CREATE UNIQUE INDEX ''questionnaire\_public\_id'' ON ''questionnaire'' (''public\_id'');
+
+CREATE INDEX ''rating\_questionnaire\_id'' ON ''rating'' (''questionnaire\_id'');
+
+CREATE INDEX ''rating\_student\_id'' ON ''rating'' (''student\_id'');
+
+CREATE INDEX ''studentpresence\_questionnaire\_id'' ON ''studentpresence'' (''questionnaire\_id'');
+
+CREATE INDEX ''studentpresence\_student\_id'' ON ''studentpresence'' (''student\_id'');
+
