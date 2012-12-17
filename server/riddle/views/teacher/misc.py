@@ -134,7 +134,8 @@ def results_texts():
         answers = Answer.select(Answer, Student).where(Answer.question == qion)
 
         for answer in answers:
-            ret['question_answers'].append({'text': answer.text, 'student': answer.student.name, 'id': answer.id})
+            if answer.text:
+                ret['question_answers'].append({'text': answer.text, 'student': answer.student.name, 'id': answer.id})
 
 
         return json.dumps(ret)

@@ -80,7 +80,7 @@ class QuestionPage extends Page
     maxValue = 1 if maxValue == 0 # division by zero
 
     totalWidth = 400
-    totalHeight = 200
+    totalHeight = 100
     padding = 5
     width = (totalWidth / data.length) - padding
 
@@ -151,9 +151,10 @@ class CommentsView extends View
     view: CommentView
     key: 'id'
 
+  className: 'comments'
+
   constructor: ->
     super
-    @append 'comments go here'
 
   update: ->
     @data @comments

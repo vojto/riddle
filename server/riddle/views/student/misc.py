@@ -90,7 +90,7 @@ def submit_answer():
         qion_type = qtype2str(qion.typ)
 
         text_answer = request.form.get('text_answer')
-        if text_answer:
+        if text_answer and text_answer != '':
             Answer.create(text=text_answer, question=qion, student=student)
 
         option_ids = request.form.getlist('option_ids[]')
