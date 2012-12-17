@@ -5,20 +5,22 @@ Course = require('models/course')
 Question = require('models/question')
 Option = require('models/option')
 
-# QuestionFormPage
-# -----------------------------------------------------------------------------
+## QuestionFormPage
+## ----------------------------------------------------------------------------
 class QuestionFormPage extends Page
   template: require('templates/question/form')
-  className: 'light halfling'
+  className: 'light'
 
   elements:
     'form': '$form'
     'input[name=description]': '$descriptionField'
     'select[name=type]': '$typeSelect'
+    'div.options': '$options'
 
   events:
     'submit form': 'submit'
     'click a.add-option': 'addOption'
+    'change select[name=type]': 'didChangeType'
 
   constructor: ->
     super
@@ -29,8 +31,12 @@ class QuestionFormPage extends Page
     @$('div.options').append(@optionListView.$el)
 
   show: (options) ->
+    @setupHalfling()
+
     courseID = options.course_id
     questionID = options.id
+
+    @$form.find('input[type=text]').val('')
 
     @isEditing = !!questionID
     Course.fetchOne courseID, (course) =>
@@ -48,6 +54,14 @@ class QuestionFormPage extends Page
       @optionListView.options = @question.options().all()
     @optionListView.update()
 
+  # Event handlers
+
+  didChangeType: ->
+    {type} = @$form.serializeObject()
+    if type == '3'
+      @$options.hide()
+    else
+      @$options.show()
 
   # Actions
 
@@ -78,8 +92,8 @@ class QuestionFormPage extends Page
     ev.preventDefault()
     @optionListView.createOption()
 
-# OptionView
-# -----------------------------------------------------------------------------
+## OptionView
+## ----------------------------------------------------------------------------
 class OptionView extends View
   template: require('templates/question/option')
 
@@ -97,8 +111,8 @@ class OptionView extends View
   updateModel: ->
     @model.text = @$input.val()
 
-# OptionListView
-# -----------------------------------------------------------------------------
+## OptionListView
+## ----------------------------------------------------------------------------
 class OptionListView extends View
   @extend Spine.Binding
 
@@ -110,11 +124,12 @@ class OptionListView extends View
     super
     @options = []
 
-    @append 'this is option list view'
     @update()
 
   update: ->
     console.log 'updating them options', @options
+    for opt, i in @options
+      opt.number = i+1
     @data @options
 
   # Actions

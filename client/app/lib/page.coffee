@@ -29,6 +29,7 @@ class Page extends Spine.Controller
 
   setupHalfling: ->
     @$el.addClass('halfling')
+    $(document.body).find('.halfling-close').remove()
     $halflingClose = $('<div />').addClass('halfling-close')
     $(document.body).append($halflingClose)
     $halflingClose.click =>

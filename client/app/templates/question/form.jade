@@ -1,21 +1,24 @@
-h1 Edit question
-
 form
-  div.line
-    label Title
-    input(type='text', name='description')
-  div.line
-    label Type
-    select(name='type')
-      option(value='1') Single choice
-      option(value='2') Multiple choice
-      option(value='3') Text only
+  div.left.bordered
+    h1 Edit question
 
-  div.line
-    input.button(type='submit') Save
+    div.line
+      label Title
+      input(type='text', name='description')
+    div.line
+      label Type
+      select(name='type')
+        option(value='1') Single choice
+        option(value='2') Multiple choice
+        option(value='3') Text only
 
-h2 Options
+    div.line
+      input.button.primary(type='submit') Save
 
-a.add-option(href='#') Add option
 
-div.options
+  div.right.options
+    h2.margined
+      | Options
+      a.h2link.add-option(href='#')
+        img(src='/images/add-button-black.png')
+    div.options

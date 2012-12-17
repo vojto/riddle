@@ -1,5 +1,23 @@
 @import './mixin'
 
+/// Special
+/// ---------------------------------------------------------------------------
+
+div.left
+  float left
+  width 35%
+
+  &.bordered
+    border-right 1px solid #ccc
+
+div.right
+  padding-left 20px
+  float left
+  width 40%
+
+  h2
+    margin-top 10px
+
 /// Layout
 /// ---------------------------------------------------------------------------
 
@@ -54,8 +72,11 @@ div.error-message
 
 
   &.light
-    background #fff
+    background #ededed
     color #000
+
+    a
+      color #000
 
   &.halfling
     left halflingMargin
@@ -140,6 +161,8 @@ h1
 
 h2
   font-weight 200
+  &.margined
+    margin-bottom 7px
 
 a
   color #fff
@@ -150,6 +173,10 @@ a
     color #000
     text-shadow none
 
+.h2link
+  margin-left 5px
+  position relative
+  top 2px
 
 /// Elements
 /// ---------------------------------------------------------------------------
@@ -162,17 +189,17 @@ form
     &.center
       text-align center
 
-    label
-      width 100px
-      display block
-      padding-top 5px
-      color #8b8b8b
-      margin-bottom 5px
+  label
+    width 100px
+    display block
+    padding-top 5px
+    color #8b8b8b
+    margin-bottom 5px
 
-    input[type=text], input[type=password]
-      display block
-      width 220px
-      color #000
+  input[type=text], input[type=password]
+    display block
+    width 220px
+    color #000
 
 /// Dark form
 
@@ -187,6 +214,13 @@ form
     padding 12px 15px
     &:focus
       outline none
+
+/// Light form
+
+.page.light form
+  input
+    background darken(#fff, 2)
+    color #000
 
 /// Buttons
 buttonColor = darken(#686869, 2)
@@ -422,6 +456,7 @@ div.presentation-status
 
   .right
     float right
+    width auto
 
 .halfling
   .presentation-status
