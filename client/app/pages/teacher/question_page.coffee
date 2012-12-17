@@ -21,14 +21,21 @@ class QuestionPage extends Page
 
   constructor: ->
     super
-    @html @template(@)
+
     @question = null
+
+    @cleanRender()
+
+  cleanRender: ->
+    @html @template(@)
+
 
     @commentsView = new CommentsView
     @append @commentsView
 
     @statusView = new StatusView
     @append @statusView
+
 
   show: (options) ->
     @setupHalfling()
@@ -41,7 +48,7 @@ class QuestionPage extends Page
       @question = @course.questions().find(questionID)
 
       # Reset the whole view
-      @html @template(@)
+      @cleanRender()
 
       @update()
 
