@@ -34,19 +34,108 @@
     
  
 \subsection{Detailnı návrh aplikácie}
-\lipsum[2]
-~~~~~     
-\subsubsection{Pouívate¾ské rozhranie}    
-\lipsum[2]
+    
+    
+    
 \subsubsection{Registrácia}    
- Na titulnej strane je potrebné kliknú na tlaèidlo SIGN UP. Následne sa zobrazí dialóg v . 
-\subsubsection{Pouívate¾ské akcie}    
-\lipsum[2]
+ Registrácia pouívate¾a prebieha pomocou formulára. Pouívate¾ vyplní formulár v tvare prezıvka, pouívate¾ské meno, heslo a email.
+ Následne potvrdí stlaèením tlaèidla Odosla.
+ 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{pics/registraciaCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Prihlásenie} 
+ Prihlásenie pouívate¾a prebieha pomocou formuláru, kde pouívate¾ zadá svoju prezıvku a heslo.
+ Následne potvrdí stlaèením tlaèidla Odosla. \\
+ Po úspešnom prihlásení ho aplikácia presunie na stránku obsahujúcu kategórie a pod nich spadajúce dotazníky.
+ 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{pics/loginCROP.png}
+\end{figure}   
+
+\newpage
 \subsubsection{Správa dotazníkov}   
-\lipsum[2] 
-\subsubsection{Vytváranie ankety}     
-\lipsum[2]  
-\subsubsection{Rozhranie študenta}     
-\lipsum[2]  
-\subsubsection{Akcie študenta}     
-\lipsum[2] 
+Na tejto stránke pouívate¾ preh¾adne vidí svoje vytvorené dotazníky rozdelené do kategórií. \\
+V pravom hornom rohu aplikácie sa nachádza meno pouívate¾a a pod ním monos odhlásenia sa z aplikácie.\\
+Po kliknutí na danı dotazník sa pouívate¾ovi otvorí okno, kde uvidí zoznam otázok, ktoré dotazník obsahuje.\\
+Po kliknutí na tlaèidlo Add category sa pouívate¾ovi zobrazí okno, kde môe prida novú kategóriu.\\
+Po kliknutí na tlaèidlo Edit má monos upravi dotazník.\\
+Pre rıchle vytvorenie nového dotazníka je k dispozícii vdy na konci kategórie tlaèidlo Add lecture.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.90]{pics/dashboardCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Pridanie kategórie}   
+Na tejto stránke má pouívate¾ monos prida novú kategóriu, a to zadaním názvu novej kategórie a následnım kliknutím na tlaèidlo Odosla.
+Potom bude presmerovanı naspä na stránku so správou dotazníkov. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/add-categoryCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Zobrazenie otázok}     
+Na tejto stránke pouívate¾ vidí zoznam otázok vytvorenıch v tomto dotazníku.\\
+Pri kadej otázke je monost upravi, zmaza alebo prezentova danú otázku. \\
+Pri oznaèení otázky prezentova stlaèením tlaèidla Present sa stane otázka vidite¾nou pre študentov.\\
+V spodnej èasti sa nachádzajú tlaèidlá urèené na pridanie otázky a prezentovanie.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/view-questionsCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Úprava dotazníka}    
+Na tejto stránke má pouívate¾ monos upravi dotazník. \\
+V¾avej hornej èasti je pole oznaèené ako Title, kde je moné zmeni názov otázky.\\
+Pod ním je combo box s monosou zmeny typu otázky z multiple choice na sigle choice alebo textovú.\\
+V pravej èasti sa nachádzajú polia s aktuálnymi monosami.\\
+Hore sa nachádza tlaèidlo, ktoré pridá ïalšiu monos.\\
+Ïalej je moné premenova aktuálne monosti.\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/add-questionCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Publikovanie dotazníka}     
+Pri publikovaní dotazníka sa zobrazí QR kód a link na stránku, kde môu študenti hlasova.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/qrANDlinkCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Monos odoslania}     
+Táto stránka dáva študentovi vybra monos zada svoju prezıvku alebo osta anonymnı.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{pics/choose-usernameCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Prezentovaná otázka}     
+Táto stránka reprezentuje, èo uvidí študent pri navštívení zverejneného dotazníka. \\
+V hornej èasti stránky je umiestnenie danej otázky (kategória-dotazník).\\
+Ïalej je názov otázky a prezentované monosti.\\
+V dolnej èasti je monos prida komentár.\\
+Nakoniec sa to všetko odošle stlaèením tlaèidla Odosla.\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.60]{pics/student-questionCROP.png}
+\end{figure}
+
+\newpage
+\subsubsection{Vyhodnotenie otázky}   
+Na tejto stránke sa nachádza vyhodnotenie otázky vo forme grafu reprezentujúceho poèet hlasov pre danú monos.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.60]{pics/questionnaire-resultsCROP.png}
+\end{figure}
